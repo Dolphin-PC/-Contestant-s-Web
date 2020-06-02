@@ -1,79 +1,119 @@
-/*!
-
-=========================================================
-* Argon Design System React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React from 'react';
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import { Button, Container, Row, Col } from 'reactstrap';
+import landing_1 from '../../assets/img/Landing/landing_1.jpg';
+import landing_2 from '../../assets/img/Landing/landing_2.jpg';
+import landing_3 from '../../assets/img/Landing/landing_3.jpg';
+import landing_4 from '../../assets/img/Landing/landing_award_1.jpg';
+import landing_5 from '../../assets/img/Landing/landing_award_2.jpg';
+import landing_6 from '../../assets/img/Landing/landing_award_3.jpg';
+import landing_8 from '../../assets/img/Landing/landing_contest_1.jpg';
+import landing_7 from '../../assets/img/Landing/landing_contest_2.jpg';
+import landing_9 from '../../assets/img/Landing/landing_contest_3.jpg';
+import landing_10 from '../../assets/img/Landing/landing_friendly_1.jpg';
+import landing_11 from '../../assets/img/Landing/landing_friendly_2.jpg';
+import landing_12 from '../../assets/img/Landing/landing_friendly_3.jpg';
+import landing_13 from '../../assets/img/Landing/landing_friendly_4.jpg';
 
 class Icons extends React.Component {
   render() {
     return (
       <>
-        <section className="section section-lg section-nucleo-icons pb-250">
+        <section className='section section-lg section-nucleo-icons pb-250'>
           <Container>
-            <Row className="justify-content-center">
-              <Col className="text-center" lg="8">
-                <h2 className="display-3">Nucleo Icons</h2>
-                <p className="lead">
-                  The official package contains over 21.000 icons which are
-                  looking great in combination with Argon Design System. Make
-                  sure you check all of them and use those that you like the
-                  most.
+            <Row className='justify-content-center'>
+              <Col className='text-center' lg='8'>
+                <h2 className='display-3'>{this.props.title}</h2>
+                <p className='lead'>
+                  {this.props.description}
+                  <br />
+                  <small>{this.props.descriptionBottom}</small>
                 </p>
-                <div className="btn-wrapper">
-                  <Button
-                    color="primary"
-                    href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/icons?ref=adsr-landing-page"
-                  >
-                    View demo icons
-                  </Button>
-                  <Button
-                    className="mt-3 mt-md-0"
-                    color="default"
-                    href="https://nucleoapp.com/?ref=1712"
-                    target="_blank"
-                  >
-                    View all icons
-                  </Button>
-                </div>
               </Col>
             </Row>
-            <div className="blur--hover">
-              <a href="https://demos.creative-tim.com/argon-design-system-react/#/documentation/icons?ref=adsr-landing-page">
-                <div className="icons-container blur-item mt-5 on-screen">
-                  <i className="icon ni ni-diamond" />
-                  <i className="icon icon-sm ni ni-album-2" />
-                  <i className="icon icon-sm ni ni-app" />
-                  <i className="icon icon-sm ni ni-atom" />
-                  <i className="icon ni ni-bag-17" />
-                  <i className="icon ni ni-bell-55" />
-                  <i className="icon ni ni-credit-card" />
-                  <i className="icon icon-sm ni ni-briefcase-24" />
-                  <i className="icon icon-sm ni ni-building" />
-                  <i className="icon icon-sm ni ni-button-play" />
-                  <i className="icon ni ni-calendar-grid-58" />
-                  <i className="icon ni ni-camera-compact" />
-                  <i className="icon ni ni-chart-bar-32" />
-                </div>
-                <span className="blur-hidden h5 text-success">
-                  Eplore all the 21.000+ Nucleo Icons
-                </span>
-              </a>
+            <div className='blur--hover'>
+              <div className='icons-container blur-item mt-5 on-screen'>
+                <i
+                  className='icon ni'
+                  style={{
+                    backgroundImage: `url(${landing_1})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i
+                  className='icon icon-sm ni'
+                  style={{
+                    backgroundImage: `url(${landing_2})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i className='icon icon-sm ni ni-app' />
+                <i
+                  className='icon icon-sm ni '
+                  style={{
+                    backgroundImage: `url(${landing_3})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i
+                  className='icon ni '
+                  style={{
+                    backgroundImage: `url(${landing_4})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i className='icon ni ni-bell-55' />
+                <i
+                  className='icon ni '
+                  style={{
+                    backgroundImage: `url(${landing_5})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i
+                  className='icon icon-sm '
+                  style={{
+                    backgroundImage: `url(${landing_13})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i
+                  className='icon icon-sm ni '
+                  style={{
+                    backgroundImage: `url(${landing_11})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i className='icon icon-sm ni ni-button-play' />
+                <i className='icon ni ni-calendar-grid-58' />
+                <i
+                  className='icon ni '
+                  style={{
+                    backgroundImage: `url(${landing_8})`,
+                    backgroundSize: 'cover',
+                  }}
+                />
+                <i className='icon ni ni-chart-bar-32' />
+              </div>
+              <span className='blur-hidden h1 text-success'>
+                {this.props.hiddenDescription}
+                <br />
+                <desc
+                  style={{
+                    backgroundColor: '#2DCF89',
+                    color: 'white',
+                  }}
+                >
+                  {this.props.hiddenDescription1}
+                </desc>
+                <br />
+                {this.props.hiddenDescription2}
+                <br />
+                <Button className='btn-blue mt-12' color='warning' href='#'>
+                  더 알아보기
+                </Button>
+              </span>
             </div>
           </Container>
         </section>

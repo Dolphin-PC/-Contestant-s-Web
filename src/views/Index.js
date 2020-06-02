@@ -68,7 +68,7 @@ class Index extends React.Component {
               <TooltipPopover />
             </Container>
           </section>
-          <Carousel />
+
           <Icons />
           <Login />
           <Download />
