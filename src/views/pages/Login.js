@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 // reactstrap components
 import {
   Button,
@@ -19,7 +19,15 @@ import {
 
 // core components
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
-import SimpleFooter from 'components/Footers/SimpleFooter.js';
+import CardsFooter from 'components/Footers/CardsFooter.js';
+
+// Firebase AUTH
+import withFirebaseAuth from 'react-with-firebase-auth';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import { FirebaseConfig } from '../../config/dev';
+import { FirebaseApp } from '../../config/firebase';
+import Landing from './Landing';
 
 class Login extends React.Component {
   componentDidMount() {
@@ -28,8 +36,11 @@ class Login extends React.Component {
     this.refs.main.scrollTop = 0;
   }
   render() {
-    return (
-      <>
+    const { user, signOut, signInWithGoogle } = this.props;
+    return user ? (
+      <Landing user={user} />
+    ) : (
+      <div>
         <DemoNavbar />
         <main ref='main'>
           <section className='section section-shaped section-lg'>
@@ -78,7 +89,12 @@ class Login extends React.Component {
                               src={require('assets/img/icons/common/google.svg')}
                             />
                           </span>
-                          <span className='btn-inner--text'>Google</span>
+                          <span
+                            className='btn-inner--text'
+                            onClick={signInWithGoogle}
+                          >
+                            Google
+                          </span>
                         </Button>
                       </div>
                     </CardHeader>
@@ -147,13 +163,9 @@ class Login extends React.Component {
                       </a>
                     </Col>
                     <Col className='text-right' xs='6'>
-                      <a
-                        className='text-light'
-                        href='#pablo'
-                        onClick={(e) => e.preventDefault()}
-                      >
+                      <Link to={'/register-page'}>
                         <small>Create new account</small>
-                      </a>
+                      </Link>
                     </Col>
                   </Row>
                 </Col>
@@ -161,10 +173,17 @@ class Login extends React.Component {
             </Container>
           </section>
         </main>
-        <SimpleFooter />
-      </>
+        <CardsFooter />
+      </div>
     );
   }
 }
 
-export default Login;
+const firebaseAppAuth = FirebaseApp.auth();
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+};
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth,
+})(Login);

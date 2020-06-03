@@ -1,10 +1,10 @@
 export const FirebaseConfig = {
-  apiKey: 'AIzaSyCIjxtUwFU5Sf-TJiNHcViyACj_n21rU1g',
-  authDomain: 'contestant-s.firebaseapp.com',
-  databaseURL: 'https://contestant-s.firebaseio.com',
-  projectId: 'contestant-s',
-  storageBucket: 'contestant-s.appspot.com',
-  messagingSenderId: '834575363507',
-  appId: '1:834575363507:web:a2939ebf92d570c85dafc6',
-  measurementId: 'G-FQPH0SDZM8',
+  apiKey: 'AIzaSyA5wpWbDxFvoKSDmSiLpQz10gOhdE8pRG0',
+  authDomain: 'contest-test-23ef1.firebaseapp.com',
+  databaseURL: 'https://contest-test-23ef1.firebaseio.com',
+  projectId: 'contest-test-23ef1',
+  storageBucket: 'contest-test-23ef1.appspot.com',
+  messagingSenderId: '97741201000',
+  appId: '1:97741201000:web:c0d76a946198077e7f25dd',
+  measurementId: 'G-XSWD0HR5CF',
 };

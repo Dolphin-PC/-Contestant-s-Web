@@ -1,6 +1,22 @@
 import { todosRef, LandingRef } from '../config/firebase';
 import { FETCH_TODOS, FETCH_LANDING } from './types';
+import firebase from 'firebase/app';
 
+// Firebase Auth
+export const signIn = (credentials) => {
+  return (dispatch, getState) => {
+    firebase
+      .auth()(credentials.email, credentials.password)
+      .then(() => {
+        dispatch({ type: 'LOGIN_SUCCESS' });
+      })
+      .catch((err) => {
+        dispatch({ type: 'LOGIN_ERROR', err });
+      });
+  };
+};
+
+// Firebase Database
 export const addToDo = (newToDo) => async (dispatch) => {
   todosRef.push().set(newToDo);
 };

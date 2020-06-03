@@ -22,6 +22,12 @@ import {
   UncontrolledTooltip,
 } from 'reactstrap';
 
+import withFirebaseAuth from 'react-with-firebase-auth';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import { FirebaseConfig } from '../../config/dev';
+import { FirebaseApp } from '../../config/firebase';
+
 class DemoNavbar extends React.Component {
   componentDidMount() {
     let headroom = new Headroom(document.getElementById('navbar-main'));
@@ -46,6 +52,7 @@ class DemoNavbar extends React.Component {
   };
 
   render() {
+    const { user, signOut, signInWithGoogle } = this.props;
     return (
       <>
         <header className='header-global'>
@@ -169,15 +176,36 @@ class DemoNavbar extends React.Component {
                       Follow us on Instagram
                     </UncontrolledTooltip>
                   </NavItem>
+
                   <NavItem className='d-none d-lg-block ml-lg-4'>
-                    <Link to={'/login-page'}>
-                      <Button className='btn-neutral btn-icon' color='default'>
+                    {user ? (
+                      <Button
+                        className='btn-neutral btn-icon'
+                        color='default'
+                        onClick={signOut}
+                      >
                         <span className='btn-inner--icon'>
                           <i className='fa fa-user mr-2' />
                         </span>
-                        <span className='nav-link-inner--text ml-1'>Login</span>
+                        <span className='nav-link-inner--text ml-1'>
+                          LOGOUT
+                        </span>
                       </Button>
-                    </Link>
+                    ) : (
+                      <Link to={'/login-page'}>
+                        <Button
+                          className='btn-neutral btn-icon'
+                          color='default'
+                        >
+                          <span className='btn-inner--icon'>
+                            <i className='fa fa-user mr-2' />
+                          </span>
+                          <span className='nav-link-inner--text ml-1'>
+                            LOGIN
+                          </span>
+                        </Button>
+                      </Link>
+                    )}
                   </NavItem>
                 </Nav>
               </UncontrolledCollapse>
@@ -189,4 +217,11 @@ class DemoNavbar extends React.Component {
   }
 }
 
-export default DemoNavbar;
+const firebaseAppAuth = FirebaseApp.auth();
+const providers = {
+  googleProvider: new firebase.auth.GoogleAuthProvider(),
+};
+export default withFirebaseAuth({
+  providers,
+  firebaseAppAuth,
+})(DemoNavbar);

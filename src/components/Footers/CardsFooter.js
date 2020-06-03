@@ -21,7 +21,6 @@ class CardsFooter extends React.Component {
       <>
         <footer className='footer has-cards'>
           <Container>
-            <hr />
             <Row className='align-items-center justify-content-md-between'>
               <Col md='6'>
                 <div className='copyright'>

@@ -35,7 +35,11 @@ class Hero extends React.Component {
                       src={require('assets/img/brand/main.png')}
                       style={{ width: '300px' }}
                     />
-                    <p className='lead text-white'>{this.props.title}</p>
+                    <p className='lead text-white'>
+                      {this.props.user
+                        ? `${this.props.title} 님 환영합니다.`
+                        : ''}
+                    </p>
                     <div className='btn-wrapper mt-5'>
                       <Button
                         className='btn-white btn-icon mb-3 mb-sm-0'

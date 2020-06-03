@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add @react-firebase/storage
+  /usr/local/bin/node /usr/local/bin/yarn add react-firebase-authentication
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/park-chanyoung/opt/anaconda3/bin:/Users/park-chanyoung/opt/anaconda3/condabin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@react-firebase%2fstorage: Not found
+  Error: https://registry.yarnpkg.com/react-firebase-authentication: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66926:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140564:22)
       at Request.emit (events.js:310:20)
@@ -28,14 +28,10 @@ Trace:
 
 npm manifest: 
   {
-    "name": "argon-design-system-react",
+    "name": "Dolphin_PC",
     "version": "1.1.0",
-    "description": "React version of Argon Design System by Creative Tim",
+    "description": "Contestants",
     "main": "index.js",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/creativetimofficial/argon-design-system-react.git"
-    },
     "keywords": [
       "react",
       "reactjs",
@@ -51,12 +47,9 @@ npm manifest:
       "argon-design-system-react",
       "design-system-react"
     ],
-    "author": "Creative Tim",
+    "author": "Dolphin PC",
     "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/creativetimofficial/argon-design-system-react/issues"
-    },
-    "homepage": "https://demos.creative-tim.com/argon-design-system-react/",
+    "homepage": ".",
     "scripts": {
       "start": "react-scripts start",
       "build": "react-scripts build && gulp licenses",
@@ -88,10 +81,13 @@ npm manifest:
       "react": "16.12.0",
       "react-datetime": "2.16.3",
       "react-dom": "16.12.0",
+      "react-redux": "^7.2.0",
       "react-router": "5.1.2",
       "react-router-dom": "5.1.2",
       "react-scripts": "3.4.1",
-      "reactstrap": "8.4.1"
+      "reactstrap": "8.4.1",
+      "redux": "^4.0.5",
+      "redux-thunk": "^2.3.0"
     },
     "devDependencies": {
       "@types/googlemaps": "3.39.2",
@@ -100,7 +96,7 @@ npm manifest:
       "eslint-plugin-flowtype": "3.13.0",
       "gulp": "4.0.2",
       "gulp-append-prepend": "1.0.8",
-      "jquery": "3.4.1",
+      "jquery": "^3.5.1",
       "typescript": "3.7.5"
     }
   }

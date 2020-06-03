@@ -25,7 +25,6 @@ import Icons from '../IndexSections/Icons';
 
 import Suppoters from 'views/IndexSections/Suppoters';
 import Contact from 'views/IndexSections/Contact';
-
 const mainItems = [
   {
     src: require('assets/img/Landing/landing_1.jpg'),
@@ -64,6 +63,7 @@ class Landing extends Component {
   }
 
   render() {
+    const { user, signOut } = this.props;
     const { data } = this.props;
     const getData = _.map(data, (value, key) => {
       console.log(value.title);
@@ -73,7 +73,8 @@ class Landing extends Component {
     return (
       <div>
         <DemoNavbar />
-        <Hero title='' />
+        {user ? <Hero user={user} title={user.displayName} /> : <Hero />}
+
         <Carousel
           items={mainItems}
           title='공모자들'
