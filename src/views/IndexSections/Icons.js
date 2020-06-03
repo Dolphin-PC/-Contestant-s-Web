@@ -21,7 +21,7 @@ class Icons extends React.Component {
     return (
       <>
         <section className='section section-lg section-nucleo-icons pb-250'>
-          <Container>
+          <Container backgroundColor='default'>
             <Row className='justify-content-center'>
               <Col className='text-center' lg='8'>
                 <h2 className='display-3'>{this.props.title}</h2>

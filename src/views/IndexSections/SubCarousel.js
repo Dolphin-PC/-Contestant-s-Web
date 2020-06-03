@@ -32,9 +32,6 @@ class SubCarousel extends React.Component {
   }
 }
 
-SubCarousel.propTypes = {
-  items: PropTypes.object.isRequired,
-};
 SubCarousel.defaultProps = {
   items: items,
 };

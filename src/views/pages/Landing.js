@@ -23,6 +23,9 @@ import ButtonPopover from '../../components/ButtonPopover';
 
 import Icons from '../IndexSections/Icons';
 
+import Suppoters from 'views/IndexSections/Suppoters';
+import Contact from 'views/IndexSections/Contact';
+
 const mainItems = [
   {
     src: require('assets/img/Landing/landing_1.jpg'),
@@ -80,12 +83,12 @@ class Landing extends Component {
           사람들과 함께 공모전에 도전할 수 있습니다👍'
         />
         <hr />
-        <Container>
-          <h1>공모자들은 뭘 하나요?</h1>
+        <Container style={{ textAlign: 'center' }}>
+          <h1>'공모자들'은 뭘 하나요?</h1>
           <Row>
-            <Col>
+            <Col className='col-12 col-sm-4'>
               <SubCarousel category='공모전' items={contestItems} />
-              <Row>
+              <Row className='justify-content-center'>
                 <ButtonPopover
                   title='자유기획'
                   PH_text='자유기획'
@@ -101,9 +104,9 @@ class Landing extends Component {
                 />
               </Row>
             </Col>
-            <Col>
+            <Col className='col-12 col-sm-4'>
               <SubCarousel category='수상/경험' items={awardItems} />
-              <Row>
+              <Row className='justify-content-center'>
                 <ButtonPopover
                   title='수상'
                   PH_text='수상'
@@ -121,9 +124,9 @@ class Landing extends Component {
                 />
               </Row>
             </Col>
-            <Col>
+            <Col className='col-12 col-sm-4'>
               <SubCarousel category='친목활동' items={friendlyItems} />
-              <Row>
+              <Row className='justify-content-center'>
                 <ButtonPopover
                   title='친목활동'
                   PH_text='친목활동'
@@ -135,15 +138,16 @@ class Landing extends Component {
             </Col>
           </Row>
           <Icons
-            title='공모자들의 활동'
-            description='공모자들의 시작부터 현재까지의 활동이에요.'
+            title={"'공모자들'의 활동"}
+            description={"'공모자들'의 시작부터 현재까지의 활동이에요."}
             descriptionBottom='(2019년 2학기 ~ 현재)'
             hiddenDescription='지금까지'
             hiddenDescription1='+ 12'
             hiddenDescription2='활동들을 진행했어요!'
           />
         </Container>
-
+        <hr />
+        <Contact />
         <CardsFooter />
       </div>
     );

@@ -27,7 +27,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact render={(props) => <Index {...props} />} />
+        <Route path='/' exact render={(props) => <Landing {...props} />} />
         <Route
           path='/landing-page'
           exact
@@ -49,7 +49,7 @@ ReactDOM.render(
           render={(props) => <Register {...props} />}
         />
         <Route path='/test' exact render={(props) => <Index {...props} />} />
-        <Redirect to='/' />
+        <Redirect to='/landing-page' />
       </Switch>
     </BrowserRouter>
   </Provider>,

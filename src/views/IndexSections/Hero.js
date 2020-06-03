@@ -13,7 +13,7 @@ class Hero extends React.Component {
           {/* Hero for FREE version */}
           <section className='section section-hero section-shaped'>
             {/* Background circles */}
-            <div className='shape shape-style-1 shape-default'>
+            <div className='shape shape-style-1 bg-gradient-default'>
               <span className='span-150' />
               <span className='span-50' />
               <span className='span-50' />
@@ -51,7 +51,7 @@ class Hero extends React.Component {
                       <Button
                         className='btn-icon mb-3 mb-sm-0'
                         color='github'
-                        href='https://github.com/creativetimofficial/argon-design-system-react'
+                        href='https://instagram.com/gongmoja_official?igshid=i0g35ajrhg2v'
                         size='lg'
                         target='_blank'
                       >
@@ -74,10 +74,6 @@ class Hero extends React.Component {
     );
   }
 }
-
-Hero.propTypes = {
-  title: PropTypes.string.isRequired,
-};
 
 Hero.defaultProps = {
   image: '',

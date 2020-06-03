@@ -112,9 +112,7 @@ class DemoNavbar extends React.Component {
                               공모자들 이란?
                             </h6>
                             <p className='description d-none d-md-inline-block mb-0'>
-                              공모자들이란 공모자들이란 공모자들이란
-                              공모자들이란 공모자들이란 공모자들이란
-                              공모자들이란 공모자들이란 공모자들이란
+                              춘천 유일의 공모전 연합동아리 입니다.
                             </p>
                           </Media>
                         </Media>
@@ -172,12 +170,14 @@ class DemoNavbar extends React.Component {
                     </UncontrolledTooltip>
                   </NavItem>
                   <NavItem className='d-none d-lg-block ml-lg-4'>
-                    <Button className='btn-neutral btn-icon' color='default'>
-                      <span className='btn-inner--icon'>
-                        <i className='fa fa-user mr-2' />
-                      </span>
-                      <span className='nav-link-inner--text ml-1'>Login</span>
-                    </Button>
+                    <Link to={'/login-page'}>
+                      <Button className='btn-neutral btn-icon' color='default'>
+                        <span className='btn-inner--icon'>
+                          <i className='fa fa-user mr-2' />
+                        </span>
+                        <span className='nav-link-inner--text ml-1'>Login</span>
+                      </Button>
+                    </Link>
                   </NavItem>
                 </Nav>
               </UncontrolledCollapse>
