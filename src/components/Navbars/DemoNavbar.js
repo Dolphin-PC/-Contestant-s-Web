@@ -20,6 +20,7 @@ import {
   Row,
   Col,
   UncontrolledTooltip,
+  Badge,
 } from 'reactstrap';
 
 import withFirebaseAuth from 'react-with-firebase-auth';
@@ -176,7 +177,15 @@ class DemoNavbar extends React.Component {
                       Follow us on Instagram
                     </UncontrolledTooltip>
                   </NavItem>
-
+                  <NavItem>
+                    {user ? (
+                      <Badge className='text-uppercase' color='info' pill>
+                        {user.displayName}
+                      </Badge>
+                    ) : (
+                      ''
+                    )}
+                  </NavItem>
                   <NavItem className='d-none d-lg-block ml-lg-4'>
                     {user ? (
                       <Button

@@ -80,8 +80,7 @@ class Login extends React.Component {
                         <Button
                           className='btn-neutral btn-icon ml-1'
                           color='default'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
+                          onClick={signInWithGoogle}
                         >
                           <span className='btn-inner--icon mr-1'>
                             <img
@@ -89,12 +88,7 @@ class Login extends React.Component {
                               src={require('assets/img/icons/common/google.svg')}
                             />
                           </span>
-                          <span
-                            className='btn-inner--text'
-                            onClick={signInWithGoogle}
-                          >
-                            Google
-                          </span>
+                          <span className='btn-inner--text'>Google</span>
                         </Button>
                       </div>
                     </CardHeader>

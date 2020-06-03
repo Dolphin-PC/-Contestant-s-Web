@@ -73,8 +73,7 @@ class Landing extends Component {
     return (
       <div>
         <DemoNavbar />
-        {user ? <Hero user={user} title={user.displayName} /> : <Hero />}
-
+        <Hero />
         <Carousel
           items={mainItems}
           title='공모자들'
