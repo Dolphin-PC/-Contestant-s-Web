@@ -49,7 +49,7 @@ class Rule extends React.Component {
                     <Card className='card-lift--hover shadow border-0'>
                       <CardBody className='py-5'>
                         <div className='icon icon-shape icon-shape-primary rounded-circle mb-4'>
-                          <i className='ni ni-spaceship' />
+                          <i className='ni ni-notification-70' />
                         </div>
                         <h6 className='text-primary text-uppercase'>
                           회의방침
@@ -72,7 +72,7 @@ class Rule extends React.Component {
                     <Card className='card-lift--hover shadow border-0'>
                       <CardBody className='py-5'>
                         <div className='icon icon-shape icon-shape-success rounded-circle mb-4'>
-                          <i className='ni ni-paper-diploma' />
+                          <i className='ni ni-money-coins' />
                         </div>
                         <h6 className='text-success text-uppercase'>
                           예산운영
@@ -100,7 +100,7 @@ class Rule extends React.Component {
                     <Card className='card-lift--hover shadow border-0'>
                       <CardBody className='py-5'>
                         <div className='icon icon-shape icon-shape-warning rounded-circle mb-4'>
-                          <i className='ni ni-note-03' />
+                          <i className='ni ni-tag' />
                         </div>
                         <h6 className='text-warning text-uppercase'>
                           운영방침
@@ -125,40 +125,30 @@ class Rule extends React.Component {
                   <Col lg='3'>
                     <Card className='card-lift--hover shadow border-0'>
                       <CardBody className='py-5'>
-                        <div className='icon icon-shape icon-shape-warning rounded-circle mb-4'>
-                          <i className='ni ni-note-03' />
+                        <div className='icon icon-shape icon-shape-info rounded-circle mb-4'>
+                          <i className='ni ni-chat-round' />
                         </div>
-                        <h6 className='text-warning text-uppercase'>
-                          친목 활동
+                        <h6 className='text-info text-uppercase'>
+                          채팅방 방침
                         </h6>
                         <p className='description mt-3'>
-                          고생많았다 동지들.. 뒷풀이 시간이다!
-                          <br />
-                          끝없는 회의를 함께 헤쳐나간 팀원들과 함께
-                          <br />
-                          즐기는 시간도 필요하겠죠?
-                          <br />
-                          친구 만들기도 좋은 공모자들! 함께해요~
+                          '공모자들'에 가입하면 어떤 채팅방이 생기는지
+                          알아보세요.
                         </p>
                         <div>
-                          <Badge color='warning' pill className='mr-1'>
-                            영화
+                          <Badge color='info' pill className='mr-1'>
+                            카카오톡
                           </Badge>
-                          <Badge color='warning' pill className='mr-1'>
-                            야유회
+                          <Badge color='info' pill className='mr-1'>
+                            공지채팅방
                           </Badge>
-                          <Badge color='warning' pill className='mr-1'>
-                            체험
+                          <Badge color='info' pill className='mr-1'>
+                            팀별채팅방
+                          </Badge>
+                          <Badge color='info' pill className='mr-1'>
+                            익명채팅방
                           </Badge>
                         </div>
-                        <Button
-                          className='mt-4'
-                          color='warning'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          더 보기
-                        </Button>
                       </CardBody>
                     </Card>
                   </Col>
