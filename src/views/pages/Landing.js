@@ -25,16 +25,11 @@ import Icons from '../IndexSections/Icons';
 
 import Suppoters from 'views/IndexSections/Suppoters';
 import Contact from 'views/IndexSections/Contact';
+
 const mainItems = [
-  {
-    src: require('assets/img/Landing/landing_1.jpg'),
-  },
-  {
-    src: require('assets/img/Landing/landing_2.jpg'),
-  },
-  {
-    src: require('assets/img/Landing/landing_3.jpg'),
-  },
+  { src: require('assets/img/Landing/landing_1.jpg') },
+  { src: require('assets/img/Landing/landing_2.jpg') },
+  { src: require('assets/img/Landing/landing_3.jpg') },
 ];
 const contestItems = [
   { src: require('assets/img/Landing/landing_contest_1.jpg') },
@@ -73,6 +68,7 @@ class Landing extends Component {
     return (
       <div>
         <DemoNavbar />
+
         <Hero />
         <Carousel
           items={mainItems}
@@ -85,6 +81,14 @@ class Landing extends Component {
         <hr />
         <Container style={{ textAlign: 'center' }}>
           <h1>'공모자들'은 뭘 하나요?</h1>
+          <h4>다양한 공모전에 참여합니다.</h4>
+          <p className='lead'>
+            소수로 구성된 여러 팀들은 다양한 공모전에 도전합니다.
+            <br />
+            수 많은 회의를 통해서 만들어낸 결과물을 통해서, 스펙은 덤!
+            <br />
+            개개인의 다양한 경험과 역량을 발전시킬 수 있습니다.
+          </p>
           <Row>
             <Col className='col-12 col-sm-4'>
               <SubCarousel category='공모전' items={contestItems} />

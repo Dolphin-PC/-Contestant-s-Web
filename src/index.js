@@ -6,12 +6,13 @@ import 'assets/vendor/nucleo/css/nucleo.css';
 import 'assets/vendor/font-awesome/css/font-awesome.min.css';
 import 'assets/scss/argon-design-system-react.scss?v1.1.0';
 
-// Sample Views
+// Views
 import Index from 'views/Index.js';
 import Landing from 'views/pages/Landing.js';
 import Login from 'views/pages/Login.js';
 import Profile from 'views/pages/Profile.js';
 import Register from 'views/pages/Register.js';
+import Activity from 'views/pages/Activity.js';
 
 import Test from './Test';
 
@@ -49,6 +50,11 @@ ReactDOM.render(
           render={(props) => <Register {...props} />}
         />
         <Route path='/test' exact render={(props) => <Index {...props} />} />
+        <Route
+          path='/activity'
+          exact
+          render={(props) => <Activity {...props} />}
+        />
         <Redirect to='/landing-page' />
       </Switch>
     </BrowserRouter>

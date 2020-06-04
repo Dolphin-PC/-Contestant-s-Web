@@ -39,13 +39,14 @@ class Hero extends React.Component {
                       <Button
                         className='btn-white btn-icon mb-3 mb-sm-0'
                         color='default'
-                        href='https://www.creative-tim.com/product/argon-design-system-react?ref=adsr-landing-page'
+                        href='http://gongmoja.dothome.co.kr/wp-content/uploads/2019/10/%EA%B3%B5%EB%AA%A8%EC%A0%84-%EC%98%A4%ED%8B%B0%ED%8B%B0%ED%8C%89.mp4'
                         size='lg'
+                        target='_blank'
                       >
                         <span className='btn-inner--icon mr-1'>
                           <i className='ni ni-cloud-download-95' />
                         </span>
-                        <span className='btn-inner--text'>가입하기</span>
+                        <span className='btn-inner--text'>소개영상</span>
                       </Button>
                       <Button
                         className='btn-icon mb-3 mb-sm-0'

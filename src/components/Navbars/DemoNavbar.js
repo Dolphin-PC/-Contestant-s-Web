@@ -132,13 +132,17 @@ class DemoNavbar extends React.Component {
                           <div className='icon icon-shape bg-gradient-success rounded-circle text-white'>
                             <i className='ni ni-palette' />
                           </div>
-                          <Media body className='ml-3'>
+                          <Media
+                            body
+                            className='ml-3'
+                            to='/activity'
+                            tag={Link}
+                          >
                             <h6 className='heading text-primary mb-md-1'>
                               활동 내역
                             </h6>
                             <p className='description d-none d-md-inline-block mb-0'>
-                              활동 내역 활동 내역 활동 내역 활동 내역 활동 내역
-                              활동 내역 활동 내역 활동 내역 활동 내역
+                              '공모자들'의 활약들을 소개합니다.😎
                             </p>
                           </Media>
                         </Media>
