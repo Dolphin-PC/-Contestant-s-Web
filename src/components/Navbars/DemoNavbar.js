@@ -103,6 +103,68 @@ class DemoNavbar extends React.Component {
                   <UncontrolledDropdown nav>
                     <DropdownToggle nav>
                       <i className='ni ni-ui-04 d-lg-none mr-1' />
+                      <span className='nav-link-inner--text'>공모자들</span>
+                    </DropdownToggle>
+                    <DropdownMenu className='dropdown-menu-xl'>
+                      <div className='dropdown-menu-inner'>
+                        <Media
+                          className='d-flex align-items-center'
+                          to='/curriculum'
+                          tag={Link}
+                        >
+                          <div className='icon icon-shape bg-gradient-primary rounded-circle text-white'>
+                            <i className='ni ni-calendar-grid-58' />
+                          </div>
+                          <Media body className='ml-3'>
+                            <h6 className='heading text-primary mb-md-1'>
+                              2020 커리큘럼
+                            </h6>
+                            <p className='description d-none d-md-inline-block mb-0'>
+                              공모자들 2020 계획표입니다.
+                            </p>
+                          </Media>
+                        </Media>
+                        <Media
+                          className='d-flex align-items-center'
+                          to='/budget'
+                          tag={Link}
+                        >
+                          <div className='icon icon-shape bg-gradient-success rounded-circle text-white'>
+                            <i className='ni ni-money-coins' />
+                          </div>
+                          <Media body className='ml-3'>
+                            <h6 className='heading text-primary mb-md-1'>
+                              예산 계획과 사용 내역
+                            </h6>
+                            <p className='description d-none d-md-inline-block mb-0'>
+                              공모자들의 예산내역을 투명하게 공개합니다.
+                            </p>
+                          </Media>
+                        </Media>
+                        <Media
+                          className='d-flex align-items-center'
+                          to='/rule'
+                          tag={Link}
+                        >
+                          <div className='icon icon-shape bg-gradient-warning rounded-circle text-white'>
+                            <i className='ni ni-notification-70' />
+                          </div>
+                          <Media body className='ml-3'>
+                            <h6 className='heading text-warning mb-md-1'>
+                              운영 방안과 규칙
+                            </h6>
+                            <p className='description d-none d-md-inline-block mb-0'>
+                              공모자들, 이것만은 꼭! 지켜주세요.
+                            </p>
+                          </Media>
+                        </Media>
+                      </div>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+
+                  <UncontrolledDropdown nav>
+                    <DropdownToggle nav>
+                      <i className='ni ni-ui-04 d-lg-none mr-1' />
                       <span className='nav-link-inner--text'>동아리 소개</span>
                     </DropdownToggle>
                     <DropdownMenu className='dropdown-menu-xl'>
@@ -112,11 +174,11 @@ class DemoNavbar extends React.Component {
                           to='/landing-page'
                           tag={Link}
                         >
-                          <div className='icon icon-shape bg-gradient-primary rounded-circle text-white'>
+                          <div className='icon icon-shape bg-gradient-info rounded-circle text-white'>
                             <i className='ni ni-spaceship' />
                           </div>
                           <Media body className='ml-3'>
-                            <h6 className='heading text-primary mb-md-1'>
+                            <h6 className='heading text-info mb-md-1'>
                               공모자들 이란?
                             </h6>
                             <p className='description d-none d-md-inline-block mb-0'>
@@ -126,19 +188,14 @@ class DemoNavbar extends React.Component {
                         </Media>
                         <Media
                           className='d-flex align-items-center'
-                          to='/landing-page'
+                          to='/activity'
                           tag={Link}
                         >
                           <div className='icon icon-shape bg-gradient-success rounded-circle text-white'>
-                            <i className='ni ni-palette' />
+                            <i className='ni ni-collection' />
                           </div>
-                          <Media
-                            body
-                            className='ml-3'
-                            to='/activity'
-                            tag={Link}
-                          >
-                            <h6 className='heading text-primary mb-md-1'>
+                          <Media body className='ml-3'>
+                            <h6 className='heading text-success mb-md-1'>
                               활동 내역
                             </h6>
                             <p className='description d-none d-md-inline-block mb-0'>
@@ -151,16 +208,46 @@ class DemoNavbar extends React.Component {
                   </UncontrolledDropdown>
                   <UncontrolledDropdown nav>
                     <DropdownToggle nav>
-                      <i className='ni ni-collection d-lg-none mr-1' />
+                      <i className='ni ni-ui-04 d-lg-none mr-1' />
                       <span className='nav-link-inner--text'>활동하기</span>
                     </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem to='/landing-page' tag={Link}>
-                        일정표
-                      </DropdownItem>
-                      <DropdownItem to='/profile-page' tag={Link}>
-                        진행중인 회의 목록
-                      </DropdownItem>
+                    <DropdownMenu className='dropdown-menu-xl'>
+                      <div className='dropdown-menu-inner'>
+                        <Media
+                          className='d-flex align-items-center'
+                          to='/day'
+                          tag={Link}
+                        >
+                          <div className='icon icon-shape bg-gradient-primary rounded-circle text-white'>
+                            <i className='ni ni-single-copy-04' />
+                          </div>
+                          <Media body className='ml-3'>
+                            <h6 className='heading text-primary mb-md-1'>
+                              공모자의 하루
+                            </h6>
+                            <p className='description d-none d-md-inline-block mb-0'>
+                              회의 및 프로젝트 진행사항을 보고합니다.
+                            </p>
+                          </Media>
+                        </Media>
+                        <Media
+                          className='d-flex align-items-center'
+                          to='/idea'
+                          tag={Link}
+                        >
+                          <div className='icon icon-shape bg-gradient-danger rounded-circle text-white'>
+                            <i className='ni ni-bulb-61' />
+                          </div>
+                          <Media body className='ml-3'>
+                            <h6 className='heading text-danger mb-md-1'>
+                              아이디어가 떠올랐어요!
+                            </h6>
+                            <p className='description d-none d-md-inline-block mb-0'>
+                              아이디어가 있다면 자유롭게 작성해보아요.
+                            </p>
+                          </Media>
+                        </Media>
+                      </div>
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 </Nav>

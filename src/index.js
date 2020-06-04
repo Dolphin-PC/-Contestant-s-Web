@@ -13,6 +13,11 @@ import Login from 'views/pages/Login.js';
 import Profile from 'views/pages/Profile.js';
 import Register from 'views/pages/Register.js';
 import Activity from 'views/pages/Activity.js';
+import Curriculum from 'views/pages/Curriculum.js';
+import Budget from 'views/pages/Budget.js';
+import Rule from 'views/pages/Rule.js';
+import Day from 'views/pages/Day.js';
+import Idea from 'views/pages/Idea.js';
 
 import Test from './Test';
 
@@ -55,6 +60,15 @@ ReactDOM.render(
           exact
           render={(props) => <Activity {...props} />}
         />
+        <Route
+          path='/curriculum'
+          exact
+          render={(props) => <Curriculum {...props} />}
+        />
+        <Route path='/budget' exact render={(props) => <Budget {...props} />} />
+        <Route path='/rule' exact render={(props) => <Rule {...props} />} />
+        <Route path='/idea' exact render={(props) => <Idea {...props} />} />
+        <Route path='/day' exact render={(props) => <Day {...props} />} />
         <Redirect to='/landing-page' />
       </Switch>
     </BrowserRouter>

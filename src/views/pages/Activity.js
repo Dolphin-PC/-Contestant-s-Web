@@ -24,6 +24,7 @@ import {
 import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
 import CardsFooter from '../../components/Footers/CardsFooter.js';
 import SubCarousel from '../IndexSections/SubCarousel';
+import Background from '../IndexSections/Background';
 
 const contestItems = [{ src: require('assets/img/Landing/landing_1.jpg') }];
 const prizeItems = [
@@ -72,52 +73,10 @@ class Activity extends React.Component {
       <>
         <DemoNavbar />
         <main ref='main'>
-          <div className='position-relative'>
-            {/* shape Hero */}
-            <section className='section section-lg section-shaped pb-250'>
-              <div className='shape shape-style-1 shape-default'>
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <Container className='py-lg-md d-flex'>
-                <div className='col px-0'>
-                  <Row>
-                    <Col lg='6'>
-                      <h1 className='display-3 text-white'>'공모자들' 활동</h1>
-                      <p className='lead text-white'>
-                        '공모자들'의 활약들을 소개합니다.😎
-                      </p>
-                      <div className='btn-wrapper'></div>
-                    </Col>
-                  </Row>
-                </div>
-              </Container>
-              {/* SVG separator */}
-              <div className='separator separator-bottom separator-skew'>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  preserveAspectRatio='none'
-                  version='1.1'
-                  viewBox='0 0 2560 100'
-                  x='0'
-                  y='0'
-                >
-                  <polygon
-                    className='fill-white'
-                    points='2560 0 2560 100 0 100'
-                  />
-                </svg>
-              </div>
-            </section>
-            {/* 1st Hero Variation */}
-          </div>
+          <Background
+            title="'공모자들' 활동"
+            desc="'공모자들'의 활약들을 소개합니다.😎"
+          />
           <section className='section section-lg pt-lg-0 mt--200'>
             <Container>
               <Row className='justify-content-center'>
