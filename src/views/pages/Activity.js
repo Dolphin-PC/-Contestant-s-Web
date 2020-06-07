@@ -61,6 +61,45 @@ const friendlyItems = [
     header: '19년 동계 오티',
   },
 ];
+
+const testMapData = [
+  { BadgeName: 'ni ni-collection', titleName: '19-2학기' },
+  { BadgeName: 'ni ni-collection', titleName: '19-겨울방학' },
+  { BadgeName: 'ni ni-collection', titleName: '20-1학기' },
+];
+
+const supporter_info = [
+  {
+    imageURL: 'supporter1.jpeg',
+    title: '찐마',
+    description: '한림대학교 글로벌비즈니스 졸업',
+    buttonColor: 'warning',
+  },
+  {
+    imageURL: 'supporter2.jpeg',
+    title: '토마토',
+    description: '우송대학교 글로벌철도융합학과 3학년 재학중',
+    buttonColor: 'primary',
+  },
+  {
+    imageURL: 'supporter3.jpeg',
+    title: '혀니',
+    description: '한림대학교 글로벌비즈니스 3학년 휴학중',
+    buttonColor: 'info',
+  },
+  {
+    imageURL: 'supporter5.jpeg',
+    title: '원',
+    description: '한림대학교 글로벌비즈니스 3학년 휴학중',
+    buttonColor: 'success',
+  },
+  {
+    imageURL: 'supporter4.jpeg',
+    title: '두리',
+    description: '강원대학교 통계학과 2학년 재학중',
+    buttonColor: 'warning',
+  },
+];
 class Activity extends React.Component {
   state = {};
   componentDidMount() {
@@ -226,51 +265,25 @@ class Activity extends React.Component {
                     <h3>공모전</h3>
                     <p>지금껏 진행해온 공모전들입니다.</p>
                     <ul className='list-unstyled mt-5'>
-                      <li className='py-2'>
-                        <div className='d-flex align-items-center'>
-                          <div>
-                            <Badge
-                              className='badge-circle mr-3'
-                              color='primary'
-                            >
-                              <i className='ni ni-collection' />
-                            </Badge>
-                          </div>
-                          <div>
-                            <h6 className='mb-0'>19-2학기</h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className='py-2'>
-                        <div className='d-flex align-items-center'>
-                          <div>
-                            <Badge
-                              className='badge-circle mr-3'
-                              color='primary'
-                            >
-                              <i className='ni ni-collection' />
-                            </Badge>
-                          </div>
-                          <div>
-                            <h6 className='mb-0'>19-겨울방학</h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className='py-2'>
-                        <div className='d-flex align-items-center'>
-                          <div>
-                            <Badge
-                              className='badge-circle mr-3'
-                              color='primary'
-                            >
-                              <i className='ni ni-collection' />
-                            </Badge>
-                          </div>
-                          <div>
-                            <h6 className='mb-0'>20-1학기</h6>
-                          </div>
-                        </div>
-                      </li>
+                      {testMapData.map((test, i) => {
+                        return (
+                          <li className='py-2'>
+                            <div className='d-flex align-items-center'>
+                              <div>
+                                <Badge
+                                  className='badge-circle mr-3'
+                                  color='primary'
+                                >
+                                  <i className={test.BadgeName} />
+                                </Badge>
+                              </div>
+                              <div>
+                                <h6 className='mb-0'>{test.titleName}</h6>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </Col>
@@ -311,51 +324,25 @@ class Activity extends React.Component {
                     <h3>친목 활동</h3>
                     <p>공모전 끝! 뒷풀이 시작!</p>
                     <ul className='list-unstyled mt-5'>
-                      <li className='py-2'>
-                        <div className='d-flex align-items-center'>
-                          <div>
-                            <Badge
-                              className='badge-circle mr-3'
-                              color='primary'
-                            >
-                              <i className='ni ni-collection' />
-                            </Badge>
-                          </div>
-                          <div>
-                            <h6 className='mb-0'>19-2학기</h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className='py-2'>
-                        <div className='d-flex align-items-center'>
-                          <div>
-                            <Badge
-                              className='badge-circle mr-3'
-                              color='primary'
-                            >
-                              <i className='ni ni-collection' />
-                            </Badge>
-                          </div>
-                          <div>
-                            <h6 className='mb-0'>19-겨울방학</h6>
-                          </div>
-                        </div>
-                      </li>
-                      <li className='py-2'>
-                        <div className='d-flex align-items-center'>
-                          <div>
-                            <Badge
-                              className='badge-circle mr-3'
-                              color='primary'
-                            >
-                              <i className='ni ni-collection' />
-                            </Badge>
-                          </div>
-                          <div>
-                            <h6 className='mb-0'>20-1학기</h6>
-                          </div>
-                        </div>
-                      </li>
+                      {testMapData.map((contact, i) => {
+                        return (
+                          <li className='py-2'>
+                            <div className='d-flex align-items-center'>
+                              <div>
+                                <Badge
+                                  className='badge-circle mr-3'
+                                  color='primary'
+                                >
+                                  <i className={contact.BadgeName} />
+                                </Badge>
+                              </div>
+                              <div>
+                                <h6 className='mb-0'>{contact.titleName}</h6>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 </Col>
@@ -394,226 +381,56 @@ class Activity extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col className='mb-5 mb-lg-0' lg='3' md='6'>
-                  <div className='px-4'>
-                    <img
-                      alt='...'
-                      className='rounded-circle img-center img-fluid shadow shadow-lg--hover'
-                      src={require('assets/img/supporters/supporter1.jpeg')}
-                      style={{ width: 'auto' }}
-                    />
-                    <div className='pt-4 text-center'>
-                      <h5 className='title'>
-                        <span className='d-block mb-1'>찐마</span>
-                        <small className='h6 text-muted'>
-                          한림대학교 글로벌비즈니스 졸업
-                        </small>
-                      </h5>
-                      <div className='mt-3'>
-                        <Button
-                          className='btn-icon-only rounded-circle'
-                          color='warning'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-twitter' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='warning'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-facebook' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='warning'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-dribbble' />
-                        </Button>
+                {supporter_info.map((contact, i) => {
+                  return (
+                    <Col className='mb-5 mb-lg-0' lg='3' md='6'>
+                      <div className='px-4'>
+                        <img
+                          alt='...'
+                          className='rounded-circle img-center img-fluid shadow shadow-lg--hover'
+                          src={require(`assets/img/supporters/${contact.imageURL}`)}
+                          style={{ width: 'auto' }}
+                        />
+                        <div className='pt-4 text-center'>
+                          <h5 className='title'>
+                            <span className='d-block mb-1'>
+                              {contact.title}
+                            </span>
+                            <small className='h6 text-muted'>
+                              {contact.description}
+                            </small>
+                          </h5>
+                          <div className='mt-3'>
+                            <Button
+                              className='btn-icon-only rounded-circle'
+                              color={contact.buttonColor}
+                              href='#pablo'
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              <i className='fa fa-twitter' />
+                            </Button>
+                            <Button
+                              className='btn-icon-only rounded-circle ml-1'
+                              color={contact.buttonColor}
+                              href='#pablo'
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              <i className='fa fa-facebook' />
+                            </Button>
+                            <Button
+                              className='btn-icon-only rounded-circle ml-1'
+                              color={contact.buttonColor}
+                              href='#pablo'
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              <i className='fa fa-dribbble' />
+                            </Button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col className='mb-5 mb-lg-0' lg='3' md='6'>
-                  <div className='px-4'>
-                    <img
-                      alt='...'
-                      className='rounded-circle img-center img-fluid shadow shadow-lg--hover'
-                      src={require('assets/img/supporters/supporter2.jpeg')}
-                      style={{ width: '200px' }}
-                    />
-                    <div className='pt-4 text-center'>
-                      <h5 className='title'>
-                        <span className='d-block mb-1'>토마토</span>
-                        <small className='h6 text-muted'>
-                          우송대학교 글로벌철도융합학과 3학년 재학중
-                        </small>
-                      </h5>
-                      <div className='mt-3'>
-                        <Button
-                          className='btn-icon-only rounded-circle'
-                          color='primary'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-twitter' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='primary'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-facebook' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='primary'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-dribbble' />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col className='mb-5 mb-lg-0' lg='3' md='6'>
-                  <div className='px-4'>
-                    <img
-                      alt='...'
-                      className='rounded-circle img-center img-fluid shadow shadow-lg--hover'
-                      src={require('assets/img/supporters/supporter3.jpeg')}
-                      style={{ width: '200px' }}
-                    />
-                    <div className='pt-4 text-center'>
-                      <h5 className='title'>
-                        <span className='d-block mb-1'>혀니</span>
-                        <small className='h6 text-muted'>
-                          한림대학교 글로벌비즈니스 3학년 휴학중
-                        </small>
-                      </h5>
-                      <div className='mt-3'>
-                        <Button
-                          className='btn-icon-only rounded-circle'
-                          color='info'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-twitter' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='info'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-facebook' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='info'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-dribbble' />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col className='mb-5 mb-lg-0' lg='3' md='6'>
-                  <div className='px-4'>
-                    <img
-                      alt='...'
-                      className='rounded-circle img-center img-fluid shadow shadow-lg--hover'
-                      src={require('assets/img/supporters/supporter5.jpeg')}
-                      style={{ width: '200px' }}
-                    />
-                    <div className='pt-4 text-center'>
-                      <h5 className='title'>
-                        <span className='d-block mb-1'>원</span>
-                        <small className='h6 text-muted'>
-                          한림대학교 글로벌비즈니스 3학년 휴학중
-                        </small>
-                      </h5>
-                      <div className='mt-3'>
-                        <Button
-                          className='btn-icon-only rounded-circle'
-                          color='success'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-twitter' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='success'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-facebook' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='success'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-dribbble' />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col className='mb-5 mb-lg-0' lg='3' md='6'>
-                  <div className='px-4'>
-                    <img
-                      alt='...'
-                      className='rounded-circle img-center img-fluid shadow shadow-lg--hover'
-                      src={require('assets/img/supporters/supporter4.jpeg')}
-                      style={{ width: '200px' }}
-                    />
-                    <div className='pt-4 text-center'>
-                      <h5 className='title'>
-                        <span className='d-block mb-1'>두리</span>
-                        <small className='h6 text-muted'>
-                          강원대학교 통계학과 2학년 재학중
-                        </small>
-                      </h5>
-                      <div className='mt-3'>
-                        <Button
-                          className='btn-icon-only rounded-circle'
-                          color='success'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-twitter' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='success'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-facebook' />
-                        </Button>
-                        <Button
-                          className='btn-icon-only rounded-circle ml-1'
-                          color='success'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <i className='fa fa-dribbble' />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Col>
+                    </Col>
+                  );
+                })}
               </Row>
             </Container>
           </section>
