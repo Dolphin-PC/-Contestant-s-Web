@@ -6,25 +6,27 @@ const localizer = momentLocalizer(moment);
 
 export default class Curriculum_cal extends Component {
   state = {
-    events: [
-      {
-        start: moment().toDate(),
-        end: moment().add(1, 'days').toDate(),
-        title: 'Some title',
-      },
-    ],
+    events: this.props.events,
   };
+
+  Add = () => {
+    alert('Add');
+  };
+
   render() {
     return (
-      <Calendar
-        localizer={localizer}
-        defaultDate={new Date()}
-        defaultView='month'
-        events={this.state.events}
-        startAccessor='start'
-        endAccessor='end'
-        style={{ height: '100vh' }}
-      />
+      <div>
+        <Calendar
+          localizer={localizer}
+          defaultDate={new Date()}
+          defaultView='month'
+          events={this.state.events}
+          startAccessor='start'
+          endAccessor='end'
+          style={{ height: '100vh' }}
+        />
+        <button onClick={this.Add}>추가하기</button>
+      </div>
     );
   }
 }

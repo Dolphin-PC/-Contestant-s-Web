@@ -69,6 +69,7 @@ ReactDOM.render(
         <Route path='/rule' exact render={(props) => <Rule {...props} />} />
         <Route path='/idea' exact render={(props) => <Idea {...props} />} />
         <Route path='/day' exact render={(props) => <Day {...props} />} />
+        <Route path='/te' exact render={(props) => <Test {...props} />} />
         <Redirect to='/landing-page' />
       </Switch>
     </BrowserRouter>

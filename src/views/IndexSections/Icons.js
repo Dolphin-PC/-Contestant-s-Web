@@ -21,7 +21,7 @@ class Icons extends React.Component {
     return (
       <>
         <section className='section section-lg section-nucleo-icons pb-250'>
-          <Container backgroundColor='default'>
+          <Container>
             <Row className='justify-content-center'>
               <Col className='text-center' lg='8'>
                 <h2 className='display-3'>{this.props.title}</h2>
@@ -99,14 +99,14 @@ class Icons extends React.Component {
               <span className='blur-hidden h1 text-success'>
                 {this.props.hiddenDescription}
                 <br />
-                <desc
+                <p
                   style={{
                     backgroundColor: '#2DCF89',
                     color: 'white',
                   }}
                 >
                   {this.props.hiddenDescription1}
-                </desc>
+                </p>
                 <br />
                 {this.props.hiddenDescription2}
                 <br />

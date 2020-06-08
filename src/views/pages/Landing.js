@@ -68,7 +68,6 @@ class Landing extends Component {
     return (
       <div>
         <DemoNavbar />
-
         <Hero />
         <Carousel
           items={mainItems}
@@ -157,9 +156,7 @@ class Landing extends Component {
     );
   }
 }
-{
-  /* {getData} */
-}
+
 const mapStateToProps = ({ data }) => {
   return {
     data,

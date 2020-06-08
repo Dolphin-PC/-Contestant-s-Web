@@ -1,4 +1,4 @@
-import { todosRef, LandingRef } from '../config/firebase';
+import { todosRef, LandingRef, Firestore } from '../config/firebase';
 import { FETCH_TODOS, FETCH_LANDING } from './types';
 import firebase from 'firebase/app';
 
