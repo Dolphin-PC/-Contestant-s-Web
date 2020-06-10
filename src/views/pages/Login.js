@@ -63,20 +63,6 @@ class Login extends React.Component {
                       </div>
                       <div className='btn-wrapper text-center'>
                         <Button
-                          className='btn-neutral btn-icon'
-                          color='default'
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        >
-                          <span className='btn-inner--icon mr-1'>
-                            <img
-                              alt='...'
-                              src={require('assets/img/icons/common/github.svg')}
-                            />
-                          </span>
-                          <span className='btn-inner--text'>Github</span>
-                        </Button>
-                        <Button
                           className='btn-neutral btn-icon ml-1'
                           color='default'
                           onClick={signInWithGoogle}

@@ -52,12 +52,6 @@ class Landing extends Component {
   }
 
   render() {
-    // const { data } = this.props;
-    // const getData = _.map(data, (value, key) => {
-    //   console.log(value.title);
-    //   return value.title;
-    // });
-
     return (
       <div>
         <DemoNavbar />
@@ -69,6 +63,7 @@ class Landing extends Component {
           text1='춘천 유일의 공모전 연합동아리 입니다.
           ‘공모자들’에서는 경험이 없어도, 잘 하지 못해도 누구든 다양한
           사람들과 함께 공모전에 도전할 수 있습니다👍'
+          link='#'
         />
         <hr />
         <Container style={{ textAlign: 'center' }}>
@@ -133,15 +128,15 @@ class Landing extends Component {
               </Row>
             </Col>
           </Row>
-          <Icons
-            title={"'공모자들'의 활동"}
-            description={"'공모자들'의 시작부터 현재까지의 활동이에요."}
-            descriptionBottom='(2019년 2학기 ~ 현재)'
-            hiddenDescription='지금까지'
-            hiddenDescription1='+ 12'
-            hiddenDescription2='활동들을 진행했어요!'
-          />
         </Container>
+        <Icons
+          title={"'공모자들'의 활동"}
+          description={"'공모자들'의 시작부터 현재까지의 활동이에요."}
+          descriptionBottom='(2019년 2학기 ~ 현재)'
+          hiddenDescription='지금까지'
+          hiddenDescription1='+ 12'
+          hiddenDescription2='활동들을 진행했어요!'
+        />
         <hr />
         <Contact />
         <CardsFooter />

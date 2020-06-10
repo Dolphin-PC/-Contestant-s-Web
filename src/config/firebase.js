@@ -17,3 +17,4 @@ const databaseRef = firebase.database().ref();
 export const todosRef = databaseRef.child('todos');
 export const LandingRef = databaseRef.child('landing');
 export const teamList_Ref = databaseRef.child('teamList');
+export const curriculum_Ref = databaseRef.child('curriculum');

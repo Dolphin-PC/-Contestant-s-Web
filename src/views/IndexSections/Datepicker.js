@@ -1,23 +1,6 @@
-/*!
-
-=========================================================
-* Argon Design System React - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-design-system-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
+import React from 'react';
 // react plugin used to create datetimepicker
-import ReactDatetime from "react-datetime";
+import ReactDatetime from 'react-datetime';
 
 // reactstrap components
 import {
@@ -26,33 +9,33 @@ import {
   InputGroupText,
   InputGroup,
   Row,
-  Col
-} from "reactstrap";
+  Col,
+} from 'reactstrap';
 
 class Datepicker extends React.Component {
   state = {};
   handleReactDatetimeChange = (who, date) => {
     if (
       this.state.startDate &&
-      who === "endDate" &&
-      new Date(this.state.startDate._d + "") > new Date(date._d + "")
+      who === 'endDate' &&
+      new Date(this.state.startDate._d + '') > new Date(date._d + '')
     ) {
       this.setState({
         startDate: date,
-        endDate: date
+        endDate: date,
       });
     } else if (
       this.state.endDate &&
-      who === "startDate" &&
-      new Date(this.state.endDate._d + "") < new Date(date._d + "")
+      who === 'startDate' &&
+      new Date(this.state.endDate._d + '') < new Date(date._d + '')
     ) {
       this.setState({
         startDate: date,
-        endDate: date
+        endDate: date,
       });
     } else {
       this.setState({
-        [who]: date
+        [who]: date,
       });
     }
   };
@@ -61,77 +44,77 @@ class Datepicker extends React.Component {
   // start-date className which means that this day will only have left border radius
   // end-date className which means that this day will only have right border radius
   // this way, the selected dates will look nice and will only be rounded at the ends
-  getClassNameReactDatetimeDays = date => {
+  getClassNameReactDatetimeDays = (date) => {
     if (this.state.startDate && this.state.endDate) {
     }
     if (
       this.state.startDate &&
       this.state.endDate &&
-      this.state.startDate._d + "" !== this.state.endDate._d + ""
+      this.state.startDate._d + '' !== this.state.endDate._d + ''
     ) {
       if (
-        new Date(this.state.endDate._d + "") > new Date(date._d + "") &&
-        new Date(this.state.startDate._d + "") < new Date(date._d + "")
+        new Date(this.state.endDate._d + '') > new Date(date._d + '') &&
+        new Date(this.state.startDate._d + '') < new Date(date._d + '')
       ) {
-        return " middle-date";
+        return ' middle-date';
       }
-      if (this.state.endDate._d + "" === date._d + "") {
-        return " end-date";
+      if (this.state.endDate._d + '' === date._d + '') {
+        return ' end-date';
       }
-      if (this.state.startDate._d + "" === date._d + "") {
-        return " start-date";
+      if (this.state.startDate._d + '' === date._d + '') {
+        return ' start-date';
       }
     }
-    return "";
+    return '';
   };
   render() {
     return (
       <>
-        <h3 className="h4 text-success font-weight-bold mt-md mb-4">
+        <h3 className='h4 text-success font-weight-bold mt-md mb-4'>
           Datepicker
         </h3>
         <Row>
-          <Col md="4">
-            <small className="d-block text-uppercase font-weight-bold mb-3">
+          <Col md='4'>
+            <small className='d-block text-uppercase font-weight-bold mb-3'>
               Single date
             </small>
             <FormGroup>
               <InputGroup>
-                <InputGroupAddon addonType="prepend">
+                <InputGroupAddon addonType='prepend'>
                   <InputGroupText>
-                    <i className="ni ni-calendar-grid-58" />
+                    <i className='ni ni-calendar-grid-58' />
                   </InputGroupText>
                 </InputGroupAddon>
                 <ReactDatetime
                   inputProps={{
-                    placeholder: "Date Picker Here"
+                    placeholder: 'Date Picker Here',
                   }}
                   timeFormat={false}
                 />
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col className="mt-4 mt-md-0" md="8">
-            <small className="d-block text-uppercase font-weight-bold mb-3">
+          <Col className='mt-4 mt-md-0' md='8'>
+            <small className='d-block text-uppercase font-weight-bold mb-3'>
               Date range
             </small>
             <Row>
               <Col sm={6} xs={12}>
                 <FormGroup>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend">
+                    <InputGroupAddon addonType='prepend'>
                       <InputGroupText>
-                        <i className="ni ni-calendar-grid-58" />
+                        <i className='ni ni-calendar-grid-58' />
                       </InputGroupText>
                     </InputGroupAddon>
                     <ReactDatetime
                       inputProps={{
-                        placeholder: "Start Date"
+                        placeholder: 'Start Date',
                       }}
                       value={this.state.startDate}
                       timeFormat={false}
-                      onChange={e =>
-                        this.handleReactDatetimeChange("startDate", e)
+                      onChange={(e) =>
+                        this.handleReactDatetimeChange('startDate', e)
                       }
                       renderDay={(props, currentDate, selectedDate) => {
                         let classes = props.className;
@@ -151,20 +134,20 @@ class Datepicker extends React.Component {
               <Col sm={6} xs={12}>
                 <FormGroup>
                   <InputGroup>
-                    <InputGroupAddon addonType="prepend">
+                    <InputGroupAddon addonType='prepend'>
                       <InputGroupText>
-                        <i className="ni ni-calendar-grid-58" />
+                        <i className='ni ni-calendar-grid-58' />
                       </InputGroupText>
                     </InputGroupAddon>
                     <ReactDatetime
                       inputProps={{
-                        placeholder: "End Date"
+                        placeholder: 'End Date',
                       }}
-                      className="rdtPickerOnRight"
+                      className='rdtPickerOnRight'
                       value={this.state.endDate}
                       timeFormat={false}
-                      onChange={e =>
-                        this.handleReactDatetimeChange("endDate", e)
+                      onChange={(e) =>
+                        this.handleReactDatetimeChange('endDate', e)
                       }
                       renderDay={(props, currentDate, selectedDate) => {
                         let classes = props.className;

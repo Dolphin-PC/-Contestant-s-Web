@@ -18,7 +18,7 @@ class Carousel extends React.Component {
                 <Button
                   className='btn-blue mt-4'
                   color='default'
-                  href='https://demos.creative-tim.com/argon-design-system-react/#/documentation/alerts?ref=adsr-landing-page'
+                  href={this.props.link}
                 >
                   더 알아보기
                 </Button>
