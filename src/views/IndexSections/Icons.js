@@ -7,13 +7,9 @@ import landing_2 from '../../assets/img/Landing/landing_2.jpg';
 import landing_3 from '../../assets/img/Landing/landing_3.jpg';
 import landing_4 from '../../assets/img/Landing/landing_award_1.jpg';
 import landing_5 from '../../assets/img/Landing/landing_award_2.jpg';
-import landing_6 from '../../assets/img/Landing/landing_award_3.jpg';
 import landing_8 from '../../assets/img/Landing/landing_contest_1.jpg';
-import landing_7 from '../../assets/img/Landing/landing_contest_2.jpg';
-import landing_9 from '../../assets/img/Landing/landing_contest_3.jpg';
-import landing_10 from '../../assets/img/Landing/landing_friendly_1.jpg';
 import landing_11 from '../../assets/img/Landing/landing_friendly_2.jpg';
-import landing_12 from '../../assets/img/Landing/landing_friendly_3.jpg';
+
 import landing_13 from '../../assets/img/Landing/landing_friendly_4.jpg';
 
 class Icons extends React.Component {
@@ -99,14 +95,9 @@ class Icons extends React.Component {
               <span className='blur-hidden h1 text-success'>
                 {this.props.hiddenDescription}
                 <br />
-                <p
-                  style={{
-                    backgroundColor: '#2DCF89',
-                    color: 'white',
-                  }}
-                >
+                <span style={{ backgroundColor: '#2DCF89', color: 'white' }}>
                   {this.props.hiddenDescription1}
-                </p>
+                </span>
                 <br />
                 {this.props.hiddenDescription2}
                 <br />

@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // reactstrap components
-import { Button, Container, Row, Col, UncontrolledCarousel } from 'reactstrap';
+import { Container, Row, Col, UncontrolledCarousel } from 'reactstrap';
 
 const items = [
   {

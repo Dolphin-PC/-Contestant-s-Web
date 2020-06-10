@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Card, Badge, CardBody } from 'reactstrap';
+import { Col, Card, Badge, CardBody } from 'reactstrap';
 
 class TeamList extends Component {
+  TeamDetail(title) {
+    alert(title);
+  }
+
   render() {
+    const { title, description } = this.props;
     return (
       <>
         <Col lg='3'>
@@ -11,13 +16,18 @@ class TeamList extends Component {
               <div className='icon icon-shape icon-shape-primary rounded-circle mb-4'>
                 <i className='ni ni-notification-70' />
               </div>
-              <h6 className='text-primary text-uppercase'>
-                {this.props.title}
-              </h6>
-              <p className='description mt-3'>{this.props.description}</p>
+              <h6 className='text-primary text-uppercase'>{title}</h6>
+              <p className='description mt-3'>{description}</p>
               <div>
-                <Badge color='primary' pill className='mr-1'>
-                  참가
+                <Badge
+                  color='primary'
+                  pill
+                  className='mr-1'
+                  onClick={function () {
+                    alert(title);
+                  }}
+                >
+                  참가하기
                 </Badge>
               </div>
             </CardBody>

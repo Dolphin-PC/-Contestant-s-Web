@@ -4,22 +4,13 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Label,
   FormGroup,
   Form,
   Input,
-  FormText,
-  NavItem,
-  NavLink,
-  Nav,
-  Table,
-  TabContent,
-  TabPane,
   Container,
   Row,
   Col,
   UncontrolledTooltip,
-  UncontrolledCarousel,
 } from 'reactstrap';
 
 export default class Contact extends Component {

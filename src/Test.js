@@ -1,30 +1,22 @@
-import React, { Component } from 'react';
-import DemoNavbar from './components/Navbars/DemoNavbar';
+import React from 'react';
 
-import { FirebaseApp, todosRef } from './config/firebase';
+import { todosRef } from './config/firebase';
 
 class Test extends React.Component {
-  constructor() {
-    super();
-
-    this.app = FirebaseApp;
-    this.database = FirebaseApp.database().ref().child('speed');
-
-    this.state = {
-      speed: 10,
-    };
-  }
+  state = {
+    test: '',
+  };
 
   componentDidMount() {
-    this.database.on('value', (snap) => {
+    todosRef.on('value', (snap) => {
       this.setState({
-        speed: snap.val(),
+        test: snap.val(),
       });
     });
   }
 
   render() {
-    return <div>{this.state.speed}</div>;
+    return <div>{this.state.test}</div>;
   }
 }
 

@@ -1,23 +1,4 @@
 import React from 'react';
-// nodejs library that concatenates classes
-import classnames from 'classnames';
-
-// reactstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-} from 'reactstrap';
 
 // core components
 
@@ -32,6 +13,7 @@ class Idea extends React.Component {
     document.scrollingElement.scrollTop = 0;
   }
   render() {
+    const ready = true;
     return (
       <div>
         <DemoNavbar />
@@ -39,6 +21,7 @@ class Idea extends React.Component {
           title='아이디어 게시판'
           desc='아이디어가 있다면 자유롭게 작성해주세요!'
         />
+        <h1 style={{ textAlign: 'center' }}>😭작업 중에 있습니다😭</h1>
         <CardsFooter />
       </div>
     );

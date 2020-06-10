@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Badge, Container, Row, Col } from 'reactstrap';
-import Contact from './Contact';
 
 export default class MainContent extends Component {
   render() {

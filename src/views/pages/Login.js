@@ -25,7 +25,6 @@ import CardsFooter from 'components/Footers/CardsFooter.js';
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { FirebaseConfig } from '../../config/dev';
 import { FirebaseApp } from '../../config/firebase';
 import Landing from './Landing';
 
@@ -36,7 +35,7 @@ class Login extends React.Component {
     this.refs.main.scrollTop = 0;
   }
   render() {
-    const { user, signOut, signInWithGoogle } = this.props;
+    const { user, signInWithGoogle } = this.props;
     return user ? (
       <Landing user={user} />
     ) : (

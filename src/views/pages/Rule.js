@@ -1,24 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-// nodejs library that concatenates classes
-import classnames from 'classnames';
 
 // reactstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-} from 'reactstrap';
+import { Badge, Card, CardBody, Container, Row, Col } from 'reactstrap';
 
 // core components
 

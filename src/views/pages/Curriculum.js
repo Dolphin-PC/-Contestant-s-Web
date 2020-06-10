@@ -1,23 +1,8 @@
 import React from 'react';
 // nodejs library that concatenates classes
-import classnames from 'classnames';
 
 // reactstrap components
-import {
-  Badge,
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
-  Container,
-  Row,
-  Col,
-} from 'reactstrap';
+import { Container } from 'reactstrap';
 
 // core components
 
@@ -26,9 +11,6 @@ import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
 import Curriculum_cal from '../IndexSections/Curriculum_cal';
 import moment from 'moment';
-
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
 
 const events = [
   {

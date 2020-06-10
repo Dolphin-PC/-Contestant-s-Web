@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // reactstrap components
 import { Button, Container, Row, Col, UncontrolledCarousel } from 'reactstrap';

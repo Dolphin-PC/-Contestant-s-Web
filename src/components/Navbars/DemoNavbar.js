@@ -7,7 +7,6 @@ import {
   Button,
   UncontrolledCollapse,
   DropdownMenu,
-  DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
   Media,
@@ -26,7 +25,6 @@ import {
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { FirebaseConfig } from '../../config/dev';
 import { FirebaseApp } from '../../config/firebase';
 
 const Nav_Media = [
@@ -135,7 +133,7 @@ class DemoNavbar extends React.Component {
 
   render() {
     //firebase OAuth
-    const { user, signOut, signInWithGoogle } = this.props;
+    const { user, signOut } = this.props;
     return (
       <>
         <header className='header-global'>
@@ -184,7 +182,7 @@ class DemoNavbar extends React.Component {
                 <Nav className='navbar-nav-hover align-items-lg-center' navbar>
                   {Nav_Media.map((con, i) => {
                     return (
-                      <UncontrolledDropdown nav>
+                      <UncontrolledDropdown nav key={i}>
                         <DropdownToggle nav>
                           <i className='ni ni-ui-04 d-lg-none mr-1' />
                           <span className='nav-link-inner--text'>
@@ -196,6 +194,7 @@ class DemoNavbar extends React.Component {
                             {con.media.map((media_con, i) => {
                               return (
                                 <Media
+                                  key={i}
                                   className='d-flex align-items-center'
                                   to={media_con.to}
                                   tag={Link}

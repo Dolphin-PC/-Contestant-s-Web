@@ -1,29 +1,23 @@
 import React, { Component } from 'react';
-// nodejs library that concatenates classes
-import classnames from 'classnames';
 
 // reactstrap components
-import { Button, Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 // core components
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import CardsFooter from 'components/Footers/CardsFooter.js';
 
-// index page sections
-import Download from '../IndexSections/Download.js';
 import Hero from '../IndexSections/Hero';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { completeLanding } from '../../actions';
-import _ from 'lodash';
+
 import Carousel from '../../views/IndexSections/Carousel';
 import SubCarousel from 'views/IndexSections/SubCarousel.js';
 import ButtonPopover from '../../components/ButtonPopover';
 
 import Icons from '../IndexSections/Icons';
 
-import Suppoters from 'views/IndexSections/Suppoters';
 import Contact from 'views/IndexSections/Contact';
 
 const mainItems = [
@@ -58,12 +52,11 @@ class Landing extends Component {
   }
 
   render() {
-    const { user, signOut } = this.props;
-    const { data } = this.props;
-    const getData = _.map(data, (value, key) => {
-      console.log(value.title);
-      return value.title;
-    });
+    // const { data } = this.props;
+    // const getData = _.map(data, (value, key) => {
+    //   console.log(value.title);
+    //   return value.title;
+    // });
 
     return (
       <div>

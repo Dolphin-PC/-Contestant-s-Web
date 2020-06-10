@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 // reactstrap components
 import {
   Button,
-  Container,
-  Row,
-  Col,
   UncontrolledPopover,
   PopoverBody,
   PopoverHeader,

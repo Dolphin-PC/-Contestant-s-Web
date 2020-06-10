@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // reactstrap components
 import { Button, Container, Row, Col } from 'reactstrap';
-import { UncontrolledCarousel } from 'reactstrap';
 
 class Hero extends React.Component {
   render() {

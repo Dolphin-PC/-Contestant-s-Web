@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Button,
-  Col,
-  Row,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
+import { Container, Col, Row } from 'reactstrap';
 
 export default class Background extends Component {
   render() {

@@ -16,6 +16,4 @@ export const FirebaseApp = firebase.initializeApp(FirebaseConfig);
 const databaseRef = firebase.database().ref();
 export const todosRef = databaseRef.child('todos');
 export const LandingRef = databaseRef.child('landing');
-
-//AUTH
-const providers = { googleProvider: new firebase.auth.GoogleAuthProvider() };
+export const teamList_Ref = databaseRef.child('teamList');
