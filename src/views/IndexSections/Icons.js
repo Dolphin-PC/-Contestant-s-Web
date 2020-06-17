@@ -11,6 +11,7 @@ import landing_8 from '../../assets/img/Landing/landing_contest_1.jpg';
 import landing_11 from '../../assets/img/Landing/landing_friendly_2.jpg';
 
 import landing_13 from '../../assets/img/Landing/landing_friendly_4.jpg';
+import { Link } from 'react-router-dom';
 
 class Icons extends React.Component {
   render() {
@@ -101,9 +102,11 @@ class Icons extends React.Component {
                 <br />
                 {this.props.hiddenDescription2}
                 <br />
-                <Button className='btn-blue mt-12' color='warning' href='#'>
-                  더 알아보기
-                </Button>
+                <Link to={this.props.to}>
+                  <Button className='btn-blue mt-12' color='warning'>
+                    더 알아보기
+                  </Button>
+                </Link>
               </span>
             </div>
           </Container>

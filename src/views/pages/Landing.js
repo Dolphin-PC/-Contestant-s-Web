@@ -63,7 +63,7 @@ class Landing extends Component {
           text1='춘천 유일의 공모전 연합동아리 입니다.
           ‘공모자들’에서는 경험이 없어도, 잘 하지 못해도 누구든 다양한
           사람들과 함께 공모전에 도전할 수 있습니다👍'
-          link='#'
+          link='activity'
         />
         <hr />
         <Container style={{ textAlign: 'center' }}>
@@ -136,6 +136,7 @@ class Landing extends Component {
           hiddenDescription='지금까지'
           hiddenDescription1='+ 12'
           hiddenDescription2='활동들을 진행했어요!'
+          to='activity'
         />
         <hr />
         <Contact />

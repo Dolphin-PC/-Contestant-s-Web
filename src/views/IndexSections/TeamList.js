@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Col, Card, Badge, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class TeamList extends Component {
-  TeamDetail(title) {
-    alert(title);
-  }
-
   render() {
     const { title, description } = this.props;
     return (
@@ -23,9 +20,7 @@ class TeamList extends Component {
                   color='primary'
                   pill
                   className='mr-1'
-                  onClick={function () {
-                    alert(title);
-                  }}
+                  onClick={this.props.clickHandler}
                 >
                   참가하기
                 </Badge>

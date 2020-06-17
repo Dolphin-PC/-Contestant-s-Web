@@ -35,6 +35,9 @@ class Day extends React.Component {
     plainTabs: Active_Tabs,
     maxTabs: 2,
     TeamInfo: [],
+    isLoading: false,
+    isDetail: false,
+    detailTitle: '',
   };
 
   componentDidMount() {
@@ -98,6 +101,9 @@ class Day extends React.Component {
           }),
         });
       }
+      this.setState({
+        isLoading: true,
+      });
       console.log(Team);
     });
   }
@@ -108,9 +114,19 @@ class Day extends React.Component {
       [state]: index,
     });
   };
+  OnDetail = (title) => {
+    alert(title);
+    this.setState({
+      isDetail: true,
+      detailTitle: title,
+    });
+  };
+  OffDetail = () => {
+    this.setState({});
+  };
 
   render() {
-    const ready = true;
+    const ready = false;
 
     return (
       <div>
@@ -250,16 +266,23 @@ class Day extends React.Component {
                             <Col lg='12'>
                               <Row className='row-grid'>
                                 {/* 팀 목록 리스트 뿌려주기 */}
-                                {this.state.TeamInfo.map((con, i) => {
-                                  return (
-                                    <TeamList
-                                      key={i}
-                                      id={con.id}
-                                      title={con.title}
-                                      description={con.subtitle}
-                                    />
-                                  );
-                                })}
+                                {this.state.isLoading
+                                  ? this.state.isDetail
+                                    ? this.state.detailTitle
+                                    : this.state.TeamInfo.map((con, i) => {
+                                        return (
+                                          <TeamList
+                                            clickHandler={() =>
+                                              this.OnDetail(con.title)
+                                            }
+                                            key={i}
+                                            id={con.id}
+                                            title={con.title}
+                                            description={con.subtitle}
+                                          />
+                                        );
+                                      })
+                                  : '로딩 중입니다...'}
                               </Row>
                             </Col>
                           </Row>
