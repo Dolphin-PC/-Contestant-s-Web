@@ -26,6 +26,7 @@ import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
 import TeamList from '../IndexSections/TeamList';
 import RowTabs from '../../components/Contents/RowTabs';
+import TeamMember from '../../components/Contents/TeamMember';
 
 const Active_Tabs = 1;
 
@@ -39,7 +40,7 @@ class Day extends React.Component {
     isLoading: false,
     isDetail: false,
     detailTitle: '',
-    team_member: [],
+    TeamMate: [],
   };
 
   componentDidMount() {
@@ -107,6 +108,7 @@ class Day extends React.Component {
         isLoading: true,
       });
       console.log(Team);
+      // console.log(this.state.TeamInfo.mate);
     });
   }
 
@@ -124,25 +126,16 @@ class Day extends React.Component {
       detailTitle: title,
     });
 
-    teamList_Ref.child('/' + title + '/team_member').on('value', (snap) => {
-      var data = snap.val();
-      for (const i in data) {
-        console.log(data[i]);
-        const { team_member } = this.state;
-        this.setState({
-          team_member: team_member.concat({
-            name: data[i],
-          }),
-        });
-      }
-    });
+    // this.ReadDetailTeam(title);
   };
   OffDetail = () => {
+    console.log(this.state.team_member);
     this.setState({
       isDetail: false,
       detailTitle: '',
-      team_member: [],
     });
+
+    // console.log(this.state.TeamMate.mate);
   };
 
   render() {
@@ -303,17 +296,9 @@ class Day extends React.Component {
                                     <Col>
                                       <h1>{this.state.detailTitle}</h1>
 
-                                      {this.state.team_member.map((con, i) => {
-                                        return (
-                                          <Badge
-                                            color='primary'
-                                            pill
-                                            className='mr-1'
-                                          >
-                                            {con.name}
-                                          </Badge>
-                                        );
-                                      })}
+                                      <TeamMember
+                                        detailTitle={this.state.detailTitle}
+                                      />
 
                                       {/* 목록 */}
                                       <RowTabs />
