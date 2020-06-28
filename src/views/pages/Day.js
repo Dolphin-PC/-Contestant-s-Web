@@ -17,14 +17,15 @@ import {
   Row,
   Button,
   Modal,
+  Badge,
 } from 'reactstrap';
-
 // core components
 
 import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
 import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
 import TeamList from '../IndexSections/TeamList';
+import RowTabs from '../../components/Contents/RowTabs';
 
 const Active_Tabs = 1;
 
@@ -38,6 +39,7 @@ class Day extends React.Component {
     isLoading: false,
     isDetail: false,
     detailTitle: '',
+    team_member: [],
   };
 
   componentDidMount() {
@@ -114,15 +116,33 @@ class Day extends React.Component {
       [state]: index,
     });
   };
+
   OnDetail = (title) => {
-    alert(title);
+    // alert(title);
     this.setState({
       isDetail: true,
       detailTitle: title,
     });
+
+    teamList_Ref.child('/' + title + '/team_member').on('value', (snap) => {
+      var data = snap.val();
+      for (const i in data) {
+        console.log(data[i]);
+        const { team_member } = this.state;
+        this.setState({
+          team_member: team_member.concat({
+            name: data[i],
+          }),
+        });
+      }
+    });
   };
   OffDetail = () => {
-    this.setState({});
+    this.setState({
+      isDetail: false,
+      detailTitle: '',
+      team_member: [],
+    });
   };
 
   render() {
@@ -200,15 +220,27 @@ class Day extends React.Component {
                     <TabContent activeTab={'plainTabs' + this.state.plainTabs}>
                       <TabPane tabId='plainTabs1'>
                         <Container>
-                          <Button
-                            block
-                            className='mb-3'
-                            color='primary'
-                            type='button'
-                            onClick={() => this.toggleModal('defaultModal')}
-                          >
-                            팀 추가하기
-                          </Button>
+                          {this.state.isDetail ? (
+                            <Button
+                              block
+                              className='mb-3'
+                              color='warning'
+                              type='button'
+                              onClick={() => this.OffDetail()}
+                            >
+                              #{this.state.detailTitle}
+                            </Button>
+                          ) : (
+                            <Button
+                              block
+                              className='mb-3'
+                              color='primary'
+                              type='button'
+                              onClick={() => this.toggleModal('defaultModal')}
+                            >
+                              팀 추가하기
+                            </Button>
+                          )}
                           <Modal
                             className='modal-dialog-centered'
                             isOpen={this.state.defaultModal}
@@ -266,23 +298,44 @@ class Day extends React.Component {
                             <Col lg='12'>
                               <Row className='row-grid'>
                                 {/* 팀 목록 리스트 뿌려주기 */}
-                                {this.state.isLoading
-                                  ? this.state.isDetail
-                                    ? this.state.detailTitle
-                                    : this.state.TeamInfo.map((con, i) => {
+                                {this.state.isLoading ? (
+                                  this.state.isDetail ? (
+                                    <Col>
+                                      <h1>{this.state.detailTitle}</h1>
+
+                                      {this.state.team_member.map((con, i) => {
                                         return (
-                                          <TeamList
-                                            clickHandler={() =>
-                                              this.OnDetail(con.title)
-                                            }
-                                            key={i}
-                                            id={con.id}
-                                            title={con.title}
-                                            description={con.subtitle}
-                                          />
+                                          <Badge
+                                            color='primary'
+                                            pill
+                                            className='mr-1'
+                                          >
+                                            {con.name}
+                                          </Badge>
                                         );
-                                      })
-                                  : '로딩 중입니다...'}
+                                      })}
+
+                                      {/* 목록 */}
+                                      <RowTabs />
+                                    </Col>
+                                  ) : (
+                                    this.state.TeamInfo.map((con, i) => {
+                                      return (
+                                        <TeamList
+                                          clickHandler={() =>
+                                            this.OnDetail(con.title)
+                                          }
+                                          key={i}
+                                          id={con.id}
+                                          title={con.title}
+                                          description={con.subtitle}
+                                        />
+                                      );
+                                    })
+                                  )
+                                ) : (
+                                  '로딩 중입니다...'
+                                )}
                               </Row>
                             </Col>
                           </Row>
