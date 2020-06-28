@@ -23,6 +23,56 @@ class RowTabs extends React.Component {
   state = {
     iconTabs: 1,
     plainTabs: 1,
+    test_Row: [
+      {
+        tabs: 1,
+        tabsTitle: 'test1',
+        tabssubTitle: 'test1Sub',
+        opinion: 'test1opinion',
+        feedback: 'test1feedback',
+        etc: 'test1etc',
+      },
+      {
+        tabs: 2,
+        tabsTitle: 'test2',
+        tabssubTitle: 'test2Sub',
+        opinion: 'test2opinion',
+        feedback: 'test2feedback',
+        etc: 'test2etc',
+      },
+      {
+        tabs: 3,
+        tabsTitle: 'test3',
+        tabssubTitle: 'test3Sub',
+        opinion: 'test3opinion',
+        feedback: 'test3feedback',
+        etc: 'test3etc',
+      },
+      {
+        tabs: 4,
+        tabsTitle: 'test4',
+        tabssubTitle: 'test4Sub',
+        opinion: 'test4opinion',
+        feedback: 'test4feedback',
+        etc: 'test4etc',
+      },
+      {
+        tabs: 5,
+        tabsTitle: 'test5',
+        tabssubTitle: 'test5Sub',
+        opinion: 'test5opinion',
+        feedback: 'test5feedback',
+        etc: 'test5etc',
+      },
+      {
+        tabs: 6,
+        tabsTitle: 'test6',
+        tabssubTitle: 'test6Sub',
+        opinion: 'test6opinion',
+        feedback: 'test6feedback',
+        etc: 'test6etc',
+      },
+    ],
   };
   toggleNavs = (e, state, index) => {
     e.preventDefault();
@@ -53,72 +103,44 @@ class RowTabs extends React.Component {
                 pills
                 role='tablist'
               >
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.plainTabs === 1}
-                    className={classnames('mb-sm-3 mb-md-0', {
-                      active: this.state.plainTabs === 1,
-                    })}
-                    onClick={(e) => this.toggleNavs(e, 'plainTabs', 1)}
-                    href='#pablo'
-                    role='tab'
-                  >
-                    Test1
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.plainTabs === 2}
-                    className={classnames('mb-sm-3 mb-md-0', {
-                      active: this.state.plainTabs === 2,
-                    })}
-                    onClick={(e) => this.toggleNavs(e, 'plainTabs', 2)}
-                    href='#pablo'
-                    role='tab'
-                  >
-                    Test2
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    aria-selected={this.state.plainTabs === 3}
-                    className={classnames('mb-sm-3 mb-md-0', {
-                      active: this.state.plainTabs === 3,
-                    })}
-                    onClick={(e) => this.toggleNavs(e, 'plainTabs', 3)}
-                    href='#pablo'
-                    role='tab'
-                  >
-                    Test3
-                  </NavLink>
-                </NavItem>
+                {this.state.test_Row.map((con, i) => {
+                  return (
+                    <NavItem>
+                      <NavLink
+                        aria-selected={this.state.plainTabs === con.tabs}
+                        className={classnames('mb-sm-3 mb-md-0', {
+                          active: this.state.plainTabs === con.tabs,
+                        })}
+                        onClick={(e) =>
+                          this.toggleNavs(e, 'plainTabs', con.tabs)
+                        }
+                        href='#pablo'
+                        role='tab'
+                      >
+                        {con.tabsTitle}
+                      </NavLink>
+                    </NavItem>
+                  );
+                })}
               </Nav>
             </Col>
             <Col lg='9'>
               <Card className='shadow'>
                 <CardBody>
-                  <TabContent activeTab={'plainTabs' + this.state.plainTabs}>
-                    <TabPane tabId='plainTabs1'>
-                      <ColTabs
-                        title='ColTabs_Title1'
-                        subtitle='ColTabs_SubTitle'
-                      />
-                      ;
-                    </TabPane>
-                    <TabPane tabId='plainTabs2'>
-                      <ColTabs
-                        title='ColTabs_Title2'
-                        subtitle='ColTabs_SubTitle'
-                      />
-                      ;
-                    </TabPane>
-                    <TabPane tabId='plainTabs3'>
-                      <ColTabs
-                        title='ColTabs_Title3'
-                        subtitle='ColTabs_SubTitle'
-                      />
-                      ;
-                    </TabPane>
+                  <TabContent activeTab={this.state.plainTabs}>
+                    {this.state.test_Row.map((con, i) => {
+                      return (
+                        <TabPane tabId={con.tabs}>
+                          <ColTabs
+                            title={con.tabsTitle}
+                            subtitle={con.tabssubTitle}
+                            opinion={con.opinion}
+                            feedback={con.feedback}
+                            etc={con.etc}
+                          />
+                        </TabPane>
+                      );
+                    })}
                   </TabContent>
                 </CardBody>
               </Card>

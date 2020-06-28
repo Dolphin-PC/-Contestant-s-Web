@@ -20,9 +20,18 @@ class TeamList extends Component {
                   color='primary'
                   pill
                   className='mr-1'
-                  onClick={this.props.clickHandler}
+                  onClick={this.props.JoinClickHandler}
                 >
                   참가하기
+                </Badge>
+                <br></br>
+                <Badge
+                  color='warning'
+                  pill
+                  className='mr-1'
+                  onClick={this.props.DeleteClickHandler}
+                >
+                  삭제하기
                 </Badge>
               </div>
             </CardBody>

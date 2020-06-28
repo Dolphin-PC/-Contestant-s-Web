@@ -59,7 +59,7 @@ class ColTabs extends React.Component {
                     href='#pablo'
                     role='tab'
                   >
-                    Test1
+                    회의내용
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -72,7 +72,7 @@ class ColTabs extends React.Component {
                     href='#pablo'
                     role='tab'
                   >
-                    Test2
+                    피드백
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -85,7 +85,7 @@ class ColTabs extends React.Component {
                     href='#pablo'
                     role='tab'
                   >
-                    Test3
+                    기타
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -94,35 +94,13 @@ class ColTabs extends React.Component {
               <CardBody>
                 <TabContent activeTab={'plainTabs' + this.state.plainTabs}>
                   <TabPane tabId='plainTabs1'>
-                    <p className='description'>
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse. Mustache cliche tempor, williamsburg carles vegan
-                      helvetica. Reprehenderit butcher retro keffiyeh
-                      dreamcatcher synth.
-                    </p>
-                    <p className='description'>
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse.
-                    </p>
+                    <p className='description'>{this.props.opinion}</p>
                   </TabPane>
                   <TabPane tabId='plainTabs2'>
-                    <p className='description'>
-                      Cosby sweater eu banh mi, qui irure terry richardson ex
-                      squid. Aliquip placeat salvia cillum iphone. Seitan
-                      aliquip quis cardigan american apparel, butcher voluptate
-                      nisi qui.
-                    </p>
+                    <p className='description'>{this.props.feedback}</p>
                   </TabPane>
                   <TabPane tabId='plainTabs3'>
-                    <p className='description'>
-                      Raw denim you probably haven't heard of them jean shorts
-                      Austin. Nesciunt tofu stumptown aliqua, retro synth master
-                      cleanse. Mustache cliche tempor, williamsburg carles vegan
-                      helvetica. Reprehenderit butcher retro keffiyeh
-                      dreamcatcher synth.
-                    </p>
+                    <p className='description'>{this.props.etc}</p>
                   </TabPane>
                 </TabContent>
               </CardBody>

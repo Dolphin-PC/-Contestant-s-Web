@@ -138,6 +138,11 @@ class Day extends React.Component {
     // console.log(this.state.TeamMate.mate);
   };
 
+  DeleteClickHandler = (title) => {
+    //function 처리(예정)
+    alert(`Delete Team : ${title}`);
+  };
+
   render() {
     const ready = false;
 
@@ -307,8 +312,11 @@ class Day extends React.Component {
                                     this.state.TeamInfo.map((con, i) => {
                                       return (
                                         <TeamList
-                                          clickHandler={() =>
+                                          JoinClickHandler={() =>
                                             this.OnDetail(con.title)
+                                          }
+                                          DeleteClickHandler={() =>
+                                            this.DeleteClickHandler(con.title)
                                           }
                                           key={i}
                                           id={con.id}
