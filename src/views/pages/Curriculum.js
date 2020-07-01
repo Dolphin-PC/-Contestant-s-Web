@@ -26,13 +26,7 @@ class Curriculum extends React.Component {
   state = {
     title: '2020커리큘럼',
     description: "'공모자들'의 2020년 계획표입니다.",
-    plans: [
-      {
-        start: '2020/06/19',
-        end: '2020/06/25',
-        title: 'test',
-      },
-    ],
+    plans: [],
   };
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -53,12 +47,9 @@ class Curriculum extends React.Component {
           }),
         });
       }
-      console.log(this.state.plans);
     });
   }
   render() {
-    console.log(this.state.plans);
-    console.log(events);
     return (
       <div>
         <DemoNavbar />

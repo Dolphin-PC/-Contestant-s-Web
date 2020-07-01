@@ -17,19 +17,10 @@ export default class Curriculum_cal extends Component {
 
   ReadFirebaseforPlan() {
     curriculum_Ref.on('value', (snap) => {
-      var plan = snap.val();
-      for (const i in plan) {
-        const { plans } = this.state;
-        this.setState({
-          plans: plans.concat({
-            start: plan[i].start_date,
-            end: plan[i].end_date,
-            title: plan[i].contest_name,
-          }),
-        });
-      }
-      console.log(this.state.plans);
-      console.log(this.state.events);
+      console.log(snap.val());
+      this.setState({
+        plans: snap.val(),
+      });
     });
   }
   eventStyleGetter(event, start, end, isSelected) {
@@ -39,7 +30,7 @@ export default class Curriculum_cal extends Component {
       backgroundColor: backgroundColor,
       borderRadius: '0px',
       opacity: 0.8,
-      color: 'black',
+      color: 'red',
       border: '0px',
       display: 'block',
     };
@@ -54,7 +45,7 @@ export default class Curriculum_cal extends Component {
           localizer={localizer}
           defaultDate={new Date()}
           defaultView='month'
-          events={this.state.events}
+          events={this.state.plans}
           startAccessor='start'
           endAccessor='end'
           style={{ height: '100vh' }}

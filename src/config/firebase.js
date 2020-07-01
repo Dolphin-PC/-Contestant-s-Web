@@ -14,6 +14,7 @@ export const FirebaseApp = firebase.initializeApp(FirebaseConfig);
 
 // Realtime DB
 const databaseRef = firebase.database().ref();
+export const dbRef = databaseRef;
 export const todosRef = databaseRef.child('todos');
 export const LandingRef = databaseRef.child('landing');
 export const teamList_Ref = databaseRef.child('teamList');

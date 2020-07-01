@@ -31,6 +31,24 @@ import TeamMember from '../../components/Contents/TeamMember';
 const Active_Tabs = 1;
 
 class Day extends React.Component {
+  day = [
+    {
+      tabs: 1,
+      tabsTitle: 'test1props',
+      tabssubTitle: 'test1Subprops',
+      opinion: 'test1opinionprops',
+      feedback: 'test1feedbackprops',
+      etc: 'test1etcprops',
+    },
+    {
+      tabs: 2,
+      tabsTitle: 'test2props',
+      tabssubTitle: 'test2Subprops',
+      opinion: 'test2opinionprops',
+      feedback: 'test2feedbackprops',
+      etc: 'test2etcprops',
+    },
+  ];
   state = {
     value: '',
     iconTabs: Active_Tabs,
@@ -41,7 +59,17 @@ class Day extends React.Component {
     isDetail: false,
     detailTitle: '',
     TeamMate: [],
+    Day_Data: [],
   };
+
+  Read_Day_Data(title) {
+    teamList_Ref.child('/' + title + '/teamDay').on('value', (snap) => {
+      console.log(snap.val());
+      this.setState({
+        Day_Data: snap.val(),
+      });
+    });
+  }
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -126,6 +154,8 @@ class Day extends React.Component {
       detailTitle: title,
     });
 
+    this.Read_Day_Data(title);
+
     // this.ReadDetailTeam(title);
   };
   OffDetail = () => {
@@ -140,7 +170,7 @@ class Day extends React.Component {
 
   DeleteClickHandler = (title) => {
     //function 처리(예정)
-    alert(`Delete Team : ${title}`);
+    TODO: alert(`Delete Team : ${title}`);
   };
 
   render() {
@@ -305,8 +335,13 @@ class Day extends React.Component {
                                         detailTitle={this.state.detailTitle}
                                       />
 
-                                      {/* 목록 */}
-                                      <RowTabs />
+                                      {this.state.Day_Data ? (
+                                        <RowTabs
+                                          day_data={this.state.Day_Data}
+                                        />
+                                      ) : (
+                                        '아직 회의록이 없습니다.'
+                                      )}
                                     </Col>
                                   ) : (
                                     this.state.TeamInfo.map((con, i) => {

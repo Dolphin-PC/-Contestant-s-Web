@@ -97,7 +97,7 @@ class Icons extends React.Component {
                 {this.props.hiddenDescription}
                 <br />
                 <span style={{ backgroundColor: '#2DCF89', color: 'white' }}>
-                  {this.props.hiddenDescription1}
+                  + {this.props.hiddenDescription1}
                 </span>
                 <br />
                 {this.props.hiddenDescription2}

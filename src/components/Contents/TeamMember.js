@@ -24,13 +24,15 @@ export class TeamMember extends Component {
       <div>
         {/* {this.TeamName} */}
 
-        {this.state.TeamMate.map((con, i) => {
-          return (
-            <Badge color='primary' pill className='mr-1' key={i}>
-              {con.memberName}
-            </Badge>
-          );
-        })}
+        {this.state.TeamMate
+          ? this.state.TeamMate.map((con, i) => {
+              return (
+                <Badge color='primary' pill className='mr-1' key={i}>
+                  {con.memberName}
+                </Badge>
+              );
+            })
+          : '아직 팀멤버가 없습니다.'}
         {/* {this.state.Badge} */}
       </div>
     );

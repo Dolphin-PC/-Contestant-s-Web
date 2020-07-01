@@ -103,7 +103,7 @@ class RowTabs extends React.Component {
                 pills
                 role='tablist'
               >
-                {this.state.test_Row.map((con, i) => {
+                {this.props.day_data.map((con, i) => {
                   return (
                     <NavItem>
                       <NavLink
@@ -128,7 +128,7 @@ class RowTabs extends React.Component {
               <Card className='shadow'>
                 <CardBody>
                   <TabContent activeTab={this.state.plainTabs}>
-                    {this.state.test_Row.map((con, i) => {
+                    {this.props.day_data.map((con, i) => {
                       return (
                         <TabPane tabId={con.tabs}>
                           <ColTabs

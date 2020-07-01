@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { dbRef } from '../../config/firebase';
 
 // reactstrap components
 import { Container, Row, Col } from 'reactstrap';
@@ -43,12 +44,24 @@ const friendlyItems = [
 ];
 
 class Landing extends Component {
+  state = {
+    Activity: 0,
+  };
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+    this.ReadActivity();
   }
   componentWillMount() {
     this.props.fetchLanding();
+  }
+
+  ReadActivity() {
+    dbRef.child('/landing-page/activity').on('value', (snap) => {
+      this.setState({
+        Activity: snap.val(),
+      });
+    });
   }
 
   render() {
@@ -134,7 +147,7 @@ class Landing extends Component {
           description={"'공모자들'의 시작부터 현재까지의 활동이에요."}
           descriptionBottom='(2019년 2학기 ~ 현재)'
           hiddenDescription='지금까지'
-          hiddenDescription1='+ 12'
+          hiddenDescription1={this.state.Activity}
           hiddenDescription2='활동들을 진행했어요!'
           to='activity'
         />
