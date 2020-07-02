@@ -1,7 +1,7 @@
 import React from 'react';
 // nodejs library that concatenates classes
 import classnames from 'classnames';
-import { teamList_Ref } from '../../config/firebase';
+import { dbRef, teamList_Ref } from '../../config/firebase';
 
 // reactstrap components
 import {
@@ -60,10 +60,12 @@ class Day extends React.Component {
     detailTitle: '',
     TeamMate: [],
     Day_Data: [],
+    teamIndex: 0,
+    test: ['qwe', 'qwer', 'qwert', 'qwerty'],
   };
 
   Read_Day_Data(title) {
-    teamList_Ref.child('/' + title + '/teamDay').on('value', (snap) => {
+    teamList_Ref.child('/2020-1/' + title + '/teamDay').on('value', (snap) => {
       console.log(snap.val());
       this.setState({
         Day_Data: snap.val(),
@@ -71,10 +73,33 @@ class Day extends React.Component {
     });
   }
 
+  Read_Team_Member(title) {
+    teamList_Ref
+      .child('/2020-1/' + title + '/team_member')
+      .on('value', (snap) => {
+        const Member = snap.val();
+        console.log(snap.val());
+
+        for (const i in Member) {
+          console.log(i);
+          this.setState({
+            TeamMate: this.state.TeamMate.concat({
+              memberName: i,
+            }),
+          });
+        }
+      });
+
+    this.setState({
+      isLoading: true,
+    });
+  }
+
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.ReadFirebaseforTeam();
+    // this.Read_Team_Member();
   }
   toggleModal = (state) => {
     this.setState({
@@ -85,58 +110,66 @@ class Day extends React.Component {
   handleChange = (event) => {
     this.setState({ value: event.target.value });
   };
-  handleSubmit = (event) => {
+
+  TeamHandleSubmit = (event) => {
     if (this.state.value === '') {
       alert('팀명을 입력해주세요.');
+      return;
+    }
+    this.CreateTeam(this.state.value);
+  };
+
+  MemberHandleSubmit = (event) => {
+    if (this.state.value === '') {
+      alert('팀원을 입력해주세요.');
       event.preventDefault();
       return;
     }
-    this.UpdateTeamtoFirebase(this.state.value);
     event.preventDefault();
+    this.AddTeamMember(this.state.value);
   };
-  UpdateTeamtoFirebase(value) {
-    const { TeamInfo } = this.state;
 
-    console.log(value);
-    for (const i in this.state.TeamInfo) {
-      // console.log(this.state.TeamInfo[i].title);
-      if (value === this.state.TeamInfo[i].title) {
-        alert('중복된 팀명입니다.');
-        return;
+  AddTeamMember = (Name) => {
+    const { detailTitle } = this.state;
+    alert(`[${Name}] 님을 추가합니다.`);
+
+    teamList_Ref.child('/2020-1/' + detailTitle + '/team_member/' + Name).set(
+      {
+        memberName: Name,
+      },
+      function () {
+        alert('complete');
       }
-    }
-    this.setState({
-      value: '',
-      TeamInfo: TeamInfo.concat({
-        id: this.state.value,
-        title: this.state.value,
-        subtitle: '',
-      }),
-    });
-    teamList_Ref.child('/' + value).set({
+    );
+  };
+
+  AddMeetingLog = () => {
+    alert(`새로운 회의록을 추가합니다.`);
+  };
+
+  CreateTeam(value) {
+    console.log(value);
+    teamList_Ref.child('/2020-1/' + value).set({
       title: value,
     });
   }
 
   ReadFirebaseforTeam() {
-    teamList_Ref.on('value', (snap) => {
-      var Team = snap.val();
-      // for (const i in Team) {
-      //   console.log(Team[i].title);
-      // }
+    teamList_Ref.child('/2020-1/').on('value', (snap) => {
+      const Team = snap.val();
+      console.log(Team);
+
       for (const i in Team) {
-        const { TeamInfo } = this.state;
         this.setState({
-          TeamInfo: TeamInfo.concat({
-            title: Team[i].title,
+          TeamInfo: this.state.TeamInfo.concat({
+            title: i,
           }),
         });
       }
-      this.setState({
-        isLoading: true,
-      });
-      console.log(Team);
-      // console.log(this.state.TeamInfo.mate);
+    });
+
+    this.setState({
+      isLoading: true,
     });
   }
 
@@ -155,22 +188,22 @@ class Day extends React.Component {
     });
 
     this.Read_Day_Data(title);
-
-    // this.ReadDetailTeam(title);
+    this.Read_Team_Member(title);
   };
+
   OffDetail = () => {
     console.log(this.state.team_member);
     this.setState({
       isDetail: false,
       detailTitle: '',
+      TeamMate: [],
     });
-
-    // console.log(this.state.TeamMate.mate);
   };
 
-  DeleteClickHandler = (title) => {
-    //function 처리(예정)
-    TODO: alert(`Delete Team : ${title}`);
+  DeleteClickHandler = (index, title) => {
+    alert(`[${title}]팀을 삭제합니다.`);
+    window.location.reload();
+    teamList_Ref.child('/2020-1/' + title).remove();
   };
 
   render() {
@@ -249,15 +282,100 @@ class Day extends React.Component {
                       <TabPane tabId='plainTabs1'>
                         <Container>
                           {this.state.isDetail ? (
-                            <Button
-                              block
-                              className='mb-3'
-                              color='warning'
-                              type='button'
-                              onClick={() => this.OffDetail()}
-                            >
-                              #{this.state.detailTitle}
-                            </Button>
+                            <Row>
+                              <Col lg='2'>
+                                <Button
+                                  block
+                                  color='primary'
+                                  type='button'
+                                  onClick={() => this.OffDetail()}
+                                >
+                                  팀 목록으로
+                                </Button>
+                              </Col>
+                              <Col lg='2'>
+                                <Button
+                                  block
+                                  color='success'
+                                  type='button'
+                                  onClick={() =>
+                                    this.toggleModal('memberModal')
+                                  }
+                                >
+                                  팀원추가
+                                </Button>
+                                <Modal
+                                  className='modal-dialog-centered'
+                                  isOpen={this.state.memberModal}
+                                  toggle={() => this.toggleModal('memberModal')}
+                                >
+                                  <div className='modal-header'>
+                                    <h6
+                                      className='modal-title'
+                                      id='modal-title-default'
+                                    >
+                                      신규 팀원 추가
+                                    </h6>
+                                    <button
+                                      aria-label='Close'
+                                      className='close'
+                                      data-dismiss='modal'
+                                      type='button'
+                                      onClick={() =>
+                                        this.toggleModal('memberModal')
+                                      }
+                                    >
+                                      <span aria-hidden={true}>×</span>
+                                    </button>
+                                  </div>
+                                  <form onSubmit={this.MemberHandleSubmit}>
+                                    <div className='modal-body'>
+                                      <input
+                                        type='text'
+                                        onChange={this.handleChange}
+                                      ></input>
+                                    </div>
+                                    <div className='modal-footer'>
+                                      <Button
+                                        color='primary'
+                                        type='submit'
+                                        onClick={() =>
+                                          this.toggleModal('memberModal')
+                                        }
+                                      >
+                                        팀원 추가
+                                      </Button>
+                                      <Button
+                                        className='ml-auto'
+                                        color='link'
+                                        data-dismiss='modal'
+                                        type='button'
+                                        onClick={() =>
+                                          this.toggleModal('memberModal')
+                                        }
+                                      >
+                                        취소
+                                      </Button>
+                                    </div>
+                                  </form>
+                                </Modal>
+                              </Col>
+                              <Col lg='2'>
+                                <Button
+                                  block
+                                  color='info'
+                                  type='button'
+                                  onClick={() => this.AddMeetingLog()}
+                                >
+                                  회의록추가
+                                </Button>
+                              </Col>
+                              <Col lg='6'>
+                                <Button block color='warning'>
+                                  #{this.state.detailTitle}
+                                </Button>
+                              </Col>
+                            </Row>
                           ) : (
                             <Button
                               block
@@ -291,7 +409,7 @@ class Day extends React.Component {
                                 <span aria-hidden={true}>×</span>
                               </button>
                             </div>
-                            <form onSubmit={this.handleSubmit}>
+                            <form onSubmit={this.TeamHandleSubmit}>
                               <div className='modal-body'>
                                 <input
                                   type='text'
@@ -331,9 +449,12 @@ class Day extends React.Component {
                                     <Col>
                                       <h1>{this.state.detailTitle}</h1>
 
-                                      <TeamMember
+                                      {/* <TeamMember
                                         detailTitle={this.state.detailTitle}
-                                      />
+                                      /> */}
+                                      {/* {this.state.TeamMate.map((con) => {
+                                        return <div>{con}</div>;
+                                      })} */}
 
                                       {this.state.Day_Data ? (
                                         <RowTabs
@@ -351,7 +472,10 @@ class Day extends React.Component {
                                             this.OnDetail(con.title)
                                           }
                                           DeleteClickHandler={() =>
-                                            this.DeleteClickHandler(con.title)
+                                            this.DeleteClickHandler(
+                                              i,
+                                              con.title
+                                            )
                                           }
                                           key={i}
                                           id={con.id}

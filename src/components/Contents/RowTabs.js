@@ -14,6 +14,7 @@ import {
   TabPane,
   Row,
   Col,
+  Button,
 } from 'reactstrap';
 import { createSolutionBuilderWithWatchHost } from 'typescript';
 

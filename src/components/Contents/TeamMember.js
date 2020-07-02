@@ -12,11 +12,19 @@ export class TeamMember extends Component {
   }
 
   ReadDetailTeam = (title) => {
-    teamList_Ref.child('/' + title + '/team_member').on('value', (snap) => {
-      this.setState({
-        TeamMate: snap.val(),
+    teamList_Ref
+      .child('/2020-1/' + title + '/team_member')
+      .on('value', (snap) => {
+        const Member = snap.val();
+        for (const i in Member) {
+          // console.log(i);
+          this.setState({
+            TeamMate: this.state.TeamMate.concat({
+              memberName: i,
+            }),
+          });
+        }
       });
-    });
   };
 
   render() {
