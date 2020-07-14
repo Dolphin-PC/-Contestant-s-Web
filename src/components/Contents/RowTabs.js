@@ -21,10 +21,7 @@ import { createSolutionBuilderWithWatchHost } from 'typescript';
 import ColTabs from './ColTabs';
 
 class RowTabs extends React.Component {
-  state = {
-    iconTabs: 1,
-    plainTabs: 1,
-  };
+  state = {};
   toggleNavs = (e, state, index, selectName) => {
     e.preventDefault();
     this.setState({

@@ -31,15 +31,12 @@ import TeamMember from '../../components/Contents/TeamMember';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-var Active_Tabs = 0;
-
 var DatePicker = require('reactstrap-date-picker');
 
 class Day extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      plainTabs: Active_Tabs,
       TeamInfo: [],
       isLoading: false,
       isDetail: false,
@@ -281,15 +278,17 @@ class Day extends React.Component {
               )
               .remove();
             alert('삭제되었습니다.');
+            window.location.reload();
           },
         },
         {
           label: '취소',
-          onClick: () => alert('삭제가 취소되었습니다.'),
+          onClick: () => {},
         },
       ],
     });
   };
+  // TODO: 회의록 편집(isEnableEdit ? textarea : text)
 
   render() {
     const ready = false;
@@ -380,12 +379,17 @@ class Day extends React.Component {
                       return (
                         <NavItem key={i}>
                           <NavLink
-                            aria-selected={this.state.plainTabs === i + 1}
+                            aria-selected={this.state.seasonPlainTabs === i + 1}
                             className={classnames('mb-sm-3 mb-md-0', {
-                              active: this.state.plainTabs === i + 1,
+                              active: this.state.seasonPlainTabs === i + 1,
                             })}
                             onClick={(e) =>
-                              this.toggleNavs(e, 'plainTabs', i + 1, con.season)
+                              this.toggleNavs(
+                                e,
+                                'seasonPlainTabs',
+                                i + 1,
+                                con.season
+                              )
                             }
                             href='#pablo'
                             role='tab'
