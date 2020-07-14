@@ -1,16 +1,18 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-
+import 'firebase/firestore';
 //Config
 import { FirebaseConfig } from '../config/keys';
+
+export const fireBase = firebase;
 
 export const FirebaseApp = firebase.initializeApp(FirebaseConfig);
 
 // FireStore
-// const firestore = firebase.firestore();
-// const firestore_settings = { timestampsInSnapshots: true };
-// export const Firestore = firestore.settings(firestore_settings);
+const firestore = FirebaseApp.firestore();
+const firestore_settings = {};
+export const Firestore = firestore.settings(firestore_settings);
 
 // Realtime DB
 const databaseRef = firebase.database().ref();

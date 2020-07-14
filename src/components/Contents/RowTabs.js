@@ -24,62 +24,13 @@ class RowTabs extends React.Component {
   state = {
     iconTabs: 1,
     plainTabs: 1,
-    test_Row: [
-      {
-        tabs: 1,
-        tabsTitle: 'test1',
-        tabssubTitle: 'test1Sub',
-        opinion: 'test1opinion',
-        feedback: 'test1feedback',
-        etc: 'test1etc',
-      },
-      {
-        tabs: 2,
-        tabsTitle: 'test2',
-        tabssubTitle: 'test2Sub',
-        opinion: 'test2opinion',
-        feedback: 'test2feedback',
-        etc: 'test2etc',
-      },
-      {
-        tabs: 3,
-        tabsTitle: 'test3',
-        tabssubTitle: 'test3Sub',
-        opinion: 'test3opinion',
-        feedback: 'test3feedback',
-        etc: 'test3etc',
-      },
-      {
-        tabs: 4,
-        tabsTitle: 'test4',
-        tabssubTitle: 'test4Sub',
-        opinion: 'test4opinion',
-        feedback: 'test4feedback',
-        etc: 'test4etc',
-      },
-      {
-        tabs: 5,
-        tabsTitle: 'test5',
-        tabssubTitle: 'test5Sub',
-        opinion: 'test5opinion',
-        feedback: 'test5feedback',
-        etc: 'test5etc',
-      },
-      {
-        tabs: 6,
-        tabsTitle: 'test6',
-        tabssubTitle: 'test6Sub',
-        opinion: 'test6opinion',
-        feedback: 'test6feedback',
-        etc: 'test6etc',
-      },
-    ],
   };
-  toggleNavs = (e, state, index) => {
+  toggleNavs = (e, state, index, selectName) => {
     e.preventDefault();
     this.setState({
       [state]: index,
     });
+    this.props.changeSelectedName(selectName);
   };
   render() {
     return (
@@ -106,14 +57,19 @@ class RowTabs extends React.Component {
               >
                 {this.props.day_data.map((con, i) => {
                   return (
-                    <NavItem>
+                    <NavItem key={i}>
                       <NavLink
                         aria-selected={this.state.plainTabs === con.tabs}
                         className={classnames('mb-sm-3 mb-md-0', {
                           active: this.state.plainTabs === con.tabs,
                         })}
                         onClick={(e) =>
-                          this.toggleNavs(e, 'plainTabs', con.tabs)
+                          this.toggleNavs(
+                            e,
+                            'plainTabs',
+                            con.tabs,
+                            con.tabsTitle
+                          )
                         }
                         href='#pablo'
                         role='tab'
@@ -131,10 +87,12 @@ class RowTabs extends React.Component {
                   <TabContent activeTab={this.state.plainTabs}>
                     {this.props.day_data.map((con, i) => {
                       return (
-                        <TabPane tabId={con.tabs}>
+                        <TabPane tabId={con.tabs} key={i}>
                           <ColTabs
+                            trashClickEvent={this.props.trashClickEvent}
+                            key={i}
                             title={con.tabsTitle}
-                            subtitle={con.tabssubTitle}
+                            subtitle={con.tabsSubTitle}
                             opinion={con.opinion}
                             feedback={con.feedback}
                             etc={con.etc}

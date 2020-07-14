@@ -89,7 +89,10 @@ class Datepicker extends React.Component {
                   inputProps={{
                     placeholder: 'Date Picker Here',
                   }}
-                  timeFormat={false}
+                  timeFormat={true}
+                  onChange={(e) =>
+                    this.handleReactDatetimeChange('selectDate', e)
+                  }
                 />
               </InputGroup>
             </FormGroup>

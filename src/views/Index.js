@@ -53,7 +53,7 @@ class Index extends React.Component {
           <section className='section section-components'>
             <Container>
               {/* <Tabs /> */}
-              <RowTabs />
+
               <Row className='row-grid justify-content-between align-items-center mt-lg'>
                 <Progress />
                 <Pagination />

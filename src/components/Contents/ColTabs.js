@@ -15,6 +15,7 @@ import {
   Row,
   Col,
 } from 'reactstrap';
+import { BsFillTrashFill, BsPencilSquare, BsCheckBox } from 'react-icons/bs';
 import { createSolutionBuilderWithWatchHost } from 'typescript';
 
 class ColTabs extends React.Component {
@@ -33,6 +34,14 @@ class ColTabs extends React.Component {
       <>
         <h3 className='h4 text-success font-weight-bold mb-4'>
           {this.props.title}
+
+          <button aria-label='Close' className='close' type='button'>
+            <BsFillTrashFill onClick={this.props.trashClickEvent} />
+          </button>
+          <br />
+          <button aria-label='Close' className='close' type='button'>
+            <BsPencilSquare />
+          </button>
         </h3>
         <Row className='justify-content-center'>
           <Col lg='12'>
@@ -113,7 +122,7 @@ class ColTabs extends React.Component {
 }
 ColTabs.defaultProps = {
   title: 'default_title',
-  subtitle: 'default_subtitle',
+  subtitle: '회의록을 입력해주세요.',
 };
 
 export default ColTabs;

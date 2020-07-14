@@ -1,7 +1,7 @@
 import React from 'react';
 // nodejs library that concatenates classes
 import classnames from 'classnames';
-import { dbRef, teamList_Ref } from '../../config/firebase';
+import { dbRef, teamList_Ref, fireBase } from '../../config/firebase';
 
 // reactstrap components
 import {
@@ -19,6 +19,7 @@ import {
   Modal,
   Badge,
 } from 'reactstrap';
+
 // core components
 
 import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
@@ -27,80 +28,55 @@ import Background from '../IndexSections/Background';
 import TeamList from '../IndexSections/TeamList';
 import RowTabs from '../../components/Contents/RowTabs';
 import TeamMember from '../../components/Contents/TeamMember';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-const Active_Tabs = 1;
+var Active_Tabs = 0;
+
+var DatePicker = require('reactstrap-date-picker');
 
 class Day extends React.Component {
-  day = [
-    {
-      tabs: 1,
-      tabsTitle: 'test1props',
-      tabssubTitle: 'test1Subprops',
-      opinion: 'test1opinionprops',
-      feedback: 'test1feedbackprops',
-      etc: 'test1etcprops',
-    },
-    {
-      tabs: 2,
-      tabsTitle: 'test2props',
-      tabssubTitle: 'test2Subprops',
-      opinion: 'test2opinionprops',
-      feedback: 'test2feedbackprops',
-      etc: 'test2etcprops',
-    },
-  ];
-  state = {
-    value: '',
-    iconTabs: Active_Tabs,
-    plainTabs: Active_Tabs,
-    maxTabs: 2,
-    TeamInfo: [],
-    isLoading: false,
-    isDetail: false,
-    detailTitle: '',
-    TeamMate: [],
-    Day_Data: [],
-    teamIndex: 0,
-    test: ['qwe', 'qwer', 'qwert', 'qwerty'],
-  };
-
-  Read_Day_Data(title) {
-    teamList_Ref.child('/2020-1/' + title + '/teamDay').on('value', (snap) => {
-      console.log(snap.val());
-      this.setState({
-        Day_Data: snap.val(),
-      });
-    });
-  }
-
-  Read_Team_Member(title) {
-    teamList_Ref
-      .child('/2020-1/' + title + '/team_member')
-      .on('value', (snap) => {
-        const Member = snap.val();
-        console.log(snap.val());
-
-        for (const i in Member) {
-          console.log(i);
-          this.setState({
-            TeamMate: this.state.TeamMate.concat({
-              memberName: i,
-            }),
-          });
-        }
-      });
-
-    this.setState({
-      isLoading: true,
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      plainTabs: Active_Tabs,
+      TeamInfo: [],
+      isLoading: false,
+      isDetail: false,
+      detailTitle: '',
+      TeamMate: [],
+      Day_Data: [],
+      Day_Data_test: [],
+      teamIndex: 0,
+      Season: [],
+      selectedSeason: '',
+      date: new Date().toISOString().split('T')[0],
+      selectedMeetingLogName: '',
+      value: '',
+    };
   }
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    this.ReadFirebaseforTeam();
-    // this.Read_Team_Member();
+
+    this.readSeason();
   }
+
+  readSeason() {
+    teamList_Ref.once('value', (snap) => {
+      for (const i in snap.val()) {
+        console.log(i);
+        this.setState({
+          Season: this.state.Season.concat({
+            season: i,
+          }),
+          selectedSeason: i,
+        });
+      }
+    });
+  }
+
   toggleModal = (state) => {
     this.setState({
       [state]: !this.state[state],
@@ -133,33 +109,43 @@ class Day extends React.Component {
     const { detailTitle } = this.state;
     alert(`[${Name}] 님을 추가합니다.`);
 
-    teamList_Ref.child('/2020-1/' + detailTitle + '/team_member/' + Name).set(
-      {
-        memberName: Name,
-      },
-      function () {
-        alert('complete');
-      }
-    );
+    teamList_Ref
+      .child(
+        `${this.state.selectedSeason}/` + detailTitle + '/team_member/' + Name
+      )
+      .set(
+        {
+          memberName: Name,
+        },
+        function () {
+          alert('추가 완료!');
+        }
+      );
   };
 
-  AddMeetingLog = () => {
-    alert(`새로운 회의록을 추가합니다.`);
+  addMeetingLog = (subTitle) => {
+    const { detailTitle, date, selectedSeason, dayDataCount } = this.state;
+    alert('새로운 회의록을 추가합니다.');
+
+    teamList_Ref.child(`${selectedSeason}/${detailTitle}/teamDay/${date}`).set({
+      tabsTitle: date,
+      tabs: dayDataCount + 1,
+    });
   };
 
   CreateTeam(value) {
     console.log(value);
-    teamList_Ref.child('/2020-1/' + value).set({
+    teamList_Ref.child(`${this.state.selectedSeason}/` + value).set({
       title: value,
     });
   }
 
-  ReadFirebaseforTeam() {
-    teamList_Ref.child('/2020-1/').on('value', (snap) => {
-      const Team = snap.val();
-      console.log(Team);
-
-      for (const i in Team) {
+  readTeam(select) {
+    teamList_Ref.child(`${select}/`).once('value', (snap) => {
+      this.setState({
+        TeamInfo: [],
+      });
+      for (const i in snap.val()) {
         this.setState({
           TeamInfo: this.state.TeamInfo.concat({
             title: i,
@@ -167,43 +153,142 @@ class Day extends React.Component {
         });
       }
     });
-
     this.setState({
       isLoading: true,
     });
   }
 
-  toggleNavs = (e, state, index) => {
+  Read_Day_Data(title) {
+    var count = 0;
+    teamList_Ref
+      .child(`${this.state.selectedSeason}/${title}/teamDay`)
+      .once('value', (snap) => {
+        for (const i in snap.val()) {
+          teamList_Ref
+            .child(`${this.state.selectedSeason}/` + title + '/teamDay/' + i)
+            .once('value', (snap) => {
+              const data = snap.val();
+              this.setState({
+                Day_Data: this.state.Day_Data.concat({
+                  tabsTitle: data.tabsTitle,
+                  tabsSubTitle: data.tabsSubTitle,
+                  opinion: data.opinion,
+                  feedback: data.feedback,
+                  etc: data.etc,
+                  tabs: data.tabs,
+                }),
+              });
+            });
+          count += 1;
+        }
+        this.setState({
+          dayDataCount: count,
+        });
+      });
+  }
+
+  Read_Team_Member(title) {
+    teamList_Ref
+      .child(`${this.state.selectedSeason}/${title}/team_member`)
+      .once('value', (snap) => {
+        const Member = snap.val();
+        console.log(snap.val());
+
+        for (const i in Member) {
+          this.setState({
+            TeamMate: this.state.TeamMate.concat({
+              name: i,
+            }),
+          });
+        }
+      });
+    this.setState({
+      isLoading: true,
+    });
+  }
+
+  toggleNavs = (e, state, index, selectName) => {
     e.preventDefault();
     this.setState({
       [state]: index,
+      selectedSeason: selectName,
     });
+    this.readTeam(selectName);
   };
 
   OnDetail = (title) => {
+    this.Read_Team_Member(title);
+    this.Read_Day_Data(title);
     // alert(title);
     this.setState({
       isDetail: true,
       detailTitle: title,
     });
-
-    this.Read_Day_Data(title);
-    this.Read_Team_Member(title);
   };
 
   OffDetail = () => {
     console.log(this.state.team_member);
+
     this.setState({
       isDetail: false,
       detailTitle: '',
       TeamMate: [],
+      Day_Data: [],
     });
   };
 
   DeleteClickHandler = (index, title) => {
     alert(`[${title}]팀을 삭제합니다.`);
     window.location.reload();
-    teamList_Ref.child('/2020-1/' + title).remove();
+    teamList_Ref.child(`${this.state.selectedSeason}/` + title).remove();
+  };
+
+  seasonHandleSubmit = (event) => {
+    if (this.state.value === '') {
+      alert('시즌 이름을 입력해주세요.');
+      event.preventDefault();
+      return;
+    }
+
+    this.addSeason(this.state.value);
+  };
+
+  selectedMeetingLog = (name) => {
+    this.setState({
+      selectedMeetingLogName: name,
+    });
+  };
+
+  addSeason(seasonName) {
+    teamList_Ref.child(`${seasonName}/DUMMY`).set({
+      title: '새로운 팀 생성 후, 삭제해주세요.',
+    });
+  }
+  trashClickEvent = () => {
+    const { selectedSeason, detailTitle, selectedMeetingLogName } = this.state;
+    console.log('trash');
+    confirmAlert({
+      title: '해당 회의록을 삭제하시겠습니까?',
+      message: '삭제된 이후에는 복구가 불가능합니다.',
+      buttons: [
+        {
+          label: '삭제',
+          onClick: () => {
+            // console.log(selectedSeason, detailTitle, selectedMeetingLogName);
+            teamList_Ref
+              .child(
+                `${selectedSeason}/${detailTitle}/teamDay/${selectedMeetingLogName}`
+              )
+              .remove();
+            alert('삭제되었습니다.');
+          },
+        },
+        {
+          label: '취소',
+          onClick: () => alert('삭제가 취소되었습니다.'),
+        },
+      ],
+    });
   };
 
   render() {
@@ -225,7 +310,63 @@ class Day extends React.Component {
                 {/* Menu */}
                 <div className='mb-3'>
                   <h5 className='text-uppercase font-weight-bold text-white'>
-                    학기 선택
+                    학기 선택&emsp;
+                    <Badge
+                      color='primary'
+                      pill
+                      className='mr-1'
+                      type='button'
+                      onClick={() => this.toggleModal('seasonModal')}
+                    >
+                      학기 추가
+                    </Badge>
+                    <Modal
+                      className='modal-dialog-centered'
+                      isOpen={this.state.seasonModal}
+                      toggle={() => this.toggleModal('seasonModal')}
+                    >
+                      <div className='modal-header'>
+                        <h6 className='modal-title' id='modal-title-default'>
+                          학기 추가
+                        </h6>
+                        <button
+                          aria-label='Close'
+                          className='close'
+                          data-dismiss='modal'
+                          type='button'
+                          onClick={() => this.toggleModal('seasonModal')}
+                        >
+                          <span aria-hidden={true}>×</span>
+                        </button>
+                      </div>
+                      <form onSubmit={this.seasonHandleSubmit}>
+                        <div className='modal-body'>
+                          <input
+                            type='text'
+                            onChange={this.handleChange}
+                            placeholder='학기 명을 입력해주세요.'
+                          ></input>
+                        </div>
+                        <div className='modal-footer'>
+                          <Button
+                            color='primary'
+                            type='submit'
+                            onClick={() => this.toggleModal('seasonModal')}
+                          >
+                            작성
+                          </Button>
+                          <Button
+                            className='ml-auto'
+                            color='link'
+                            data-dismiss='modal'
+                            type='button'
+                            onClick={() => this.toggleModal('seasonModal')}
+                          >
+                            취소
+                          </Button>
+                        </div>
+                      </form>
+                    </Modal>
                   </h5>
                 </div>
                 <div className='nav-wrapper'>
@@ -235,51 +376,31 @@ class Day extends React.Component {
                     pills
                     role='tablist'
                   >
-                    <NavItem>
-                      <NavLink
-                        aria-selected={this.state.plainTabs === 1}
-                        className={classnames('mb-sm-3 mb-md-0', {
-                          active: this.state.plainTabs === 1,
-                        })}
-                        onClick={(e) => this.toggleNavs(e, 'plainTabs', 1)}
-                        href='#pablo'
-                        role='tab'
-                      >
-                        20-1학기
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        aria-selected={this.state.plainTabs === 2}
-                        className={classnames('mb-sm-3 mb-md-0', {
-                          active: this.state.plainTabs === 2,
-                        })}
-                        onClick={(e) => this.toggleNavs(e, 'plainTabs', 2)}
-                        href='#pablo'
-                        role='tab'
-                      >
-                        20-2학기
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink
-                        aria-selected={this.state.plainTabs === 3}
-                        className={classnames('mb-sm-3 mb-md-0', {
-                          active: this.state.plainTabs === 3,
-                        })}
-                        onClick={(e) => this.toggleNavs(e, 'plainTabs', 3)}
-                        href='#pablo'
-                        role='tab'
-                      >
-                        21-1학기
-                      </NavLink>
-                    </NavItem>
+                    {this.state.Season.map((con, i) => {
+                      return (
+                        <NavItem key={i}>
+                          <NavLink
+                            aria-selected={this.state.plainTabs === i + 1}
+                            className={classnames('mb-sm-3 mb-md-0', {
+                              active: this.state.plainTabs === i + 1,
+                            })}
+                            onClick={(e) =>
+                              this.toggleNavs(e, 'plainTabs', i + 1, con.season)
+                            }
+                            href='#pablo'
+                            role='tab'
+                          >
+                            {con.season}
+                          </NavLink>
+                        </NavItem>
+                      );
+                    })}
                   </Nav>
                 </div>
                 <Card className='shadow'>
                   <CardBody>
                     <TabContent activeTab={'plainTabs' + this.state.plainTabs}>
-                      <TabPane tabId='plainTabs1'>
+                      <TabPane tabId={'plainTabs' + this.state.plainTabs}>
                         <Container>
                           {this.state.isDetail ? (
                             <Row>
@@ -333,6 +454,7 @@ class Day extends React.Component {
                                       <input
                                         type='text'
                                         onChange={this.handleChange}
+                                        placeholder='팀원 이름을 입력해주세요.'
                                       ></input>
                                     </div>
                                     <div className='modal-footer'>
@@ -365,10 +487,72 @@ class Day extends React.Component {
                                   block
                                   color='info'
                                   type='button'
-                                  onClick={() => this.AddMeetingLog()}
+                                  onClick={() =>
+                                    this.toggleModal('meetingLogModal')
+                                  }
                                 >
                                   회의록추가
                                 </Button>
+                                <Modal
+                                  className='modal-dialog-centered'
+                                  isOpen={this.state.meetingLogModal}
+                                  toggle={() =>
+                                    this.toggleModal('meetingLogModal')
+                                  }
+                                >
+                                  <div className='modal-header'>
+                                    <h6
+                                      className='modal-title'
+                                      id='modal-title-default'
+                                    >
+                                      회의록 작성
+                                    </h6>
+                                    <button
+                                      aria-label='Close'
+                                      className='close'
+                                      data-dismiss='modal'
+                                      type='button'
+                                      onClick={() =>
+                                        this.toggleModal('meetingLogModal')
+                                      }
+                                    >
+                                      <span aria-hidden={true}>×</span>
+                                    </button>
+                                  </div>
+                                  <form onSubmit={this.addMeetingLog}>
+                                    <div className='modal-body'>
+                                      <small className='text-uppercase text-muted font-weight-bold'>
+                                        회의록 작성 날짜
+                                        <br />
+                                        <h4 className='display-4 mb-0'>
+                                          {this.state.date}
+                                        </h4>
+                                      </small>
+                                    </div>
+                                    <div className='modal-footer'>
+                                      <Button
+                                        color='primary'
+                                        type='submit'
+                                        onClick={() =>
+                                          this.toggleModal('meetingLogModal')
+                                        }
+                                      >
+                                        작성
+                                      </Button>
+                                      <Button
+                                        className='ml-auto'
+                                        color='link'
+                                        data-dismiss='modal'
+                                        type='button'
+                                        onClick={() =>
+                                          this.toggleModal('meetingLogModal')
+                                        }
+                                      >
+                                        취소
+                                      </Button>
+                                    </div>
+                                  </form>
+                                </Modal>
                               </Col>
                               <Col lg='6'>
                                 <Button block color='warning'>
@@ -414,6 +598,7 @@ class Day extends React.Component {
                                 <input
                                   type='text'
                                   onChange={this.handleChange}
+                                  placeholder='팀 이름을 입력해주세요.'
                                 ></input>
                               </div>
                               <div className='modal-footer'>
@@ -448,21 +633,25 @@ class Day extends React.Component {
                                   this.state.isDetail ? (
                                     <Col>
                                       <h1>{this.state.detailTitle}</h1>
-
-                                      {/* <TeamMember
-                                        detailTitle={this.state.detailTitle}
-                                      /> */}
-                                      {/* {this.state.TeamMate.map((con) => {
-                                        return <div>{con}</div>;
-                                      })} */}
-
-                                      {this.state.Day_Data ? (
-                                        <RowTabs
-                                          day_data={this.state.Day_Data}
-                                        />
-                                      ) : (
-                                        '아직 회의록이 없습니다.'
-                                      )}
+                                      {this.state.TeamMate.map((con, i) => {
+                                        return (
+                                          <Badge
+                                            color='primary'
+                                            pill
+                                            className='mr-1'
+                                            key={i}
+                                          >
+                                            {con.name}
+                                          </Badge>
+                                        );
+                                      })}
+                                      <RowTabs
+                                        day_data={this.state.Day_Data}
+                                        trashClickEvent={this.trashClickEvent}
+                                        changeSelectedName={
+                                          this.selectedMeetingLog
+                                        }
+                                      />
                                     </Col>
                                   ) : (
                                     this.state.TeamInfo.map((con, i) => {
@@ -486,15 +675,13 @@ class Day extends React.Component {
                                     })
                                   )
                                 ) : (
-                                  '로딩 중입니다...'
+                                  '로딩 중입니다...\n시즌을 선택해주세요.'
                                 )}
                               </Row>
                             </Col>
                           </Row>
                         </Container>
                       </TabPane>
-                      <TabPane tabId='plainTabs2'>20-2학기 내용</TabPane>
-                      <TabPane tabId='plainTabs3'>21-1학기 내용</TabPane>
                     </TabContent>
                   </CardBody>
                 </Card>
