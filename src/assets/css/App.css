@@ -1,0 +1,8 @@
+textarea#editTextArea {
+  line-height: 30px;
+  height: 300px;
+  width: 100%;
+  overflow-y: hidden;
+
+  border: 1px solid #ccc;
+}

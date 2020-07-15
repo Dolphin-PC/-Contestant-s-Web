@@ -21,7 +21,10 @@ import { createSolutionBuilderWithWatchHost } from 'typescript';
 import ColTabs from './ColTabs';
 
 class RowTabs extends React.Component {
-  state = {};
+  state = {
+    selectedSeason: this.props.selectedSeason,
+    detailTitle: this.props.detailTitle,
+  };
   toggleNavs = (e, state, index, selectName) => {
     e.preventDefault();
     this.setState({
@@ -93,6 +96,8 @@ class RowTabs extends React.Component {
                             opinion={con.opinion}
                             feedback={con.feedback}
                             etc={con.etc}
+                            selectedSeason={this.state.selectedSeason}
+                            detailTitle={this.state.detailTitle}
                           />
                         </TabPane>
                       );

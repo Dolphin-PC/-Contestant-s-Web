@@ -40,6 +40,7 @@ class Day extends React.Component {
       TeamInfo: [],
       isLoading: false,
       isDetail: false,
+      isEditable: false,
       detailTitle: '',
       TeamMate: [],
       Day_Data: [],
@@ -289,6 +290,12 @@ class Day extends React.Component {
     });
   };
   // TODO: 회의록 편집(isEnableEdit ? textarea : text)
+  // handleChangeMeetingLog = () => {
+  //   const { isEditable } = this.state;
+  //   this.setState({
+  //     isEditable: !isEditable,
+  //   });
+  // };
 
   render() {
     const ready = false;
@@ -570,15 +577,15 @@ class Day extends React.Component {
                               className='mb-3'
                               color='primary'
                               type='button'
-                              onClick={() => this.toggleModal('defaultModal')}
+                              onClick={() => this.toggleModal('addTeamModal')}
                             >
                               팀 추가하기
                             </Button>
                           )}
                           <Modal
                             className='modal-dialog-centered'
-                            isOpen={this.state.defaultModal}
-                            toggle={() => this.toggleModal('defaultModal')}
+                            isOpen={this.state.addTeamModal}
+                            toggle={() => this.toggleModal('addTeamModal')}
                           >
                             <div className='modal-header'>
                               <h6
@@ -592,7 +599,7 @@ class Day extends React.Component {
                                 className='close'
                                 data-dismiss='modal'
                                 type='button'
-                                onClick={() => this.toggleModal('defaultModal')}
+                                onClick={() => this.toggleModal('addTeamModal')}
                               >
                                 <span aria-hidden={true}>×</span>
                               </button>
@@ -610,7 +617,7 @@ class Day extends React.Component {
                                   color='primary'
                                   type='submit'
                                   onClick={() =>
-                                    this.toggleModal('defaultModal')
+                                    this.toggleModal('addTeamModal')
                                   }
                                 >
                                   팀 생성
@@ -621,7 +628,7 @@ class Day extends React.Component {
                                   data-dismiss='modal'
                                   type='button'
                                   onClick={() =>
-                                    this.toggleModal('defaultModal')
+                                    this.toggleModal('addTeamModal')
                                   }
                                 >
                                   취소
@@ -655,6 +662,10 @@ class Day extends React.Component {
                                         changeSelectedName={
                                           this.selectedMeetingLog
                                         }
+                                        selectedSeason={
+                                          this.state.selectedSeason
+                                        }
+                                        detailTitle={this.state.detailTitle}
                                       />
                                     </Col>
                                   ) : (

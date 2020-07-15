@@ -17,19 +17,84 @@ import {
 } from 'reactstrap';
 import { BsFillTrashFill, BsPencilSquare, BsCheckBox } from 'react-icons/bs';
 import { createSolutionBuilderWithWatchHost } from 'typescript';
+import { confirmAlert } from 'react-confirm-alert';
+import '../../assets/css/App.css';
+import { dbRef, teamList_Ref } from '../../config/firebase';
 
 class ColTabs extends React.Component {
   state = {
     iconTabs: 1,
     plainTabs: 1,
+    isEditable: false,
+    editOpinion: this.props.opinion,
+    editFeedback: this.props.feedback,
+    editEtc: this.props.etc,
   };
+
   toggleNavs = (e, state, index) => {
     e.preventDefault();
     this.setState({
       [state]: index,
     });
   };
+
+  handleOpinionChange = (event) => {
+    this.setState({ editOpinion: event.target.value });
+  };
+  handleFeedbackChange = (event) => {
+    this.setState({ editFeedback: event.target.value });
+  };
+  handleEtcChange = (event) => {
+    this.setState({ editEtc: event.target.value });
+  };
+
+  handleChangeMeetingLog = () => {
+    const { isEditable, editOpinion, editFeedback, editEtc } = this.state;
+    const { selectedSeason, detailTitle, title } = this.props;
+    // -> 편집모드
+    if (!isEditable) {
+      this.setState({
+        isEditable: !isEditable,
+      });
+    } else {
+      // Edit -> Complete
+      confirmAlert({
+        title: '해당 회의록을 수정완료하시겠습니까?',
+        message: '수정된 이후에는 복구가 불가능합니다.',
+        buttons: [
+          {
+            label: '수정',
+            onClick: () => {
+              console.log(selectedSeason, detailTitle, title);
+              teamList_Ref
+                .child(`${selectedSeason}/${detailTitle}/teamDay/${title}`)
+                .update({
+                  opinion: editOpinion,
+                  feedback: editFeedback,
+                  etc: editEtc,
+                });
+              alert('수정되었습니다.');
+              window.location.reload();
+            },
+          },
+          {
+            label: '취소',
+            onClick: () => {},
+          },
+          {
+            label: '저장하지 않고 수정모드 종료',
+            onClick: () => {
+              this.setState({
+                isEditable: false,
+              });
+            },
+          },
+        ],
+      });
+    }
+  };
   render() {
+    const { isEditable } = this.state;
     return (
       <>
         <h3 className='h4 text-success font-weight-bold mb-4'>
@@ -40,7 +105,11 @@ class ColTabs extends React.Component {
           </button>
           <br />
           <button aria-label='Close' className='close' type='button'>
-            <BsPencilSquare />
+            {isEditable ? (
+              <BsCheckBox onClick={this.handleChangeMeetingLog} />
+            ) : (
+              <BsPencilSquare onClick={this.handleChangeMeetingLog} />
+            )}
           </button>
         </h3>
         <Row className='justify-content-center'>
@@ -103,13 +172,40 @@ class ColTabs extends React.Component {
               <CardBody>
                 <TabContent activeTab={'plainTabs' + this.state.plainTabs}>
                   <TabPane tabId='plainTabs1'>
-                    <p className='description'>{this.props.opinion}</p>
+                    {isEditable ? (
+                      <textarea
+                        id='editTextArea'
+                        onChange={this.handleOpinionChange}
+                      >
+                        {this.props.opinion}
+                      </textarea>
+                    ) : (
+                      <p className='description'>{this.props.opinion}</p>
+                    )}
                   </TabPane>
                   <TabPane tabId='plainTabs2'>
-                    <p className='description'>{this.props.feedback}</p>
+                    {isEditable ? (
+                      <textarea
+                        id='editTextArea'
+                        onChange={this.handleFeedbackChange}
+                      >
+                        {this.props.feedback}
+                      </textarea>
+                    ) : (
+                      <p className='description'>{this.props.feedback}</p>
+                    )}
                   </TabPane>
                   <TabPane tabId='plainTabs3'>
-                    <p className='description'>{this.props.etc}</p>
+                    {isEditable ? (
+                      <textarea
+                        id='editTextArea'
+                        onChange={this.handleEtcChange}
+                      >
+                        {this.props.etc}
+                      </textarea>
+                    ) : (
+                      <p className='description'>{this.props.etc}</p>
+                    )}
                   </TabPane>
                 </TabContent>
               </CardBody>
