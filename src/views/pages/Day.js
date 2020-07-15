@@ -572,15 +572,7 @@ class Day extends React.Component {
                               </Col>
                             </Row>
                           ) : (
-                            <Button
-                              block
-                              className='mb-3'
-                              color='primary'
-                              type='button'
-                              onClick={() => this.toggleModal('addTeamModal')}
-                            >
-                              팀 추가하기
-                            </Button>
+                            ''
                           )}
                           <Modal
                             className='modal-dialog-centered'
@@ -669,25 +661,38 @@ class Day extends React.Component {
                                       />
                                     </Col>
                                   ) : (
-                                    this.state.TeamInfo.map((con, i) => {
-                                      return (
-                                        <TeamList
-                                          JoinClickHandler={() =>
-                                            this.OnDetail(con.title)
-                                          }
-                                          DeleteClickHandler={() =>
-                                            this.DeleteClickHandler(
-                                              i,
-                                              con.title
-                                            )
-                                          }
-                                          key={i}
-                                          id={con.id}
-                                          title={con.title}
-                                          description={con.subtitle}
-                                        />
-                                      );
-                                    })
+                                    <>
+                                      <Button
+                                        block
+                                        className='mb-3'
+                                        color='primary'
+                                        type='button'
+                                        onClick={() =>
+                                          this.toggleModal('addTeamModal')
+                                        }
+                                      >
+                                        팀 추가하기
+                                      </Button>
+                                      {this.state.TeamInfo.map((con, i) => {
+                                        return (
+                                          <TeamList
+                                            JoinClickHandler={() =>
+                                              this.OnDetail(con.title)
+                                            }
+                                            DeleteClickHandler={() =>
+                                              this.DeleteClickHandler(
+                                                i,
+                                                con.title
+                                              )
+                                            }
+                                            key={i}
+                                            id={con.id}
+                                            title={con.title}
+                                            description={con.subtitle}
+                                          />
+                                        );
+                                      })}
+                                    </>
                                   )
                                 ) : (
                                   '로딩 중입니다...\n시즌을 선택해주세요.'
