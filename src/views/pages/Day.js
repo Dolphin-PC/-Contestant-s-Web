@@ -289,13 +289,31 @@ class Day extends React.Component {
       ],
     });
   };
-  // TODO: 회의록 편집(isEnableEdit ? textarea : text)
-  // handleChangeMeetingLog = () => {
-  //   const { isEditable } = this.state;
-  //   this.setState({
-  //     isEditable: !isEditable,
-  //   });
-  // };
+
+  // TODO: 회의록 권한 설정
+  // 1. [공모자의 하루]는 (로그인 && isAuth == true) 일 경우, 이용가능
+
+  // * (isSupporter == true) 일 경우, 모든 권한 부여
+  // 2. [학기 추가]는 (isSupporter == true) 일 경우, 이용가능
+  // 3. [팀 추가]는 (isSupporter == true)일 경우
+  // 4. [팀 삭제]는 (isSupporter == true)
+  // 5. [팀원 추가]는 (isSupporter == true)
+
+  // TODO: 회원가입시, DB에 [이름],[UUID],[isSupporter],[isAuth] 정보 입력
+  // 6. [팀원]의 (회의록 추가/삭제/편집 은 UUID를 통해 권한 부여 )
+  // [해당 로그인된 this.state.UUID === for(팀원(UUID))]라면, 권한 부여
+
+  // TODO: 회의록 내용 변화
+  // [희의록 파일 업로드 및 다운로드]
+  // [회의내용] 틀 형식화 ->
+  // 1. 결정사항
+  //  - 이것이 결정됨
+
+  // 2. 진행사항
+  //  - 이것이 진행됨
+
+  // [피드백 내용 달기] : (+버튼 누르면 수정텍스트 표시되면서, [이름,날짜,피드백] 이 달리고,)
+  // 피드백내용은 날짜를 기준으로 정렬하여, 밑으로 순차적으로 리스트 표시
 
   render() {
     const ready = false;
