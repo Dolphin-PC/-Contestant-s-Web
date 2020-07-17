@@ -20,6 +20,7 @@ import {
   Badge,
 } from 'reactstrap';
 
+import * as firebase from 'firebase/app';
 // core components
 
 import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
@@ -30,6 +31,9 @@ import RowTabs from '../../components/Contents/RowTabs';
 import TeamMember from '../../components/Contents/TeamMember';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 var DatePicker = require('reactstrap-date-picker');
 
@@ -57,8 +61,17 @@ class Day extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-
     this.readSeason();
+  }
+  componentWillMount() {
+    const { fetchUserData, getUserData } = this.props;
+
+    firebase.auth().onAuthStateChanged(function (userState) {
+      if (userState) {
+        fetchUserData(userState.displayName, userState.email, userState.uid);
+        getUserData(userState.displayName, userState.uid);
+      }
+    });
   }
 
   readSeason() {
@@ -76,9 +89,20 @@ class Day extends React.Component {
   }
 
   toggleModal = (state) => {
-    this.setState({
-      [state]: !this.state[state],
-    });
+    if (state === 'seasonModal' || state === 'addTeamModal') {
+      if (this.props.user.isSupporter) {
+        this.setState({
+          [state]: !this.state[state],
+        });
+      } else {
+        alert('서포터즈 전용 메뉴입니다.');
+        return;
+      }
+    } else {
+      this.setState({
+        [state]: !this.state[state],
+      });
+    }
   };
 
   handleChange = (event) => {
@@ -292,6 +316,7 @@ class Day extends React.Component {
 
   render() {
     const ready = false;
+    const { isAuth, isSupporter } = this.props.user;
 
     return (
       <div>
@@ -300,407 +325,424 @@ class Day extends React.Component {
           title='공모자의 하루'
           desc='회의 및 프로젝트 진행상황을 보고합니다.'
         />
-        {ready ? (
-          <h1 style={{ textAlign: 'center' }}>😭작업 중에 있습니다😭</h1>
-        ) : (
-          <section className='section section-lg pt-lg-0 mt--200'>
-            <Container>
-              <Col className='mt-5 mt-lg-0' lg='12'>
-                {/* Menu */}
-                <div className='mb-3'>
-                  <h5 className='text-uppercase font-weight-bold text-white'>
-                    학기 선택&emsp;
-                    <Badge
-                      color='primary'
-                      pill
-                      className='mr-1'
-                      type='button'
-                      onClick={() => this.toggleModal('seasonModal')}
-                    >
-                      학기 추가
-                    </Badge>
-                    <Modal
-                      className='modal-dialog-centered'
-                      isOpen={this.state.seasonModal}
-                      toggle={() => this.toggleModal('seasonModal')}
-                    >
-                      <div className='modal-header'>
-                        <h6 className='modal-title' id='modal-title-default'>
-                          학기 추가
-                        </h6>
-                        <button
-                          aria-label='Close'
-                          className='close'
-                          data-dismiss='modal'
-                          type='button'
-                          onClick={() => this.toggleModal('seasonModal')}
-                        >
-                          <span aria-hidden={true}>×</span>
-                        </button>
-                      </div>
-                      <form onSubmit={this.seasonHandleSubmit}>
-                        <div className='modal-body'>
-                          <input
-                            type='text'
-                            onChange={this.handleChange}
-                            placeholder='학기 명을 입력해주세요.'
-                          ></input>
-                        </div>
-                        <div className='modal-footer'>
-                          <Button
-                            color='primary'
-                            type='submit'
-                            onClick={() => this.toggleModal('seasonModal')}
-                          >
-                            작성
-                          </Button>
-                          <Button
-                            className='ml-auto'
-                            color='link'
+        {isAuth || isSupporter ? (
+          ready ? (
+            <h1 style={{ textAlign: 'center' }}>😭작업 중에 있습니다😭</h1>
+          ) : (
+            <section className='section section-lg pt-lg-0 mt--200'>
+              <Container>
+                <Col className='mt-5 mt-lg-0' lg='12'>
+                  {/* Menu */}
+                  <div className='mb-3'>
+                    <h5 className='text-uppercase font-weight-bold text-white'>
+                      학기 선택&emsp;
+                      <Badge
+                        color='primary'
+                        pill
+                        className='mr-1'
+                        type='button'
+                        onClick={() => this.toggleModal('seasonModal')}
+                      >
+                        학기 추가
+                      </Badge>
+                      <Modal
+                        className='modal-dialog-centered'
+                        isOpen={this.state.seasonModal}
+                        toggle={() => this.toggleModal('seasonModal')}
+                      >
+                        <div className='modal-header'>
+                          <h6 className='modal-title' id='modal-title-default'>
+                            학기 추가
+                          </h6>
+                          <button
+                            aria-label='Close'
+                            className='close'
                             data-dismiss='modal'
                             type='button'
                             onClick={() => this.toggleModal('seasonModal')}
                           >
-                            취소
-                          </Button>
+                            <span aria-hidden={true}>×</span>
+                          </button>
                         </div>
-                      </form>
-                    </Modal>
-                  </h5>
-                </div>
-                <div className='nav-wrapper'>
-                  <Nav
-                    className='nav-fill flex-column flex-md-row'
-                    id='tabs-icons-text'
-                    pills
-                    role='tablist'
-                  >
-                    {this.state.Season.map((con, i) => {
-                      return (
-                        <NavItem key={i}>
-                          <NavLink
-                            aria-selected={this.state.seasonPlainTabs === i + 1}
-                            className={classnames('mb-sm-3 mb-md-0', {
-                              active: this.state.seasonPlainTabs === i + 1,
-                            })}
-                            onClick={(e) =>
-                              this.toggleNavs(
-                                e,
-                                'seasonPlainTabs',
-                                i + 1,
-                                con.season
-                              )
-                            }
-                            href='#pablo'
-                            role='tab'
-                          >
-                            {con.season}
-                          </NavLink>
-                        </NavItem>
-                      );
-                    })}
-                  </Nav>
-                </div>
-                <Card className='shadow'>
-                  <CardBody>
-                    <TabContent activeTab={'plainTabs' + this.state.plainTabs}>
-                      <TabPane tabId={'plainTabs' + this.state.plainTabs}>
-                        <Container>
-                          {this.state.isDetail ? (
-                            <Row>
-                              <Col lg='2'>
-                                <Button
-                                  block
-                                  color='primary'
-                                  type='button'
-                                  onClick={() => this.OffDetail()}
-                                >
-                                  팀 목록으로
-                                </Button>
-                              </Col>
-                              <Col lg='2'>
-                                <Button
-                                  block
-                                  color='success'
-                                  type='button'
-                                  onClick={() =>
-                                    this.toggleModal('memberModal')
-                                  }
-                                >
-                                  팀원추가
-                                </Button>
-                                <Modal
-                                  className='modal-dialog-centered'
-                                  isOpen={this.state.memberModal}
-                                  toggle={() => this.toggleModal('memberModal')}
-                                >
-                                  <div className='modal-header'>
-                                    <h6
-                                      className='modal-title'
-                                      id='modal-title-default'
-                                    >
-                                      신규 팀원 추가
-                                    </h6>
-                                    <button
-                                      aria-label='Close'
-                                      className='close'
-                                      data-dismiss='modal'
-                                      type='button'
-                                      onClick={() =>
-                                        this.toggleModal('memberModal')
-                                      }
-                                    >
-                                      <span aria-hidden={true}>×</span>
-                                    </button>
-                                  </div>
-                                  <form onSubmit={this.MemberHandleSubmit}>
-                                    <div className='modal-body'>
-                                      <input
-                                        type='text'
-                                        onChange={this.handleChange}
-                                        placeholder='팀원 이름을 입력해주세요.'
-                                      ></input>
-                                    </div>
-                                    <div className='modal-footer'>
-                                      <Button
-                                        color='primary'
-                                        type='submit'
-                                        onClick={() =>
-                                          this.toggleModal('memberModal')
-                                        }
+                        <form onSubmit={this.seasonHandleSubmit}>
+                          <div className='modal-body'>
+                            <input
+                              type='text'
+                              onChange={this.handleChange}
+                              placeholder='학기 명을 입력해주세요.'
+                            ></input>
+                          </div>
+                          <div className='modal-footer'>
+                            <Button
+                              color='primary'
+                              type='submit'
+                              onClick={() => this.toggleModal('seasonModal')}
+                            >
+                              작성
+                            </Button>
+                            <Button
+                              className='ml-auto'
+                              color='link'
+                              data-dismiss='modal'
+                              type='button'
+                              onClick={() => this.toggleModal('seasonModal')}
+                            >
+                              취소
+                            </Button>
+                          </div>
+                        </form>
+                      </Modal>
+                    </h5>
+                  </div>
+                  <div className='nav-wrapper'>
+                    <Nav
+                      className='nav-fill flex-column flex-md-row'
+                      id='tabs-icons-text'
+                      pills
+                      role='tablist'
+                    >
+                      {this.state.Season.map((con, i) => {
+                        return (
+                          <NavItem key={i}>
+                            <NavLink
+                              aria-selected={
+                                this.state.seasonPlainTabs === i + 1
+                              }
+                              className={classnames('mb-sm-3 mb-md-0', {
+                                active: this.state.seasonPlainTabs === i + 1,
+                              })}
+                              onClick={(e) =>
+                                this.toggleNavs(
+                                  e,
+                                  'seasonPlainTabs',
+                                  i + 1,
+                                  con.season
+                                )
+                              }
+                              href='#pablo'
+                              role='tab'
+                            >
+                              {con.season}
+                            </NavLink>
+                          </NavItem>
+                        );
+                      })}
+                    </Nav>
+                  </div>
+                  <Card className='shadow'>
+                    <CardBody>
+                      <TabContent
+                        activeTab={'plainTabs' + this.state.plainTabs}
+                      >
+                        <TabPane tabId={'plainTabs' + this.state.plainTabs}>
+                          <Container>
+                            {this.state.isDetail ? (
+                              <Row>
+                                <Col lg='2'>
+                                  <Button
+                                    block
+                                    color='primary'
+                                    type='button'
+                                    onClick={() => this.OffDetail()}
+                                  >
+                                    팀 목록으로
+                                  </Button>
+                                </Col>
+                                <Col lg='2'>
+                                  <Button
+                                    block
+                                    color='success'
+                                    type='button'
+                                    onClick={() =>
+                                      this.toggleModal('memberModal')
+                                    }
+                                  >
+                                    팀원추가
+                                  </Button>
+                                  <Modal
+                                    className='modal-dialog-centered'
+                                    isOpen={this.state.memberModal}
+                                    toggle={() =>
+                                      this.toggleModal('memberModal')
+                                    }
+                                  >
+                                    <div className='modal-header'>
+                                      <h6
+                                        className='modal-title'
+                                        id='modal-title-default'
                                       >
-                                        팀원 추가
-                                      </Button>
-                                      <Button
-                                        className='ml-auto'
-                                        color='link'
+                                        신규 팀원 추가
+                                      </h6>
+                                      <button
+                                        aria-label='Close'
+                                        className='close'
                                         data-dismiss='modal'
                                         type='button'
                                         onClick={() =>
                                           this.toggleModal('memberModal')
                                         }
                                       >
-                                        취소
-                                      </Button>
+                                        <span aria-hidden={true}>×</span>
+                                      </button>
                                     </div>
-                                  </form>
-                                </Modal>
-                              </Col>
-                              <Col lg='2'>
-                                <Button
-                                  block
-                                  color='info'
-                                  type='button'
-                                  onClick={() =>
-                                    this.toggleModal('meetingLogModal')
-                                  }
-                                >
-                                  회의록추가
-                                </Button>
-                                <Modal
-                                  className='modal-dialog-centered'
-                                  isOpen={this.state.meetingLogModal}
-                                  toggle={() =>
-                                    this.toggleModal('meetingLogModal')
-                                  }
-                                >
-                                  <div className='modal-header'>
-                                    <h6
-                                      className='modal-title'
-                                      id='modal-title-default'
-                                    >
-                                      회의록 작성
-                                    </h6>
-                                    <button
-                                      aria-label='Close'
-                                      className='close'
-                                      data-dismiss='modal'
-                                      type='button'
-                                      onClick={() =>
-                                        this.toggleModal('meetingLogModal')
-                                      }
-                                    >
-                                      <span aria-hidden={true}>×</span>
-                                    </button>
-                                  </div>
-                                  <form onSubmit={this.addMeetingLog}>
-                                    <div className='modal-body'>
-                                      <small className='text-uppercase text-muted font-weight-bold'>
-                                        회의록 작성 날짜
-                                        <br />
-                                        <h4 className='display-4 mb-0'>
-                                          {this.state.date}
-                                        </h4>
-                                      </small>
-                                    </div>
-                                    <div className='modal-footer'>
-                                      <Button
-                                        color='primary'
-                                        type='submit'
-                                        onClick={() =>
-                                          this.toggleModal('meetingLogModal')
-                                        }
+                                    <form onSubmit={this.MemberHandleSubmit}>
+                                      <div className='modal-body'>
+                                        <input
+                                          type='text'
+                                          onChange={this.handleChange}
+                                          placeholder='팀원 이름을 입력해주세요.'
+                                        ></input>
+                                      </div>
+                                      <div className='modal-footer'>
+                                        <Button
+                                          color='primary'
+                                          type='submit'
+                                          onClick={() =>
+                                            this.toggleModal('memberModal')
+                                          }
+                                        >
+                                          팀원 추가
+                                        </Button>
+                                        <Button
+                                          className='ml-auto'
+                                          color='link'
+                                          data-dismiss='modal'
+                                          type='button'
+                                          onClick={() =>
+                                            this.toggleModal('memberModal')
+                                          }
+                                        >
+                                          취소
+                                        </Button>
+                                      </div>
+                                    </form>
+                                  </Modal>
+                                </Col>
+                                <Col lg='2'>
+                                  <Button
+                                    block
+                                    color='info'
+                                    type='button'
+                                    onClick={() =>
+                                      this.toggleModal('meetingLogModal')
+                                    }
+                                  >
+                                    회의록추가
+                                  </Button>
+                                  <Modal
+                                    className='modal-dialog-centered'
+                                    isOpen={this.state.meetingLogModal}
+                                    toggle={() =>
+                                      this.toggleModal('meetingLogModal')
+                                    }
+                                  >
+                                    <div className='modal-header'>
+                                      <h6
+                                        className='modal-title'
+                                        id='modal-title-default'
                                       >
-                                        작성
-                                      </Button>
-                                      <Button
-                                        className='ml-auto'
-                                        color='link'
+                                        회의록 작성
+                                      </h6>
+                                      <button
+                                        aria-label='Close'
+                                        className='close'
                                         data-dismiss='modal'
                                         type='button'
                                         onClick={() =>
                                           this.toggleModal('meetingLogModal')
                                         }
                                       >
-                                        취소
-                                      </Button>
+                                        <span aria-hidden={true}>×</span>
+                                      </button>
                                     </div>
-                                  </form>
-                                </Modal>
-                              </Col>
-                              <Col lg='6'>
-                                <Button block color='warning'>
-                                  #{this.state.detailTitle}
-                                </Button>
-                              </Col>
-                            </Row>
-                          ) : (
-                            ''
-                          )}
-                          <Modal
-                            className='modal-dialog-centered'
-                            isOpen={this.state.addTeamModal}
-                            toggle={() => this.toggleModal('addTeamModal')}
-                          >
-                            <div className='modal-header'>
-                              <h6
-                                className='modal-title'
-                                id='modal-title-default'
-                              >
-                                신규 팀 생성
-                              </h6>
-                              <button
-                                aria-label='Close'
-                                className='close'
-                                data-dismiss='modal'
-                                type='button'
-                                onClick={() => this.toggleModal('addTeamModal')}
-                              >
-                                <span aria-hidden={true}>×</span>
-                              </button>
-                            </div>
-                            <form onSubmit={this.TeamHandleSubmit}>
-                              <div className='modal-body'>
-                                <input
-                                  type='text'
-                                  onChange={this.handleChange}
-                                  placeholder='팀 이름을 입력해주세요.'
-                                ></input>
-                              </div>
-                              <div className='modal-footer'>
-                                <Button
-                                  color='primary'
-                                  type='submit'
-                                  onClick={() =>
-                                    this.toggleModal('addTeamModal')
-                                  }
+                                    <form onSubmit={this.addMeetingLog}>
+                                      <div className='modal-body'>
+                                        <small className='text-uppercase text-muted font-weight-bold'>
+                                          회의록 작성 날짜
+                                          <br />
+                                          <h4 className='display-4 mb-0'>
+                                            {this.state.date}
+                                          </h4>
+                                        </small>
+                                      </div>
+                                      <div className='modal-footer'>
+                                        <Button
+                                          color='primary'
+                                          type='submit'
+                                          onClick={() =>
+                                            this.toggleModal('meetingLogModal')
+                                          }
+                                        >
+                                          작성
+                                        </Button>
+                                        <Button
+                                          className='ml-auto'
+                                          color='link'
+                                          data-dismiss='modal'
+                                          type='button'
+                                          onClick={() =>
+                                            this.toggleModal('meetingLogModal')
+                                          }
+                                        >
+                                          취소
+                                        </Button>
+                                      </div>
+                                    </form>
+                                  </Modal>
+                                </Col>
+                                <Col lg='6'>
+                                  <Button block color='warning'>
+                                    #{this.state.detailTitle}
+                                  </Button>
+                                </Col>
+                              </Row>
+                            ) : (
+                              ''
+                            )}
+                            <Modal
+                              className='modal-dialog-centered'
+                              isOpen={this.state.addTeamModal}
+                              toggle={() => this.toggleModal('addTeamModal')}
+                            >
+                              <div className='modal-header'>
+                                <h6
+                                  className='modal-title'
+                                  id='modal-title-default'
                                 >
-                                  팀 생성
-                                </Button>
-                                <Button
-                                  className='ml-auto'
-                                  color='link'
+                                  신규 팀 생성
+                                </h6>
+                                <button
+                                  aria-label='Close'
+                                  className='close'
                                   data-dismiss='modal'
                                   type='button'
                                   onClick={() =>
                                     this.toggleModal('addTeamModal')
                                   }
                                 >
-                                  취소
-                                </Button>
+                                  <span aria-hidden={true}>×</span>
+                                </button>
                               </div>
-                            </form>
-                          </Modal>
-                          <Row className='justify-content-center'>
-                            <Col lg='12'>
-                              <Row className='row-grid'>
-                                {/* 팀 목록 리스트 뿌려주기 */}
-                                {this.state.isLoading ? (
-                                  this.state.isDetail ? (
-                                    <Col>
-                                      <h1>{this.state.detailTitle}</h1>
-                                      {this.state.TeamMate.map((con, i) => {
-                                        return (
-                                          <Badge
-                                            color='primary'
-                                            pill
-                                            className='mr-1'
-                                            key={i}
-                                          >
-                                            {con.name}
-                                          </Badge>
-                                        );
-                                      })}
-                                      <RowTabs
-                                        day_data={this.state.Day_Data}
-                                        trashClickEvent={this.trashClickEvent}
-                                        changeSelectedName={
-                                          this.selectedMeetingLog
-                                        }
-                                        selectedSeason={
-                                          this.state.selectedSeason
-                                        }
-                                        detailTitle={this.state.detailTitle}
-                                      />
-                                    </Col>
+                              <form onSubmit={this.TeamHandleSubmit}>
+                                <div className='modal-body'>
+                                  <input
+                                    type='text'
+                                    onChange={this.handleChange}
+                                    placeholder='팀 이름을 입력해주세요.'
+                                  ></input>
+                                </div>
+                                <div className='modal-footer'>
+                                  <Button
+                                    color='primary'
+                                    type='submit'
+                                    onClick={() =>
+                                      this.toggleModal('addTeamModal')
+                                    }
+                                  >
+                                    팀 생성
+                                  </Button>
+                                  <Button
+                                    className='ml-auto'
+                                    color='link'
+                                    data-dismiss='modal'
+                                    type='button'
+                                    onClick={() =>
+                                      this.toggleModal('addTeamModal')
+                                    }
+                                  >
+                                    취소
+                                  </Button>
+                                </div>
+                              </form>
+                            </Modal>
+                            <Row className='justify-content-center'>
+                              <Col lg='12'>
+                                <Row className='row-grid'>
+                                  {/* 팀 목록 리스트 뿌려주기 */}
+                                  {this.state.isLoading ? (
+                                    this.state.isDetail ? (
+                                      <Col>
+                                        <h1>{this.state.detailTitle}</h1>
+                                        {this.state.TeamMate.map((con, i) => {
+                                          return (
+                                            <Badge
+                                              color='primary'
+                                              pill
+                                              className='mr-1'
+                                              key={i}
+                                            >
+                                              {con.name}
+                                            </Badge>
+                                          );
+                                        })}
+                                        <RowTabs
+                                          day_data={this.state.Day_Data}
+                                          trashClickEvent={this.trashClickEvent}
+                                          changeSelectedName={
+                                            this.selectedMeetingLog
+                                          }
+                                          selectedSeason={
+                                            this.state.selectedSeason
+                                          }
+                                          detailTitle={this.state.detailTitle}
+                                        />
+                                      </Col>
+                                    ) : (
+                                      <>
+                                        <Button
+                                          block
+                                          className='mb-3'
+                                          color='primary'
+                                          type='button'
+                                          onClick={() =>
+                                            this.toggleModal('addTeamModal')
+                                          }
+                                        >
+                                          팀 추가하기
+                                        </Button>
+                                        {this.state.TeamInfo.map((con, i) => {
+                                          return (
+                                            <TeamList
+                                              JoinClickHandler={() =>
+                                                this.OnDetail(con.title)
+                                              }
+                                              DeleteClickHandler={() =>
+                                                this.DeleteClickHandler(
+                                                  i,
+                                                  con.title
+                                                )
+                                              }
+                                              key={i}
+                                              id={con.id}
+                                              title={con.title}
+                                              description={con.subtitle}
+                                            />
+                                          );
+                                        })}
+                                      </>
+                                    )
                                   ) : (
-                                    <>
-                                      <Button
-                                        block
-                                        className='mb-3'
-                                        color='primary'
-                                        type='button'
-                                        onClick={() =>
-                                          this.toggleModal('addTeamModal')
-                                        }
-                                      >
-                                        팀 추가하기
-                                      </Button>
-                                      {this.state.TeamInfo.map((con, i) => {
-                                        return (
-                                          <TeamList
-                                            JoinClickHandler={() =>
-                                              this.OnDetail(con.title)
-                                            }
-                                            DeleteClickHandler={() =>
-                                              this.DeleteClickHandler(
-                                                i,
-                                                con.title
-                                              )
-                                            }
-                                            key={i}
-                                            id={con.id}
-                                            title={con.title}
-                                            description={con.subtitle}
-                                          />
-                                        );
-                                      })}
-                                    </>
-                                  )
-                                ) : (
-                                  '로딩 중입니다...\n시즌을 선택해주세요.'
-                                )}
-                              </Row>
-                            </Col>
-                          </Row>
-                        </Container>
-                      </TabPane>
-                    </TabContent>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Container>
-          </section>
+                                    '시즌을 선택해주세요.'
+                                  )}
+                                </Row>
+                              </Col>
+                            </Row>
+                          </Container>
+                        </TabPane>
+                      </TabContent>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Container>
+            </section>
+          )
+        ) : (
+          <div>
+            <h1 style={{ textAlign: 'center' }}>로그인이 필요합니다.</h1>
+            <p style={{ textAlign: 'center' }}>
+              로그인/인증 문제가 생기셨다면 '공모자들' 서포터즈에게 연락주세요.
+            </p>
+          </div>
         )}
 
         <CardsFooter />
@@ -709,4 +751,10 @@ class Day extends React.Component {
   }
 }
 
-export default Day;
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  };
+};
+
+export default connect(mapStateToProps, actions)(Day);

@@ -54,16 +54,14 @@ class Landing extends Component {
     this.ReadActivity();
   }
   componentWillMount() {
-    var userAuth = firebase.auth().currentUser;
-    // console.log(userAuth);
-    if (userAuth) {
-      this.props.fetchUserData(
-        userAuth.displayName,
-        userAuth.email,
-        userAuth.uid
-      );
-      this.props.getUserData(userAuth.displayName, userAuth.uid);
-    }
+    const { fetchUserData, getUserData } = this.props;
+
+    firebase.auth().onAuthStateChanged(function (userState) {
+      if (userState) {
+        fetchUserData(userState.displayName, userState.email, userState.uid);
+        getUserData(userState.displayName, userState.uid);
+      }
+    });
   }
 
   ReadActivity() {

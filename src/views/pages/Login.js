@@ -28,17 +28,47 @@ import 'firebase/auth';
 import { FirebaseApp } from '../../config/firebase';
 import Landing from './Landing';
 import * as actions from '../../actions';
+import { connect } from 'react-redux';
 
 class Login extends React.Component {
+  state = {
+    user: '',
+  };
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
 
-  render() {
-    const { user, signInWithGoogle } = this.props;
+  signInWithGoogle() {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then(function (result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        console.log(user);
+        // ...
+      })
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+  }
+  render() {
+    const { user } = this.state;
     return user ? (
       <Landing user={user} />
     ) : (
@@ -68,7 +98,7 @@ class Login extends React.Component {
                         <Button
                           className='btn-neutral btn-icon ml-1'
                           color='default'
-                          onClick={signInWithGoogle}
+                          onClick={this.signInWithGoogle}
                         >
                           <span className='btn-inner--icon mr-1'>
                             <img
@@ -161,11 +191,10 @@ class Login extends React.Component {
   }
 }
 
-const firebaseAppAuth = FirebaseApp.auth();
-const providers = {
-  googleProvider: new firebase.auth.GoogleAuthProvider(),
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  };
 };
-export default withFirebaseAuth({
-  providers,
-  firebaseAppAuth,
-})(Login);
+
+export default connect(mapStateToProps, actions)(Login);
