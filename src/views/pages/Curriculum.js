@@ -10,7 +10,6 @@ import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
 import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
 import Curriculum_cal from '../IndexSections/Curriculum_cal';
-import moment from 'moment';
 
 import { curriculum_Ref } from '../../config/firebase';
 

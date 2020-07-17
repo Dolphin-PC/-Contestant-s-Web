@@ -1,7 +1,7 @@
 import React from 'react';
 // nodejs library that concatenates classes
 import classnames from 'classnames';
-import { dbRef, teamList_Ref, fireBase } from '../../config/firebase';
+import { teamList_Ref } from '../../config/firebase';
 
 // reactstrap components
 import {
@@ -28,14 +28,12 @@ import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
 import TeamList from '../IndexSections/TeamList';
 import RowTabs from '../../components/Contents/RowTabs';
-import TeamMember from '../../components/Contents/TeamMember';
+
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-
-var DatePicker = require('reactstrap-date-picker');
 
 class Day extends React.Component {
   constructor(props) {
@@ -61,9 +59,9 @@ class Day extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    this.readSeason();
   }
   componentWillMount() {
+    this.readSeason();
     const { fetchUserData, getUserData } = this.props;
 
     firebase.auth().onAuthStateChanged(function (userState) {
@@ -74,6 +72,7 @@ class Day extends React.Component {
     });
   }
 
+  // TODO: 데이터 추가시, 추가된 데이터만 state에 추가 (현 문제 : 추가된 데이터가 아니라 DB 맨 마지막에 있는 데이터가 state에 추가됨)
   readSeason() {
     teamList_Ref.once('value', (snap) => {
       for (const i in snap.val()) {
@@ -89,7 +88,11 @@ class Day extends React.Component {
   }
 
   toggleModal = (state) => {
-    if (state === 'seasonModal' || state === 'addTeamModal') {
+    if (
+      state === 'seasonModal' ||
+      state === 'addTeamModal' ||
+      state === 'memberModal'
+    ) {
       if (this.props.user.isSupporter) {
         this.setState({
           [state]: !this.state[state],
@@ -98,10 +101,15 @@ class Day extends React.Component {
         alert('서포터즈 전용 메뉴입니다.');
         return;
       }
-    } else {
-      this.setState({
-        [state]: !this.state[state],
-      });
+    } else if (state === 'meetingLogModal') {
+      // TODO: supporter === 해당 권한자만으로
+      if (this.props.user.isSupporter) {
+        this.setState({
+          [state]: !this.state[state],
+        });
+      } else {
+        alert('허가된 사용자만 가능합니다.');
+      }
     }
   };
 
@@ -163,10 +171,8 @@ class Day extends React.Component {
   }
 
   readTeam(select) {
-    teamList_Ref.child(`${select}/`).once('value', (snap) => {
-      this.setState({
-        TeamInfo: [],
-      });
+    teamList_Ref.child(`${select}/`).on('value', (snap) => {
+      this.state.TeamInfo = [];
       for (const i in snap.val()) {
         this.setState({
           TeamInfo: this.state.TeamInfo.concat({
@@ -260,9 +266,11 @@ class Day extends React.Component {
   };
 
   DeleteClickHandler = (index, title) => {
-    alert(`[${title}]팀을 삭제합니다.`);
-    window.location.reload();
-    teamList_Ref.child(`${this.state.selectedSeason}/` + title).remove();
+    if (this.props.user.isSupporter) {
+      alert(`[${title}]팀을 삭제합니다.`);
+      window.location.reload();
+      teamList_Ref.child(`${this.state.selectedSeason}/` + title).remove();
+    }
   };
 
   seasonHandleSubmit = (event) => {
@@ -287,31 +295,39 @@ class Day extends React.Component {
     });
   }
   trashClickEvent = () => {
-    const { selectedSeason, detailTitle, selectedMeetingLogName } = this.state;
-    console.log('trash');
-    confirmAlert({
-      title: '해당 회의록을 삭제하시겠습니까?',
-      message: '삭제된 이후에는 복구가 불가능합니다.',
-      buttons: [
-        {
-          label: '삭제',
-          onClick: () => {
-            // console.log(selectedSeason, detailTitle, selectedMeetingLogName);
-            teamList_Ref
-              .child(
-                `${selectedSeason}/${detailTitle}/teamDay/${selectedMeetingLogName}`
-              )
-              .remove();
-            alert('삭제되었습니다.');
-            window.location.reload();
+    if (this.props.user.isSupporter) {
+      const {
+        selectedSeason,
+        detailTitle,
+        selectedMeetingLogName,
+      } = this.state;
+      console.log('trash');
+      confirmAlert({
+        title: '해당 회의록을 삭제하시겠습니까?',
+        message: '삭제된 이후에는 복구가 불가능합니다.',
+        buttons: [
+          {
+            label: '삭제',
+            onClick: () => {
+              // console.log(selectedSeason, detailTitle, selectedMeetingLogName);
+              teamList_Ref
+                .child(
+                  `${selectedSeason}/${detailTitle}/teamDay/${selectedMeetingLogName}`
+                )
+                .remove();
+              alert('삭제되었습니다.');
+              window.location.reload();
+            },
           },
-        },
-        {
-          label: '취소',
-          onClick: () => {},
-        },
-      ],
-    });
+          {
+            label: '취소',
+            onClick: () => {},
+          },
+        ],
+      });
+    } else {
+      alert('허가된 사용자만 가능합니다.');
+    }
   };
 
   render() {

@@ -22,10 +22,10 @@ import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import CardsFooter from 'components/Footers/CardsFooter.js';
 
 // Firebase AUTH
-import withFirebaseAuth from 'react-with-firebase-auth';
+
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { FirebaseApp } from '../../config/firebase';
+
 import Landing from './Landing';
 import * as actions from '../../actions';
 import { connect } from 'react-redux';
@@ -49,26 +49,22 @@ class Login extends React.Component {
       .auth()
       .signInWithPopup(provider)
       .then(function (result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
         var user = result.user;
         console.log(user);
-        // ...
       })
       .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+        // // Handle Errors here.
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        // // The email of the user's account used.
+        // var email = error.email;
+        // // The firebase.auth.AuthCredential type that was used.
+        // var credential = error.credential;
+        // // ...
       });
   }
   render() {
-    const { user } = this.state;
+    const { user } = this.props;
     return user ? (
       <Landing user={user} />
     ) : (

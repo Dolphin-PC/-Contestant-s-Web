@@ -18,7 +18,6 @@ import Budget from 'views/pages/Budget.js';
 import Rule from 'views/pages/Rule.js';
 import Day from 'views/pages/Day.js';
 import Idea from 'views/pages/Idea.js';
-import TeamDetail from 'views/pages/TeamDetail';
 
 import Test from './Test';
 

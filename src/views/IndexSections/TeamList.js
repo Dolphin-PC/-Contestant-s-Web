@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Col, Card, Badge, CardBody } from 'reactstrap';
-import { Link } from 'react-router-dom';
 
 class TeamList extends Component {
   render() {

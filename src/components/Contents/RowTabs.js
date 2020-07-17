@@ -1,7 +1,6 @@
 import React from 'react';
 // nodejs library that concatenates classes
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 
 // reactstrap components
 import {
@@ -14,9 +13,7 @@ import {
   TabPane,
   Row,
   Col,
-  Button,
 } from 'reactstrap';
-import { createSolutionBuilderWithWatchHost } from 'typescript';
 
 import ColTabs from './ColTabs';
 

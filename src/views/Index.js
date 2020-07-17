@@ -14,7 +14,7 @@ import Inputs from './IndexSections/Inputs.js';
 import CustomControls from './IndexSections/CustomControls.js';
 import Menus from './IndexSections/Menus.js';
 import Navbars from './IndexSections/Navbars.js';
-import Tabs from './IndexSections/Tabs.js';
+
 import Progress from './IndexSections/Progress.js';
 import Pagination from './IndexSections/Pagination.js';
 import Pills from './IndexSections/Pills.js';
@@ -28,7 +28,7 @@ import TooltipPopover from './IndexSections/TooltipPopover.js';
 import Icons from './IndexSections/Icons.js';
 import Login from './IndexSections/Login.js';
 import Download from './IndexSections/Download.js';
-import RowTabs from '../components/Contents/RowTabs';
+
 class Index extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;

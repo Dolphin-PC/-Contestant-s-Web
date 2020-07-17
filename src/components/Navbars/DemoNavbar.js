@@ -22,10 +22,8 @@ import {
   Badge,
 } from 'reactstrap';
 
-import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import { FirebaseApp } from '../../config/firebase';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';

@@ -1,7 +1,6 @@
 import React from 'react';
 // nodejs library that concatenates classes
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 
 // reactstrap components
 import {
@@ -16,10 +15,13 @@ import {
   Col,
 } from 'reactstrap';
 import { BsFillTrashFill, BsPencilSquare, BsCheckBox } from 'react-icons/bs';
-import { createSolutionBuilderWithWatchHost } from 'typescript';
+
 import { confirmAlert } from 'react-confirm-alert';
 import '../../assets/css/App.css';
-import { dbRef, teamList_Ref } from '../../config/firebase';
+import { teamList_Ref } from '../../config/firebase';
+
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class ColTabs extends React.Component {
   state = {
@@ -52,45 +54,49 @@ class ColTabs extends React.Component {
     const { isEditable, editOpinion, editFeedback, editEtc } = this.state;
     const { selectedSeason, detailTitle, title } = this.props;
     // -> 편집모드
-    if (!isEditable) {
-      this.setState({
-        isEditable: !isEditable,
-      });
-    } else {
-      // Edit -> Complete
-      confirmAlert({
-        title: '해당 회의록을 수정완료하시겠습니까?',
-        message: '수정된 이후에는 복구가 불가능합니다.',
-        buttons: [
-          {
-            label: '수정',
-            onClick: () => {
-              console.log(selectedSeason, detailTitle, title);
-              teamList_Ref
-                .child(`${selectedSeason}/${detailTitle}/teamDay/${title}`)
-                .update({
-                  opinion: editOpinion,
-                  feedback: editFeedback,
-                  etc: editEtc,
+    if (this.props.user.isSupporter) {
+      if (!isEditable) {
+        this.setState({
+          isEditable: !isEditable,
+        });
+      } else {
+        // Edit -> Complete
+        confirmAlert({
+          title: '해당 회의록을 수정완료하시겠습니까?',
+          message: '수정된 이후에는 복구가 불가능합니다.',
+          buttons: [
+            {
+              label: '수정',
+              onClick: () => {
+                console.log(selectedSeason, detailTitle, title);
+                teamList_Ref
+                  .child(`${selectedSeason}/${detailTitle}/teamDay/${title}`)
+                  .update({
+                    opinion: editOpinion,
+                    feedback: editFeedback,
+                    etc: editEtc,
+                  });
+                alert('수정되었습니다.');
+                window.location.reload();
+              },
+            },
+            {
+              label: '취소',
+              onClick: () => {},
+            },
+            {
+              label: '저장하지 않고 수정모드 종료',
+              onClick: () => {
+                this.setState({
+                  isEditable: false,
                 });
-              alert('수정되었습니다.');
-              window.location.reload();
+              },
             },
-          },
-          {
-            label: '취소',
-            onClick: () => {},
-          },
-          {
-            label: '저장하지 않고 수정모드 종료',
-            onClick: () => {
-              this.setState({
-                isEditable: false,
-              });
-            },
-          },
-        ],
-      });
+          ],
+        });
+      }
+    } else {
+      alert('허가된 사용자만 가능합니다.');
     }
   };
   render() {
@@ -221,4 +227,10 @@ ColTabs.defaultProps = {
   subtitle: '회의록을 입력해주세요.',
 };
 
-export default ColTabs;
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  };
+};
+
+export default connect(mapStateToProps, actions)(ColTabs);
