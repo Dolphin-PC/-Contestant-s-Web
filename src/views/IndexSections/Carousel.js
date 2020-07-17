@@ -52,7 +52,7 @@ const items = [
   {
     src: require('assets/img/Landing/landing_1.jpg'),
     altText: '',
-    caption: '',
+    captionText: '',
     header: '',
   },
 ];

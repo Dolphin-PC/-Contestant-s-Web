@@ -17,7 +17,8 @@ export const Firestore = firestore.settings(firestore_settings);
 // Realtime DB
 const databaseRef = firebase.database().ref();
 export const dbRef = databaseRef;
-export const todosRef = databaseRef.child('todos');
+export const UserDBRef = databaseRef.child('user');
+// export const todosRef = databaseRef.child('todos');
 export const LandingRef = databaseRef.child('landing');
 export const teamList_Ref = databaseRef.child('teamList');
 export const curriculum_Ref = databaseRef.child('curriculum');

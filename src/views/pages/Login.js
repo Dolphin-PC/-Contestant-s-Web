@@ -27,6 +27,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { FirebaseApp } from '../../config/firebase';
 import Landing from './Landing';
+import * as actions from '../../actions';
 
 class Login extends React.Component {
   componentDidMount() {
@@ -34,8 +35,10 @@ class Login extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.main.scrollTop = 0;
   }
+
   render() {
     const { user, signInWithGoogle } = this.props;
+
     return user ? (
       <Landing user={user} />
     ) : (

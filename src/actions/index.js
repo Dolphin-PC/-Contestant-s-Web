@@ -1,5 +1,5 @@
-import { todosRef, LandingRef } from '../config/firebase';
-import { FETCH_TODOS, FETCH_LANDING } from './types';
+import * as Ref from '../config/firebase';
+import * as types from './types';
 import firebase from 'firebase/app';
 
 // Firebase Auth
@@ -16,37 +16,42 @@ export const signIn = (credentials) => {
   };
 };
 
-// Firebase Database
-export const addToDo = (newToDo) => async (dispatch) => {
-  todosRef.push().set(newToDo);
+export const addLanding = (newLanding) => async (dispatch) => {
+  Ref.LandingRef.push().set(newLanding);
 };
 
-export const completeToDo = (completeToDoId) => async (dispatch) => {
-  todosRef.child(completeToDoId).remove();
+export const completeLanding = (completeLandingId) => async (dispatch) => {
+  Ref.LandingRef.child(completeLandingId).remove();
 };
 
-export const fetchToDos = () => async (dispatch) => {
-  todosRef.on('value', (snapshot) => {
+export const fetchLanding = () => async (dispatch) => {
+  Ref.LandingRef.on('value', (snapshot) => {
     dispatch({
-      type: FETCH_TODOS,
+      type: types.FETCH_LANDING,
       payload: snapshot.val(),
     });
   });
 };
 
-export const addLanding = (newLanding) => async (dispatch) => {
-  LandingRef.push().set(newLanding);
-};
-
-export const completeLanding = (completeLandingId) => async (dispatch) => {
-  LandingRef.child(completeLandingId).remove();
-};
-
-export const fetchLanding = () => async (dispatch) => {
-  LandingRef.on('value', (snapshot) => {
+export const getUserData = (userName, userUID) => async (dispatch) => {
+  Ref.UserDBRef.child(`${userName}(${userUID})`).once('value', (snapshot) => {
     dispatch({
-      type: FETCH_LANDING,
+      type: types.GET_USERDATA,
       payload: snapshot.val(),
     });
+  });
+};
+export const fetchUserData = (userName, userEmail, userUID) => async (
+  dispatch
+) => {
+  Ref.UserDBRef.child(`${userName}(${userUID})`).update({
+    userName: userName,
+    userEmail: userEmail,
+    userUID: userUID,
+  });
+};
+export const logoutUserData = () => async (dispatch) => {
+  dispatch({
+    type: types.LOGOUT_USERDATA,
   });
 };

@@ -12,6 +12,7 @@ import Hero from '../IndexSections/Hero';
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import * as firebase from 'firebase/app';
 
 import Carousel from '../../views/IndexSections/Carousel';
 import SubCarousel from 'views/IndexSections/SubCarousel.js';
@@ -53,7 +54,16 @@ class Landing extends Component {
     this.ReadActivity();
   }
   componentWillMount() {
-    this.props.fetchLanding();
+    var userAuth = firebase.auth().currentUser;
+    // console.log(userAuth);
+    if (userAuth) {
+      this.props.fetchUserData(
+        userAuth.displayName,
+        userAuth.email,
+        userAuth.uid
+      );
+      this.props.getUserData(userAuth.displayName, userAuth.uid);
+    }
   }
 
   ReadActivity() {
@@ -159,9 +169,9 @@ class Landing extends Component {
   }
 }
 
-const mapStateToProps = ({ data }) => {
+const mapStateToProps = ({ user }) => {
   return {
-    data,
+    user,
   };
 };
 
