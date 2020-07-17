@@ -1,7 +1,7 @@
 import React from 'react';
 // nodejs library that concatenates classes
 import classnames from 'classnames';
-import { teamList_Ref } from '../../config/firebase';
+import { teamList_Ref, UserDBRef } from '../../config/firebase';
 
 // reactstrap components
 import {
@@ -18,6 +18,9 @@ import {
   Button,
   Modal,
   Badge,
+  FormGroup,
+  Label,
+  Input,
 } from 'reactstrap';
 
 import * as firebase from 'firebase/app';
@@ -53,12 +56,19 @@ class Day extends React.Component {
       date: new Date().toISOString().split('T')[0],
       selectedMeetingLogName: '',
       value: '',
+      users: [],
     };
   }
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+
+    UserDBRef.once('value', (snap) => {
+      for (const i in snap.val()) {
+        this.state.users.push(i);
+      }
+    });
   }
   componentWillMount() {
     this.readSeason();
@@ -127,7 +137,7 @@ class Day extends React.Component {
 
   MemberHandleSubmit = (event) => {
     if (this.state.value === '') {
-      alert('팀원을 입력해주세요.');
+      alert('팀원을 선택해주세요.');
       event.preventDefault();
       return;
     }
@@ -135,9 +145,13 @@ class Day extends React.Component {
     this.AddTeamMember(this.state.value);
   };
 
-  AddTeamMember = (Name) => {
+  AddTeamMember = (memberData) => {
     const { detailTitle } = this.state;
-    alert(`[${Name}] 님을 추가합니다.`);
+    alert(`[${memberData}] 님을 추가합니다.`);
+
+    var Name = memberData.split('(')[0];
+    var UID = memberData.split('(')[1];
+    UID = UID.slice(0, -1);
 
     teamList_Ref
       .child(
@@ -146,6 +160,7 @@ class Day extends React.Component {
       .set(
         {
           memberName: Name,
+          memberUID: UID,
         },
         function () {
           alert('추가 완료!');
@@ -223,11 +238,7 @@ class Day extends React.Component {
         console.log(snap.val());
 
         for (const i in Member) {
-          this.setState({
-            TeamMate: this.state.TeamMate.concat({
-              name: i,
-            }),
-          });
+          this.state.TeamMate.push({ name: i });
         }
       });
     this.setState({
@@ -503,11 +514,26 @@ class Day extends React.Component {
                                     </div>
                                     <form onSubmit={this.MemberHandleSubmit}>
                                       <div className='modal-body'>
-                                        <input
+                                        {this.state.users.map((con, i) => {
+                                          return (
+                                            <FormGroup check>
+                                              <Label check>
+                                                <Input
+                                                  name='radio'
+                                                  value={con}
+                                                  type='radio'
+                                                  onChange={this.handleChange}
+                                                />{' '}
+                                                {con}
+                                              </Label>
+                                            </FormGroup>
+                                          );
+                                        })}
+                                        {/* <input
                                           type='text'
                                           onChange={this.handleChange}
                                           placeholder='팀원 이름을 입력해주세요.'
-                                        ></input>
+                                        ></input> */}
                                       </div>
                                       <div className='modal-footer'>
                                         <Button
