@@ -34,20 +34,32 @@ export const fetchLanding = () => async (dispatch) => {
 };
 
 export const getUserData = (userName, userUID) => async (dispatch) => {
-  Ref.UserDBRef.child(`${userName}(${userUID})`).once('value', (snapshot) => {
+  Ref.UserDBRef.child(`${userName}(${userUID})`).on('value', (snapshot) => {
     dispatch({
       type: types.GET_USERDATA,
       payload: snapshot.val(),
     });
   });
 };
-export const fetchUserData = (userName, userEmail, userUID) => async (
-  dispatch
-) => {
-  Ref.UserDBRef.child(`${userName}(${userUID})`).update({
-    userName: userName,
-    userEmail: userEmail,
-    userUID: userUID,
+export const fetchUserData = (
+  userName,
+  userEmail,
+  userUID,
+  isAuth,
+  isSupporter
+) => async (dispatch) => {
+  Ref.UserDBRef.child(`${userName}(${userUID})`).once('value', (snapshot) => {
+    if (snapshot.exists()) {
+      console.log('exist');
+    } else {
+      Ref.UserDBRef.child(`${userName}(${userUID})`).update({
+        userName: userName,
+        userEmail: userEmail,
+        userUID: userUID,
+        isAuth: false,
+        isSupporter: false,
+      });
+    }
   });
 };
 export const logoutUserData = () => async (dispatch) => {
