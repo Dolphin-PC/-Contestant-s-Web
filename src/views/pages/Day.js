@@ -118,6 +118,14 @@ class Day extends React.Component {
           [state]: !this.state[state],
         });
       } else {
+        for (const i in this.state.TeamMate) {
+          if (this.state.TeamMate[i].UID === this.props.user.userUID) {
+            this.setState({
+              [state]: !this.state[state],
+            });
+            return;
+          }
+        }
         alert('허가된 사용자만 가능합니다.');
       }
     }
@@ -234,12 +242,15 @@ class Day extends React.Component {
     teamList_Ref
       .child(`${this.state.selectedSeason}/${title}/team_member`)
       .once('value', (snap) => {
-        const Member = snap.val();
-        console.log(snap.val());
-
-        for (const i in Member) {
-          this.state.TeamMate.push({ name: i });
-        }
+        snap.forEach(
+          function (snapShot) {
+            // console.log(snapShot.val());
+            this.state.TeamMate.push({
+              name: snapShot.child('memberName').val(),
+              UID: snapShot.child('memberUID').val(),
+            });
+          }.bind(this)
+        );
       });
     this.setState({
       isLoading: true,
@@ -266,8 +277,6 @@ class Day extends React.Component {
   };
 
   OffDetail = () => {
-    console.log(this.state.team_member);
-
     this.setState({
       isDetail: false,
       detailTitle: '',
@@ -516,7 +525,7 @@ class Day extends React.Component {
                                       <div className='modal-body'>
                                         {this.state.users.map((con, i) => {
                                           return (
-                                            <FormGroup check>
+                                            <FormGroup check key={i}>
                                               <Label check>
                                                 <Input
                                                   name='radio'
