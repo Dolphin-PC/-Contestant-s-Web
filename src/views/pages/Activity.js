@@ -250,7 +250,7 @@ class Activity extends React.Component {
                     <ul className='list-unstyled mt-5'>
                       {testMapData.map((test, i) => {
                         return (
-                          <li className='py-2'>
+                          <li className='py-2' key={i}>
                             <div className='d-flex align-items-center'>
                               <div>
                                 <Badge
@@ -309,7 +309,7 @@ class Activity extends React.Component {
                     <ul className='list-unstyled mt-5'>
                       {testMapData.map((contact, i) => {
                         return (
-                          <li className='py-2'>
+                          <li className='py-2' key={i}>
                             <div className='d-flex align-items-center'>
                               <div>
                                 <Badge
@@ -366,7 +366,7 @@ class Activity extends React.Component {
               <Row>
                 {supporter_info.map((contact, i) => {
                   return (
-                    <Col className='mb-5 mb-lg-0' lg='3' md='6'>
+                    <Col className='mb-5 mb-lg-0' lg='3' md='6' key={i}>
                       <div className='px-4'>
                         <img
                           alt='...'

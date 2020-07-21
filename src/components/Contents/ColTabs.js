@@ -23,7 +23,14 @@ import { teamList_Ref } from '../../config/firebase';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
+import 'codemirror/lib/codemirror.css';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
+import { Editor } from '@toast-ui/react-editor';
+
 class ColTabs extends React.Component {
+  editorRef = React.createRef();
+
   state = {
     iconTabs: 1,
     plainTabs: 1,
@@ -48,6 +55,13 @@ class ColTabs extends React.Component {
   };
   handleEtcChange = (event) => {
     this.setState({ editEtc: event.target.value });
+  };
+
+  handleEditorSave = () => {
+    console.log(this.editorRef.current.getInstance().getHtml());
+    this.setState({
+      editOpinion: this.editorRef.current.getInstance().getHtml(),
+    });
   };
 
   handleChangeMeetingLog = () => {
@@ -99,6 +113,7 @@ class ColTabs extends React.Component {
       alert('허가된 사용자만 가능합니다.');
     }
   };
+
   render() {
     const { isEditable } = this.state;
     return (
@@ -218,6 +233,16 @@ class ColTabs extends React.Component {
             </Card>
           </Col>
         </Row>
+        <Editor
+          initialValue={this.state.editOpinion}
+          previewStyle='vertical'
+          height='600px'
+          initialEditType='markdown'
+          useCommandShortcut={true}
+          ref={this.editorRef}
+        />
+        <button onClick={this.handleEditorSave}>Save</button>
+        <button onClick={this.handleEditorLoad}>Load</button>
       </>
     );
   }

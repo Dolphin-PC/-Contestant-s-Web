@@ -8,14 +8,14 @@ export default class MainContent extends Component {
       <div>
         {MapData.map((Contact, i) => {
           return (
-            <section className='section section-lg'>
+            <section className='section section-lg' key={i}>
               <Container>
                 <Row className='row-grid '>
                   <Col className='order-md-2' md='9'>
                     <ul>
                       {Contact.detail.map((detailContact, i) => {
                         return (
-                          <li style={{ listStyle: 'none' }}>
+                          <li style={{ listStyle: 'none' }} key={i}>
                             <Badge
                               className='text-uppercase'
                               color={Contact.badgeInfo.color}
@@ -42,6 +42,7 @@ export default class MainContent extends Component {
                       {Contact.badgeInfo.map((BadgeContact, i) => {
                         return (
                           <Badge
+                            key={i}
                             color={BadgeContact.color}
                             pill
                             className='mr-1'

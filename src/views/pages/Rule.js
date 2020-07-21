@@ -164,7 +164,7 @@ class Rule extends React.Component {
                 <Row className='row-grid'>
                   {CardInfo.map((contact, i) => {
                     return (
-                      <Col lg='3'>
+                      <Col lg='3' key={i}>
                         <Card className='card-lift--hover shadow border-0'>
                           <CardBody className='py-5'>
                             <div className={contact.property}>
@@ -181,6 +181,7 @@ class Rule extends React.Component {
                                     color={badgeContact.color}
                                     pill
                                     className='mr-1'
+                                    key={i}
                                   >
                                     {badgeContact.text}
                                   </Badge>

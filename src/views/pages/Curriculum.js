@@ -13,24 +13,26 @@ import Curriculum_cal from '../IndexSections/Curriculum_cal';
 
 import { curriculum_Ref } from '../../config/firebase';
 
-const events = [
-  {
-    start: '2020/06/19',
-    end: '2020/06/25',
-    title: 'test',
-  },
-];
+import Calendar from 'tui-calendar'; /* ES6 */
+import 'tui-calendar/dist/tui-calendar.css';
 
+// If you use the default popups, use this.
+import 'tui-date-picker/dist/tui-date-picker.css';
+import 'tui-time-picker/dist/tui-time-picker.css';
+// TODO: 캘린더 작업하기
+// https://ui.toast.com/tui-calendar/
 class Curriculum extends React.Component {
   state = {
     title: '2020커리큘럼',
     description: "'공모자들'의 2020년 계획표입니다.",
     plans: [],
   };
+
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.ReadFirebaseforPlan();
+    this.Calendar();
   }
 
   ReadFirebaseforPlan() {
@@ -48,14 +50,52 @@ class Curriculum extends React.Component {
       }
     });
   }
+
+  Calendar() {
+    var calendar = new Calendar('#calendar', {
+      defaultView: 'month',
+      taskView: true,
+      template: {
+        monthDayname: function (dayname) {
+          return (
+            '<span class="calendar-week-dayname-name">' +
+            dayname.label +
+            '</span>'
+          );
+        },
+      },
+    });
+
+    calendar.createSchedules([
+      {
+        id: '1',
+        calendarId: '1',
+        title: 'my schedule',
+        category: 'time',
+        dueDateClass: '',
+        start: '2020-07-18T22:30:00+09:00',
+        end: '2020-07-19T02:30:00+09:00',
+      },
+      {
+        id: '2',
+        calendarId: '1',
+        title: 'second schedule',
+        category: 'time',
+        dueDateClass: '',
+        start: '2020-07-19T17:30:00+09:00',
+        end: '2020-07-24T17:31:00+09:00',
+        isReadOnly: true, // schedule is read-only
+      },
+    ]);
+  }
+
   render() {
     return (
       <div>
         <DemoNavbar />
         <Background title={this.state.title} desc={this.state.description} />
-        <Container>
-          <Curriculum_cal events={this.state.plans} />
-        </Container>
+
+        <Container id='calendar' />
         <CardsFooter />
       </div>
     );
