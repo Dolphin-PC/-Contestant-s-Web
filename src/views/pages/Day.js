@@ -215,19 +215,18 @@ class Day extends React.Component {
       .child(`${this.state.selectedSeason}/${title}/teamDay`)
       .once('value', (snap) => {
         for (const i in snap.val()) {
+          console.log(i);
           teamList_Ref
             .child(`${this.state.selectedSeason}/` + title + '/teamDay/' + i)
             .once('value', (snap) => {
               const data = snap.val();
-              this.setState({
-                Day_Data: this.state.Day_Data.concat({
-                  tabsTitle: data.tabsTitle,
-                  tabsSubTitle: data.tabsSubTitle,
-                  opinion: data.opinion,
-                  feedback: data.feedback,
-                  etc: data.etc,
-                  tabs: data.tabs,
-                }),
+              this.state.Day_Data.push({
+                tabsTitle: data.tabsTitle,
+                tabsSubTitle: data.tabsSubTitle,
+                opinion: data.opinion,
+                feedback: data.feedback,
+                etc: data.etc,
+                tabs: data.tabs,
               });
             });
           count += 1;
