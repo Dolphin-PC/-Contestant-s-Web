@@ -25,11 +25,14 @@ import * as actions from '../../actions';
 
 import 'codemirror/lib/codemirror.css';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
-import { Editor } from '@toast-ui/react-editor';
+import { Editor, Viewer } from '@toast-ui/react-editor';
 
 class ColTabs extends React.Component {
-  editorRef = React.createRef();
+  editorOpinionRef = React.createRef();
+  editorFeedbackRef = React.createRef();
+  editorEtcRef = React.createRef();
 
   state = {
     iconTabs: 1,
@@ -58,9 +61,13 @@ class ColTabs extends React.Component {
   };
 
   handleEditorSave = () => {
-    console.log(this.editorRef.current.getInstance().getHtml());
+    console.log(this.editorOpinionRef.current.getInstance().getHtml());
+    console.log(this.editorFeedbackRef.current.getInstance().getHtml());
+    console.log(this.editorEtcRef.current.getInstance().getHtml());
     this.setState({
-      editOpinion: this.editorRef.current.getInstance().getHtml(),
+      editOpinion: this.editorOpinionRef.current.getInstance().getHtml(),
+      editFeedback: this.editorFeedbackRef.current.getInstance().getHtml(),
+      editEtc: this.editorEtcRef.current.getInstance().getHtml(),
     });
   };
 
@@ -74,6 +81,7 @@ class ColTabs extends React.Component {
           isEditable: !isEditable,
         });
       } else {
+        this.handleEditorSave();
         // Edit -> Complete
         confirmAlert({
           title: '해당 회의록을 수정완료하시겠습니까?',
@@ -86,9 +94,13 @@ class ColTabs extends React.Component {
                 teamList_Ref
                   .child(`${selectedSeason}/${detailTitle}/teamDay/${title}`)
                   .update({
-                    opinion: editOpinion,
-                    feedback: editFeedback,
-                    etc: editEtc,
+                    opinion: this.editorOpinionRef.current
+                      .getInstance()
+                      .getHtml(),
+                    feedback: this.editorFeedbackRef.current
+                      .getInstance()
+                      .getHtml(),
+                    etc: this.editorEtcRef.current.getInstance().getHtml(),
                   });
                 alert('수정되었습니다.');
                 window.location.reload();
@@ -194,38 +206,56 @@ class ColTabs extends React.Component {
                 <TabContent activeTab={'plainTabs' + this.state.plainTabs}>
                   <TabPane tabId='plainTabs1'>
                     {isEditable ? (
-                      <textarea
-                        id='editTextArea'
-                        onChange={this.handleOpinionChange}
-                      >
-                        {this.props.opinion}
-                      </textarea>
+                      <div>
+                        <Editor
+                          initialValue={this.props.opinion}
+                          previewStyle='vertical'
+                          height='600px'
+                          initialEditType='wysiwyg'
+                          useCommandShortcut={true}
+                          ref={this.editorOpinionRef}
+                        />
+                      </div>
                     ) : (
-                      <p className='description'>{this.props.opinion}</p>
+                      <div>
+                        <Viewer initialValue={this.props.opinion} />
+                      </div>
                     )}
                   </TabPane>
                   <TabPane tabId='plainTabs2'>
                     {isEditable ? (
-                      <textarea
-                        id='editTextArea'
-                        onChange={this.handleFeedbackChange}
-                      >
-                        {this.props.feedback}
-                      </textarea>
+                      <div>
+                        <Editor
+                          initialValue={this.props.feedback}
+                          previewStyle='vertical'
+                          height='600px'
+                          initialEditType='wysiwyg'
+                          useCommandShortcut={true}
+                          ref={this.editorFeedbackRef}
+                        />
+                      </div>
                     ) : (
-                      <p className='description'>{this.props.feedback}</p>
+                      <div>
+                        <Viewer initialValue={this.props.feedback} />
+                      </div>
                     )}
                   </TabPane>
                   <TabPane tabId='plainTabs3'>
                     {isEditable ? (
-                      <textarea
-                        id='editTextArea'
-                        onChange={this.handleEtcChange}
-                      >
-                        {this.props.etc}
-                      </textarea>
+                      <div>
+                        <Editor
+                          initialValue={this.props.etc}
+                          previewStyle='vertical'
+                          height='600px'
+                          initialEditType='wysiwyg'
+                          useCommandShortcut={true}
+                          ref={this.editorEtcRef}
+                        />
+                      </div>
                     ) : (
-                      <p className='description'>{this.props.etc}</p>
+                      <div>
+                        <Viewer initialValue={this.props.etc} />
+                      </div>
                     )}
                   </TabPane>
                 </TabContent>
@@ -233,16 +263,6 @@ class ColTabs extends React.Component {
             </Card>
           </Col>
         </Row>
-        <Editor
-          initialValue={this.state.editOpinion}
-          previewStyle='vertical'
-          height='600px'
-          initialEditType='markdown'
-          useCommandShortcut={true}
-          ref={this.editorRef}
-        />
-        <button onClick={this.handleEditorSave}>Save</button>
-        <button onClick={this.handleEditorLoad}>Load</button>
       </>
     );
   }
