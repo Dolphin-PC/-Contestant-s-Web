@@ -67,3 +67,16 @@ export const logoutUserData = () => async (dispatch) => {
     type: types.LOGOUT_USERDATA,
   });
 };
+
+export const getTeamDataFromFB = (selectedSeason, TeamTitle) => async (
+  dispatch
+) => {
+  Ref.dbRef
+    .child(`teamList/${selectedSeason}/${TeamTitle}/team_member`)
+    .once('value', (snapShot) => {
+      dispatch({
+        type: types.GET_TEAMDATA,
+        payload: snapShot.val(),
+      });
+    });
+};

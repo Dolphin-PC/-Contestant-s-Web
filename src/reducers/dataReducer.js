@@ -1,10 +1,12 @@
-import { FETCH_TODOS, FETCH_LANDING } from '../actions/types';
+import * as types from '../actions/types';
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case FETCH_LANDING:
+    case types.FETCH_LANDING:
       return action.payload;
-    case FETCH_TODOS:
+    case types.FETCH_TODOS:
+      return action.payload;
+    case types.GET_TEAMDATA:
       return action.payload;
     default:
       return state;

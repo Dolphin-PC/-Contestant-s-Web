@@ -29,18 +29,23 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 import { Editor, Viewer } from '@toast-ui/react-editor';
 
+// Components
+import FeedbackAccordion from '../FeedbackAccordion';
+import FeedbackTextField from '../FeedbackTextField';
+
 class ColTabs extends React.Component {
   editorOpinionRef = React.createRef();
   editorFeedbackRef = React.createRef();
   editorEtcRef = React.createRef();
 
   state = {
-    iconTabs: 1,
     plainTabs: 1,
     isEditable: false,
     editOpinion: this.props.opinion,
     editFeedback: this.props.feedback,
     editEtc: this.props.etc,
+    receiveFeedback: [],
+    isThisAuth: false,
   };
 
   toggleNavs = (e, state, index) => {
@@ -49,16 +54,24 @@ class ColTabs extends React.Component {
       [state]: index,
     });
   };
+  componentDidMount() {
+    const { selectedSeason, detailTitle, user } = this.props;
 
-  handleOpinionChange = (event) => {
-    this.setState({ editOpinion: event.target.value });
-  };
-  handleFeedbackChange = (event) => {
-    this.setState({ editFeedback: event.target.value });
-  };
-  handleEtcChange = (event) => {
-    this.setState({ editEtc: event.target.value });
-  };
+    console.log(user.userUID);
+
+    teamList_Ref
+      .child(`${selectedSeason}/${detailTitle}/team_member/${user.userName}`)
+      .once(
+        'value',
+        function (snapShot) {
+          if (snapShot.exists()) {
+            if (snapShot.val().memberUID === user.userUID) {
+              this.setState({ isThisAuth: true });
+            }
+          }
+        }.bind(this)
+      );
+  }
 
   handleEditorSave = () => {
     console.log(this.editorOpinionRef.current.getInstance().getHtml());
@@ -75,7 +88,7 @@ class ColTabs extends React.Component {
     const { isEditable, editOpinion, editFeedback, editEtc } = this.state;
     const { selectedSeason, detailTitle, title } = this.props;
     // -> 편집모드
-    if (this.props.user.isSupporter) {
+    if (this.props.user.isSupporter || this.state.isThisAuth) {
       if (!isEditable) {
         this.setState({
           isEditable: !isEditable,
@@ -265,6 +278,10 @@ class ColTabs extends React.Component {
               </CardBody>
             </Card>
           </Col>
+          <Col lg='12'>
+            <FeedbackAccordion />
+            <FeedbackTextField />
+          </Col>
         </Row>
       </>
     );
@@ -275,9 +292,10 @@ ColTabs.defaultProps = {
   subtitle: '회의록을 입력해주세요.',
 };
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user, data }) => {
   return {
     user,
+    data,
   };
 };
 

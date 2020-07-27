@@ -235,6 +235,7 @@ class Day extends React.Component {
           dayDataCount: count,
         });
       });
+    this.props.getTeamDataFromFB(this.state.selectedSeason, title);
   }
 
   Read_Team_Member(title) {
@@ -801,9 +802,10 @@ class Day extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user, data }) => {
   return {
     user,
+    data,
   };
 };
 
