@@ -279,8 +279,16 @@ class ColTabs extends React.Component {
             </Card>
           </Col>
           <Col lg='12'>
-            <FeedbackAccordion />
-            <FeedbackTextField />
+            <FeedbackAccordion
+              selectedSeason={this.props.selectedSeason}
+              detailTitle={this.props.detailTitle}
+              meetingLog={this.props.title}
+            />
+            <FeedbackTextField
+              selectedSeason={this.props.selectedSeason}
+              detailTitle={this.props.detailTitle}
+              meetingLog={this.props.title}
+            />
           </Col>
         </Row>
       </>

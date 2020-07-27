@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import '../styles/main.css';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import * as Ref from '../config/firebase';
 
 const initialUserState = {
   isAuth: false,
@@ -19,7 +20,6 @@ class FeedbackTextField extends React.Component {
     super(props);
     this.state = {
       value: '',
-      user: [],
     };
   }
 
@@ -28,13 +28,25 @@ class FeedbackTextField extends React.Component {
       value: event.target.value,
     });
   };
-  handleOnClick = () => {};
+  handleOnClick = () => {
+    const { selectedSeason, detailTitle, meetingLog, user } = this.props;
+    Ref.teamList_Ref
+      .child(`${selectedSeason}/${detailTitle}/teamDay/${meetingLog}/feedbacks`)
+      .push({
+        userName: user.userName,
+        userUID: user.userUID,
+        date: new Date().toISOString().split('T')[0],
+        feedback: this.state.value,
+      });
+    this.setState({ value: '' });
+  };
   render() {
     return (
       <form noValidate autoComplete='off'>
         <Row>
           <Col lg='9'>
             <TextField
+              value={this.state.value}
               style={{ width: '100%' }}
               id='outlined-textarea'
               label='Write FeedBack'
