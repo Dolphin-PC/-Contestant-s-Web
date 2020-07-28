@@ -176,9 +176,9 @@ class Day extends React.Component {
       );
   };
 
-  addMeetingLog = (subTitle) => {
+  addMeetingLog = (e) => {
+    e.preventDefault();
     const { detailTitle, date, selectedSeason, dayDataCount } = this.state;
-    alert('새로운 회의록을 추가합니다.');
 
     teamList_Ref.child(`${selectedSeason}/${detailTitle}/teamDay/${date}`).set({
       tabsTitle: date,
@@ -213,7 +213,8 @@ class Day extends React.Component {
     var count = 0;
     teamList_Ref
       .child(`${this.state.selectedSeason}/${title}/teamDay`)
-      .once('value', (snap) => {
+      .on('value', (snap) => {
+        this.state.Day_Data = [];
         for (const i in snap.val()) {
           console.log(i);
           teamList_Ref
@@ -335,8 +336,6 @@ class Day extends React.Component {
                   `${selectedSeason}/${detailTitle}/teamDay/${selectedMeetingLogName}`
                 )
                 .remove();
-              alert('삭제되었습니다.');
-              window.location.reload();
             },
           },
           {

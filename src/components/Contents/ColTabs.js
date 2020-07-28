@@ -115,11 +115,9 @@ class ColTabs extends React.Component {
                       .getHtml(),
                     etc: this.editorEtcRef.current.getInstance().getHtml(),
                   });
-                alert('수정되었습니다.');
                 this.setState({
                   isEditable: false,
                 });
-                window.location.reload();
               },
             },
             {
