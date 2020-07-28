@@ -3,6 +3,7 @@ import React from 'react';
 import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
 import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
+import lottieWallet from '../../lotties/Wallet.json';
 
 class Budget extends React.Component {
   state = {};
@@ -15,6 +16,8 @@ class Budget extends React.Component {
       <div>
         <DemoNavbar />
         <Background
+          lottieName={lottieWallet}
+          lottieSize='200'
           title='예산계획과 사용내역'
           desc="'공모자들'의 예산내역을 투명하게 공개합니다."
         />

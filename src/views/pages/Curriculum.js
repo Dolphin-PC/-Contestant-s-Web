@@ -19,6 +19,9 @@ import 'tui-calendar/dist/tui-calendar.css';
 // If you use the default popups, use this.
 import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
+
+import lottieCalendar from '../../lotties/Calendar.json';
+
 // TODO: 캘린더 작업하기
 // https://ui.toast.com/tui-calendar/
 class Curriculum extends React.Component {
@@ -93,8 +96,12 @@ class Curriculum extends React.Component {
     return (
       <div>
         <DemoNavbar />
-        <Background title={this.state.title} desc={this.state.description} />
-
+        <Background
+          title={this.state.title}
+          desc={this.state.description}
+          lottieName={lottieCalendar}
+          lottieSize='100'
+        />
         <Container id='calendar' />
         <CardsFooter />
       </div>

@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import { Container, Col, Row } from 'reactstrap';
+import Lottie from 'react-lottie';
 
 export default class Background extends Component {
   render() {
+    const defaultOptions = {
+      loop: true,
+      autoplay: true,
+      animationData: this.props.lottieName,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice',
+      },
+    };
     return (
       <div className='position-relative'>
         {/* shape Hero */}
@@ -21,10 +30,15 @@ export default class Background extends Component {
           <Container className='py-lg-md d-flex'>
             <div className='col px-0'>
               <Row>
-                <Col lg='6'>
+                <Col lg='2'>
+                  <Lottie
+                    options={defaultOptions}
+                    width={this.props.lottieSize}
+                  />
+                </Col>
+                <Col lg='8'>
                   <h1 className='display-3 text-white'>{this.props.title}</h1>
                   <p className='lead text-white'>{this.props.desc}</p>
-                  <div className='btn-wrapper'></div>
                 </Col>
               </Row>
             </div>
