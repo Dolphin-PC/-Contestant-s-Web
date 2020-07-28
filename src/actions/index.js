@@ -16,11 +16,11 @@ export const signIn = (credentials) => {
   };
 };
 
-export const addLanding = (newLanding) => async (dispatch) => {
+export const addLanding = (newLanding) => {
   Ref.LandingRef.push().set(newLanding);
 };
 
-export const completeLanding = (completeLandingId) => async (dispatch) => {
+export const completeLanding = (completeLandingId) => {
   Ref.LandingRef.child(completeLandingId).remove();
 };
 

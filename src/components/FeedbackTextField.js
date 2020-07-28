@@ -30,9 +30,16 @@ class FeedbackTextField extends React.Component {
   };
   handleOnClick = () => {
     const { selectedSeason, detailTitle, meetingLog, user } = this.props;
-    Ref.teamList_Ref
+    var newPostKey = Ref.teamList_Ref
       .child(`${selectedSeason}/${detailTitle}/teamDay/${meetingLog}/feedbacks`)
-      .push({
+      .push().key;
+
+    Ref.teamList_Ref
+      .child(
+        `${selectedSeason}/${detailTitle}/teamDay/${meetingLog}/feedbacks/${newPostKey}`
+      )
+      .set({
+        feedbackUID: newPostKey,
         userName: user.userName,
         userUID: user.userUID,
         date: new Date().toISOString().split('T')[0],

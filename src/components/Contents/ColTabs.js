@@ -280,6 +280,7 @@ class ColTabs extends React.Component {
           </Col>
           <Col lg='12'>
             <FeedbackAccordion
+              userUID={this.props.user.userUID}
               selectedSeason={this.props.selectedSeason}
               detailTitle={this.props.detailTitle}
               meetingLog={this.props.title}
