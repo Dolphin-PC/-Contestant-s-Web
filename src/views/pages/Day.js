@@ -242,7 +242,8 @@ class Day extends React.Component {
   Read_Team_Member(title) {
     teamList_Ref
       .child(`${this.state.selectedSeason}/${title}/team_member`)
-      .once('value', (snap) => {
+      .on('value', (snap) => {
+        this.state.TeamMate = [];
         snap.forEach(
           function (snapShot) {
             // console.log(snapShot.val());
