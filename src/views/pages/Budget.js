@@ -6,7 +6,6 @@ import Background from '../IndexSections/Background';
 import lottieWallet from '../../lotties/Wallet.json';
 
 class Budget extends React.Component {
-  state = {};
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;

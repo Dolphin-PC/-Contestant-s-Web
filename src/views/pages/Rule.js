@@ -9,6 +9,7 @@ import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
 import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
 import MainContent from '../IndexSections/MainContent';
+import lottieRule from '../../lotties/Rule.json';
 
 const CardInfo = [
   {
@@ -154,6 +155,7 @@ class Rule extends React.Component {
       <div>
         <DemoNavbar />
         <Background
+          lottieName={lottieRule}
           title='운영 방안과 규칙'
           desc='공모자들, 이것만은 꼭! 지켜주세요.'
         />

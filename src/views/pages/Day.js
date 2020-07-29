@@ -37,6 +37,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import lottieDay from '../../lotties/Day.json';
 
 class Day extends React.Component {
   constructor(props) {
@@ -358,6 +359,7 @@ class Day extends React.Component {
       <div>
         <DemoNavbar />
         <Background
+          lottieName={lottieDay}
           title='공모자의 하루'
           desc='회의 및 프로젝트 진행상황을 보고합니다.'
         />

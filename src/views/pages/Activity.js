@@ -9,6 +9,7 @@ import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
 import CardsFooter from '../../components/Footers/CardsFooter.js';
 import SubCarousel from '../IndexSections/SubCarousel';
 import Background from '../IndexSections/Background';
+import lottieActivity from '../../lotties/Activity.json';
 
 const prizeItems = [
   {
@@ -96,6 +97,7 @@ class Activity extends React.Component {
         <DemoNavbar />
         <main ref='main'>
           <Background
+            lottieName={lottieActivity}
             title="'공모자들' 활동"
             desc="'공모자들'의 활약들을 소개합니다.😎"
           />
