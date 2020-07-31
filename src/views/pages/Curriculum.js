@@ -82,9 +82,33 @@ class Curriculum extends React.Component {
         return 'End date';
       },
       popupSave: function () {
+        calendar.on('beforeCreateSchedule', (scheduleData) => {
+          const schedule = {
+            title: scheduleData.title,
+            isAllDay: scheduleData.isAllDay,
+            start: scheduleData.start,
+            end: scheduleData.end,
+            category: scheduleData.isAllDay ? 'allday' : 'time',
+            triggerEventName: scheduleData.triggerEventName,
+          };
+          if (schedule.triggerEventName === 'click') {
+            console.log('click');
+          } else if (schedule.triggerEventName === 'dblclick') {
+            console.log('DBclick');
+          }
+
+          calendar.createSchedules([schedule]);
+
+          alert('일정 생성 완료');
+        });
         return 'Save';
       },
       popupUpdate: function () {
+        calendar.on('beforeUpdateSchedule', (scheduleData) => {
+          const { schedule } = scheduleData;
+
+          calendar.updateSchedule(schedule.id, schedule.calendarId, schedule);
+        });
         return 'Update';
       },
       popupDetailDate: function (isAllDay, start, end) {
@@ -123,6 +147,13 @@ class Curriculum extends React.Component {
         return 'Edit';
       },
       popupDelete: function () {
+        calendar.on('beforeDeleteSchedule', (scheduleData) => {
+          const { schedule, start, end } = scheduleData;
+
+          schedule.start = start;
+          schedule.end = end;
+          calendar.deleteSchedule(schedule.id, schedule.calendarId);
+        });
         return 'Delete';
       },
     };
@@ -166,21 +197,18 @@ class Curriculum extends React.Component {
       calendar.prev();
       this.setState({
         Year: calendar.getDate().getFullYear(),
-
         Month: calendar.getDate().getMonth() + 1,
       });
     } else if (value === 1) {
       calendar.next();
       this.setState({
         Year: calendar.getDate().getFullYear(),
-
         Month: calendar.getDate().getMonth() + 1,
       });
     } else {
       calendar.today();
       this.setState({
         Year: calendar.getDate().getFullYear(),
-
         Month: calendar.getDate().getMonth() + 1,
       });
     }
