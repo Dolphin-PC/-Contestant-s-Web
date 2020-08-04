@@ -44,7 +44,7 @@ class Curriculum extends React.Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    this.ReadFirebaseforPlan();
+
     this.Calendar();
   }
 
@@ -84,49 +84,46 @@ class Curriculum extends React.Component {
       popupSave: function () {
         calendar.on('beforeCreateSchedule', (scheduleData) => {
           const schedule = {
+            calendarId: '1',
+            id: String(Math.random() * 100000000000000000),
             title: scheduleData.title,
             isAllDay: scheduleData.isAllDay,
             start: scheduleData.start,
             end: scheduleData.end,
             category: scheduleData.isAllDay ? 'allday' : 'time',
-            triggerEventName: scheduleData.triggerEventName,
           };
-          if (schedule.triggerEventName === 'click') {
-            console.log('click');
-          } else if (schedule.triggerEventName === 'dblclick') {
-            console.log('DBclick');
-          }
+          curriculum_Ref.push({
+            calendarId: schedule.calendarId,
+            id: schedule.id,
+            title: schedule.title,
+            isAllDay: schedule.isAllDay,
+            start: schedule.start.toDate().toString(),
+            end: schedule.end.toDate().toString(),
+            category: schedule.isAllDay ? 'allday' : 'time',
+          });
+          console.log('schedule Add Event', schedule);
 
           calendar.createSchedules([schedule]);
 
-          alert('일정 생성 완료');
+          calendar.off('beforeCreateSchedule');
+
+          // console.log(schedule);
+          // console.log('getTime', schedule.getTime());
+          // console.log('toLocalTime', schedule.start.toLocalTime());
+          // console.log('toDate', schedule.start.toDate());
+          // console.log('toUTCString', schedule.start.toUTCString());
+          // console.log('getUTCTime', schedule.start.getUTCTime());
         });
         return 'Save';
       },
       popupUpdate: function () {
-        calendar.on('beforeUpdateSchedule', (scheduleData) => {
-          const { schedule } = scheduleData;
+        calendar.on('beforeUpdateSchedule', function (event) {
+          var schedule = event.schedule;
+          var changes = event.changes;
 
-          calendar.updateSchedule(schedule.id, schedule.calendarId, schedule);
+          calendar.updateSchedule(schedule.id, schedule.calendarId, changes);
         });
         return 'Update';
-      },
-      popupDetailDate: function (isAllDay, start, end) {
-        var isSameDate = moment(start).isSame(end);
-        var endFormat = (isSameDate ? '' : 'YYYY.MM.DD ') + 'hh:mm a';
-
-        if (isAllDay) {
-          return (
-            moment(start).format('YYYY.MM.DD') +
-            (isSameDate ? '' : ' - ' + moment(end).format('YYYY.MM.DD'))
-          );
-        }
-
-        return (
-          moment(start).format('YYYY.MM.DD hh:mm a') +
-          ' - ' +
-          moment(end).format(endFormat)
-        );
       },
       popupDetailLocation: function (schedule) {
         return 'Location : ' + schedule.location;
@@ -157,17 +154,12 @@ class Curriculum extends React.Component {
         return 'Delete';
       },
     };
-
     calendar = new Calendar('#calendar', {
       defaultView: 'month',
       template: templates,
       useCreationPopup: true,
       useDetailPopup: true,
       isReadOnly: false,
-    });
-    this.setState({
-      Month: calendar.getDate().getMonth() + 1,
-      Year: calendar.getDate().getFullYear(),
     });
 
     calendar.createSchedules([
@@ -177,19 +169,24 @@ class Curriculum extends React.Component {
         title: 'my schedule',
         category: 'time',
         dueDateClass: '',
-        start: '2020-07-18T22:30:00+09:00',
-        end: '2020-07-19T02:30:00+09:00',
+        start: '2020-08-18T22:30:00+09:00',
+        end: '2020-08-19T02:30:00+09:00',
       },
       {
         id: '2',
-        calendarId: '2',
+        calendarId: '1',
         title: 'second schedule',
         category: 'time',
         dueDateClass: '',
-        start: '2020-07-19T17:30:00+09:00',
-        end: '2020-07-24T17:31:00+09:00',
+        start: '2020-08-18T17:30:00+09:00',
+        end: '2020-08-19T17:31:00+09:00',
       },
     ]);
+
+    this.setState({
+      Month: calendar.getDate().getMonth() + 1,
+      Year: calendar.getDate().getFullYear(),
+    });
   }
 
   handleMonth(value) {
