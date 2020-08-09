@@ -12,7 +12,7 @@ import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
 import Curriculum_cal from '../IndexSections/Curriculum_cal';
 
-import { curriculum_Ref } from '../../config/firebase';
+import { curriculum_Ref, dbRef } from '../../config/firebase';
 
 import Calendar from 'tui-calendar'; /* ES6 */
 import 'tui-calendar/dist/tui-calendar.css';
@@ -28,6 +28,10 @@ import moment from 'moment';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+import * as firebase from 'firebase/app';
+
 // TODO: 캘린더 작업하기
 // https://ui.toast.com/tui-calendar/
 let calendar;
@@ -39,12 +43,21 @@ class Curriculum extends React.Component {
     plans: [],
     Month: '',
     Year: '',
+    isSupporter: '',
   };
 
-  componentDidMount() {
+  componentWillMount() {
+    const { getUserData } = this.props;
+    firebase.auth().onAuthStateChanged(function (userState) {
+      if (userState) {
+        getUserData(userState.displayName, userState.uid);
+      }
+    });
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+  }
 
+  componentDidMount() {
     this.Calendar();
   }
 
@@ -65,6 +78,8 @@ class Curriculum extends React.Component {
   }
 
   Calendar() {
+    const { user } = this.props;
+    console.log(user);
     var templates = {
       popupIsAllDay: function () {
         return 'All Day';
@@ -120,8 +135,44 @@ class Curriculum extends React.Component {
         calendar.on('beforeUpdateSchedule', function (event) {
           var schedule = event.schedule;
           var changes = event.changes;
+          var stateTitle = schedule.title;
+          var stateStart = schedule.start;
+          var stateEnd = schedule.end;
+          var stateCategory = schedule.category;
 
           calendar.updateSchedule(schedule.id, schedule.calendarId, changes);
+
+          if (changes.title) {
+            stateTitle = changes.title;
+          }
+          if (changes.start) {
+            stateStart = changes.start;
+          }
+          if (changes.end) {
+            stateEnd = changes.end;
+          }
+          if (changes.stateCategory) {
+            stateCategory = changes.stateCategory;
+          }
+
+          // console.log(stateStart.toDate());
+          // console.log(stateEnd.toDate());
+
+          dbRef
+            .child('curriculum/')
+            .orderByChild('id')
+            .equalTo(schedule.id)
+            .once('value', (snap) => {
+              snap.forEach(function (childSnapshot) {
+                var childKey = childSnapshot.key;
+                curriculum_Ref.child(`${childKey}/`).update({
+                  title: stateTitle,
+                  start: stateStart.toDate(),
+                  end: stateEnd.toDate(),
+                  category: stateCategory,
+                });
+              });
+            });
         });
         return 'Update';
       },
@@ -150,6 +201,17 @@ class Curriculum extends React.Component {
           schedule.start = start;
           schedule.end = end;
           calendar.deleteSchedule(schedule.id, schedule.calendarId);
+
+          dbRef
+            .child('curriculum/')
+            .orderByChild('id')
+            .equalTo(schedule.id)
+            .once('value', (snap) => {
+              snap.forEach(function (childSnapshot) {
+                var childKey = childSnapshot.key;
+                curriculum_Ref.child(`${childKey}/`).remove();
+              });
+            });
         });
         return 'Delete';
       },
@@ -162,26 +224,21 @@ class Curriculum extends React.Component {
       isReadOnly: false,
     });
 
-    calendar.createSchedules([
-      {
-        id: '1',
-        calendarId: '1',
-        title: 'my schedule',
-        category: 'time',
-        dueDateClass: '',
-        start: '2020-08-18T22:30:00+09:00',
-        end: '2020-08-19T02:30:00+09:00',
-      },
-      {
-        id: '2',
-        calendarId: '1',
-        title: 'second schedule',
-        category: 'time',
-        dueDateClass: '',
-        start: '2020-08-18T17:30:00+09:00',
-        end: '2020-08-19T17:31:00+09:00',
-      },
-    ]);
+    curriculum_Ref.once('value', (snapShot) => {
+      snapShot.forEach(function (childSnapShot) {
+        const data = childSnapShot.val();
+        calendar.createSchedules([
+          {
+            id: data.id,
+            calendarId: data.calendarId,
+            title: data.title,
+            category: data.category,
+            start: data.start,
+            end: data.end,
+          },
+        ]);
+      });
+    });
 
     this.setState({
       Month: calendar.getDate().getMonth() + 1,
@@ -246,4 +303,11 @@ class Curriculum extends React.Component {
   }
 }
 
-export default Curriculum;
+const mapStateToProps = ({ user, data }) => {
+  return {
+    user,
+    data,
+  };
+};
+
+export default connect(mapStateToProps, actions)(Curriculum);

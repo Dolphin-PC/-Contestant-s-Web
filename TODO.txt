@@ -30,3 +30,5 @@ TODO:
 해야되는 거 : 
 1) curriculum 일정 데이터를 구조화하여 firebaseDB에 입력해보고 불러오기 테스트
 2) curriculum 일정 저장/편집하여 firebaseDB에 push
+
+
