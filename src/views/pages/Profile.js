@@ -53,13 +53,10 @@ class Profile extends React.Component {
                   <Row className='justify-content-center'>
                     <Col className='order-lg-2' lg='3'>
                       <div className='card-profile-image'>
-                        <a href='#pablo' onClick={(e) => e.preventDefault()}>
-                          <img
-                            alt='...'
-                            className='rounded-circle'
-                            src={require('assets/img/theme/team-4-800x800.jpg')}
-                          />
-                        </a>
+                        <a
+                          href='#pablo'
+                          onClick={(e) => e.preventDefault()}
+                        ></a>
                       </div>
                     </Col>
                     <Col

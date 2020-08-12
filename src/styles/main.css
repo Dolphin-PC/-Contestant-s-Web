@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;500;900&display=swap');
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+}
+
+p,
+a {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+}
 #FeedbackButton {
   margin: 8px;
 }

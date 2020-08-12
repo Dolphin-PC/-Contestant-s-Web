@@ -28,7 +28,7 @@ TODO:
 4. login.js 아이디/패스워드 로그인
 
 해야되는 거 : 
-1) curriculum 일정 데이터를 구조화하여 firebaseDB에 입력해보고 불러오기 테스트
-2) curriculum 일정 저장/편집하여 firebaseDB에 push
-
+완//1) curriculum 일정 데이터를 구조화하여 firebaseDB에 입력해보고 불러오기 테스트
+완//2) curriculum 일정 저장/편집하여 firebaseDB에 push
+curriculum permission denied 에러 처리하기
 

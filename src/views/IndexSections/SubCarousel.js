@@ -3,15 +3,6 @@ import React from 'react';
 // reactstrap components
 import { Container, Row, Col, UncontrolledCarousel } from 'reactstrap';
 
-const items = [
-  {
-    src: require('assets/img/theme/img-1-1200x1000.jpg'),
-  },
-  {
-    src: require('assets/img/theme/img-2-1200x1000.jpg'),
-  },
-];
-
 class SubCarousel extends React.Component {
   render() {
     return (
@@ -30,9 +21,5 @@ class SubCarousel extends React.Component {
     );
   }
 }
-
-SubCarousel.defaultProps = {
-  items: items,
-};
 
 export default SubCarousel;

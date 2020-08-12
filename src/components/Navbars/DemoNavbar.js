@@ -258,7 +258,7 @@ class DemoNavbar extends React.Component {
                       ''
                     )}
                   </NavItem>
-                  <NavItem className='d-none d-lg-block ml-lg-4'>
+                  <NavItem>
                     {user !== '' ? (
                       <Button
                         className='btn-neutral btn-icon'
