@@ -20,7 +20,11 @@ class Budget extends React.Component {
           title='예산계획과 사용내역'
           desc="'공모자들'의 예산내역을 투명하게 공개합니다."
         />
-        <h1 style={{ textAlign: 'center' }}>😭작업 중에 있습니다😭</h1>
+        <h1 style={{ textAlign: 'center' }}>
+          <span role='img' aria-label='work'>
+            😭작업 중에 있습니다😭
+          </span>
+        </h1>
         <CardsFooter />
       </div>
     );

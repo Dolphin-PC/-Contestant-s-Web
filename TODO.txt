@@ -3,23 +3,12 @@
   // TODO: 회의록 내용 변화
   // [희의록 파일 업로드 및 다운로드]
 
-
-
-
-TODO: 2020커리큘럼 : 달력에 추가되는 만큼 게시판형식으로 표시
-( 시작날짜 / 종료날짜 / 제목 / 색(?))
-
 TODO: 아이디어 : 게시판 형식으로 (isAuth)만 게시글 생성가능
 삭제 및 편집은 당사자 혹은 서포터즈만 가능
 
 TODO: Budget(예산) : 리스트 형식
 
-
-
 TODO: 로그인된 후에, 새로고침했을 때, isLoading 표시
-
-TODO: 
-1. curriculum.js 일정 추가/수정/삭제
 
 2. idea.js Accordion 추가하고, 권한 설정
 
@@ -27,8 +16,6 @@ TODO:
 
 4. login.js 아이디/패스워드 로그인
 
-해야되는 거 : 
-완//1) curriculum 일정 데이터를 구조화하여 firebaseDB에 입력해보고 불러오기 테스트
-완//2) curriculum 일정 저장/편집하여 firebaseDB에 push
 curriculum permission denied 에러 처리하기
+
 

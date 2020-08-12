@@ -85,7 +85,7 @@ class ColTabs extends React.Component {
   };
 
   handleChangeMeetingLog = () => {
-    const { isEditable, editOpinion, editFeedback, editEtc } = this.state;
+    const { isEditable } = this.state;
     const { selectedSeason, detailTitle, title } = this.props;
     // -> 편집모드
     if (this.props.user.isSupporter || this.state.isThisAuth) {

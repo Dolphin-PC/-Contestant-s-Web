@@ -7,14 +7,6 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import * as Ref from '../config/firebase';
 
-const initialUserState = {
-  isAuth: false,
-  isSupporter: false,
-  userEmail: '',
-  userName: '',
-  userUID: '',
-};
-
 class FeedbackTextField extends React.Component {
   constructor(props) {
     super(props);

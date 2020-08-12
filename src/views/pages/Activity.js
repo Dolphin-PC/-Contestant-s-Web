@@ -240,7 +240,11 @@ class Activity extends React.Component {
             <Container>
               <Row className='row-grid align-items-center'>
                 <Col className='order-md-2' md='6'>
-                  <h1>😭작업 중에 있습니다😭</h1>
+                  <h1>
+                    <span role='img' aria-label='sad'>
+                      😭작업 중에 있습니다😭
+                    </span>
+                  </h1>
                 </Col>
                 <Col className='order-md-1' md='6'>
                   <div className='pr-md-5'>
@@ -288,7 +292,9 @@ class Activity extends React.Component {
                     </div>
                     <h3>수상/경험</h3>
                     <p className='lead'>
-                      '공모자들'에서 수상한 작품들입니다!👏
+                      <span role='img' aria-label='clap'>
+                        '공모자들'에서 수상한 작품들입니다!👏
+                      </span>
                     </p>
                   </div>
                 </Col>

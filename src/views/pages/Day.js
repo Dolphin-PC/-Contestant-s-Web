@@ -198,15 +198,12 @@ class Day extends React.Component {
     teamList_Ref.child(`${select}/`).on('value', (snap) => {
       this.state.TeamInfo = [];
       for (const i in snap.val()) {
-        this.setState({
-          TeamInfo: this.state.TeamInfo.concat({
-            title: i,
-          }),
-        });
+        console.log(i);
+        this.state.TeamInfo.push({ title: i });
       }
-    });
-    this.setState({
-      isLoading: true,
+      this.setState({
+        isLoading: true,
+      });
     });
   }
 
@@ -365,7 +362,11 @@ class Day extends React.Component {
         />
         {isAuth || isSupporter ? (
           ready ? (
-            <h1 style={{ textAlign: 'center' }}>😭작업 중에 있습니다😭</h1>
+            <h1 style={{ textAlign: 'center' }}>
+              <span role='img' aria-label='work'>
+                😭작업 중에 있습니다😭
+              </span>
+            </h1>
           ) : (
             <section className='section section-lg pt-lg-0 mt--200'>
               <Container>

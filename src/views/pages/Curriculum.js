@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import DemoNavbar from '../../components/Navbars/DemoNavbar.js';
 import CardsFooter from '../../components/Footers/CardsFooter.js';
 import Background from '../IndexSections/Background';
-import Curriculum_cal from '../IndexSections/Curriculum_cal';
 
 import { curriculum_Ref, dbRef } from '../../config/firebase';
 
@@ -22,8 +21,6 @@ import 'tui-date-picker/dist/tui-date-picker.css';
 import 'tui-time-picker/dist/tui-time-picker.css';
 
 import lottieCalendar from '../../lotties/Calendar.json';
-
-import moment from 'moment';
 
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -79,7 +76,7 @@ class Curriculum extends React.Component {
 
   Calendar() {
     const { user } = this.props;
-    console.log(user);
+    // console.log(user);
     var templates = {
       popupIsAllDay: function () {
         return 'All Day';

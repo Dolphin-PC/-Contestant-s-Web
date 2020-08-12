@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { dbRef } from '../../config/firebase';
 
 // reactstrap components
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 
 // core components
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
@@ -77,15 +77,34 @@ class Landing extends Component {
       <div>
         <DemoNavbar />
         <Hero />
-        <Carousel
-          items={mainItems}
-          title='공모자들'
-          subtitle='무슨 동아리인가요?'
-          text1='춘천 유일의 공모전 연합동아리 입니다.
-          ‘공모자들’에서는 경험이 없어도, 잘 하지 못해도 누구든 다양한
-          사람들과 함께 공모전에 도전할 수 있습니다👍'
-          link='activity'
-        />
+        <Container style={{ paddingTop: '2rem' }}>
+          <Row>
+            <Col lg='6' xs='12'>
+              <h1 className=' font-weight-bold'>공모자들</h1>
+              <h2 className=' font-weight-light'>무슨 동아리인가요?</h2>
+              <p className='lead mt-4'>
+                춘천 유일의 공모전 연합동아리 입니다.
+                <br />
+                ‘공모자들’에서는 경험이 없어도, 잘 하지 못해도
+                <br />
+                누구든 다양한 사람들과 함께 <br />
+                공모전에 도전할 수 있습니다👍
+              </p>
+
+              <Button
+                className='btn-blue mt-4'
+                color='default'
+                href='/activity'
+              >
+                더 알아보기
+              </Button>
+            </Col>
+            <Col lg='6'>
+              <Carousel items={mainItems} />
+            </Col>
+          </Row>
+        </Container>
+
         <hr />
         <Container style={{ textAlign: 'center' }}>
           <h1>'공모자들'은 뭘 하나요?</h1>
@@ -118,6 +137,7 @@ class Landing extends Component {
             </Col>
             <Col className='col-12 col-sm-4'>
               <SubCarousel category='수상/경험' items={awardItems} />
+
               <Row className='justify-content-center'>
                 <ButtonPopover
                   title='수상'

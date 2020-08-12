@@ -52,12 +52,7 @@ class Profile extends React.Component {
                 <div className='px-4'>
                   <Row className='justify-content-center'>
                     <Col className='order-lg-2' lg='3'>
-                      <div className='card-profile-image'>
-                        <a
-                          href='#pablo'
-                          onClick={(e) => e.preventDefault()}
-                        ></a>
-                      </div>
+                      <div className='card-profile-image'></div>
                     </Col>
                     <Col
                       className='order-lg-3 text-lg-right align-self-lg-center'

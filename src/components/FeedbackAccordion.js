@@ -12,7 +12,6 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import * as Ref from '../config/firebase';
 import { Badge } from 'reactstrap';
 import '../styles/main.css';
-import * as actions from '../actions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +41,7 @@ export default function FeedbackAccordion(props) {
           setFeedback((oldArray) => [...oldArray, childSnapShot.val()]);
         });
       });
-  }, [1]);
+  }, []);
   const handleSelectFeedback = (index) => {
     if (feedback[index].userUID === props.userUID) {
       setSelectedFeedback(index);
