@@ -792,7 +792,7 @@ class Day extends React.Component {
           )
         ) : (
           <div>
-            <h1 style={{ textAlign: 'center' }}>로그인이 필요합니다.</h1>
+            <h1 style={{ textAlign: 'center' }}>로그인/인증이 필요합니다.</h1>
             <p style={{ textAlign: 'center' }}>
               로그인/인증 문제가 생기셨다면 '공모자들' 서포터즈에게 연락주세요.
             </p>
