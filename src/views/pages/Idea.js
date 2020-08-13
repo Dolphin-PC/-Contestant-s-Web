@@ -7,6 +7,12 @@ import Background from '../IndexSections/Background';
 import IdeaTable from '../../components/Contents/IdeaTable';
 
 export class Idea extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isReady: false,
+    };
+  }
   render() {
     return (
       <div>
@@ -15,7 +21,12 @@ export class Idea extends Component {
           title='아이디어 게시판'
           desc='아이디어가 있다면 자유롭게 작성해주세요!'
         />
-        <IdeaTable />
+        {this.state.isReady ? (
+          <IdeaTable />
+        ) : (
+          <h1 style={{ textAlign: 'center' }}>준비중입니다.</h1>
+        )}
+
         <CardsFooter />
       </div>
     );

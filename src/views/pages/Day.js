@@ -195,65 +195,69 @@ class Day extends React.Component {
   }
 
   readTeam(select) {
+    var data;
     teamList_Ref.child(`${select}/`).on('value', (snap) => {
-      this.state.TeamInfo = [];
+      data = [];
       for (const i in snap.val()) {
         console.log(i);
-        this.state.TeamInfo.push({ title: i });
+        data.push({ title: i });
       }
       this.setState({
         isLoading: true,
+        TeamInfo: data,
       });
     });
   }
 
   Read_Day_Data(title) {
     var count = 0;
+    var data;
     teamList_Ref
       .child(`${this.state.selectedSeason}/${title}/teamDay`)
       .on('value', (snap) => {
-        this.state.Day_Data = [];
+        data = [];
         for (const i in snap.val()) {
           console.log(i);
           teamList_Ref
             .child(`${this.state.selectedSeason}/` + title + '/teamDay/' + i)
             .once('value', (snap) => {
-              const data = snap.val();
-              this.state.Day_Data.push({
-                tabsTitle: data.tabsTitle,
-                tabsSubTitle: data.tabsSubTitle,
-                opinion: data.opinion,
-                feedback: data.feedback,
-                etc: data.etc,
-                tabs: data.tabs,
+              const dataSnap = snap.val();
+              data.push({
+                tabsTitle: dataSnap.tabsTitle,
+                tabsSubTitle: dataSnap.tabsSubTitle,
+                opinion: dataSnap.opinion,
+                feedback: dataSnap.feedback,
+                etc: dataSnap.etc,
+                tabs: dataSnap.tabs,
               });
             });
           count += 1;
         }
         this.setState({
           dayDataCount: count,
+          Day_Data: data,
         });
       });
     this.props.getTeamDataFromFB(this.state.selectedSeason, title);
   }
 
   Read_Team_Member(title) {
+    var data;
     teamList_Ref
       .child(`${this.state.selectedSeason}/${title}/team_member`)
       .on('value', (snap) => {
-        this.state.TeamMate = [];
-        snap.forEach(
-          function (snapShot) {
-            // console.log(snapShot.val());
-            this.state.TeamMate.push({
-              name: snapShot.child('memberName').val(),
-              UID: snapShot.child('memberUID').val(),
-            });
-          }.bind(this)
-        );
+        data = [];
+        snap.forEach(function (snapShot) {
+          // console.log(snapShot.val());
+          data.push({
+            name: snapShot.child('memberName').val(),
+            UID: snapShot.child('memberUID').val(),
+          });
+        });
       });
     this.setState({
       isLoading: true,
+      TeamMate: data,
     });
   }
 

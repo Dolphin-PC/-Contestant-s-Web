@@ -30,7 +30,6 @@ export default function FeedbackAccordion(props) {
   const [selectedFeedback, setSelectedFeedback] = useState('');
 
   const { selectedSeason, detailTitle, meetingLog } = props;
-
   useEffect(() => {
     Ref.teamList_Ref
       .child(`${selectedSeason}/${detailTitle}/teamDay/${meetingLog}/feedbacks`)
@@ -41,7 +40,7 @@ export default function FeedbackAccordion(props) {
           setFeedback((oldArray) => [...oldArray, childSnapShot.val()]);
         });
       });
-  }, []);
+  }, [detailTitle, meetingLog, selectedSeason]);
   const handleSelectFeedback = (index) => {
     if (feedback[index].userUID === props.userUID) {
       setSelectedFeedback(index);

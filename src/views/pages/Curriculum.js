@@ -34,28 +34,42 @@ import * as firebase from 'firebase/app';
 let calendar;
 
 class Curriculum extends React.Component {
-  state = {
-    title: '2020커리큘럼',
-    description: "'공모자들'의 2020년 계획표입니다.",
-    plans: [],
-    Month: '',
-    Year: '',
-    isSupporter: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '2020커리큘럼',
+      description: "'공모자들'의 2020년 계획표입니다.",
+      plans: [],
+      Month: '',
+      Year: '',
+      isSupporter: false,
+    };
+  }
 
   componentWillMount() {
-    const { getUserData } = this.props;
-    firebase.auth().onAuthStateChanged(function (userState) {
-      if (userState) {
-        getUserData(userState.displayName, userState.uid);
-      }
-    });
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }
 
   componentDidMount() {
-    this.Calendar();
+    const { isSupporter } = this.props.user;
+    const { getUserData } = this.props;
+    firebase.auth().onAuthStateChanged(
+      function (user) {
+        if (user) {
+          getUserData(user.displayName, user.uid);
+          console.log(isSupporter);
+          this.setState({
+            isSupporter: true,
+          });
+        } else {
+          this.setState({
+            isSupporter: false,
+          });
+        }
+        this.Calendar(!this.state.isSupporter);
+      }.bind(this)
+    );
   }
 
   ReadFirebaseforPlan() {
@@ -74,8 +88,8 @@ class Curriculum extends React.Component {
     });
   }
 
-  Calendar() {
-    const { user } = this.props;
+  Calendar(isRead) {
+    console.log('isRead', isRead);
     // console.log(user);
     var templates = {
       popupIsAllDay: function () {
@@ -218,7 +232,7 @@ class Curriculum extends React.Component {
       template: templates,
       useCreationPopup: true,
       useDetailPopup: true,
-      isReadOnly: false,
+      isReadOnly: isRead,
     });
 
     curriculum_Ref.once('value', (snapShot) => {

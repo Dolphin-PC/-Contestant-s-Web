@@ -11,26 +11,6 @@ export default class MainContent extends Component {
             <section className='section section-lg' key={i}>
               <Container>
                 <Row className='row-grid '>
-                  <Col className='order-md-2' md='9'>
-                    <ul>
-                      {Contact.detail.map((detailContact, i) => {
-                        return (
-                          <li style={{ listStyle: 'none' }} key={i}>
-                            <Badge
-                              className='text-uppercase'
-                              color={Contact.badgeInfo.color}
-                              pill
-                            >
-                              #{i + 1}
-                            </Badge>
-
-                            <h3>{detailContact.main}</h3>
-                            <p>{detailContact.sub}</p>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </Col>
                   <Col className='order-md-1' md='3'>
                     <div className='pr-md-5'>
                       <div className={Contact.property}>
@@ -52,6 +32,26 @@ export default class MainContent extends Component {
                         );
                       })}
                     </div>
+                  </Col>
+                  <Col className='order-md-2' md='9'>
+                    <ul>
+                      {Contact.detail.map((detailContact, i) => {
+                        return (
+                          <li style={{ listStyle: 'none' }} key={i}>
+                            <Badge
+                              className='text-uppercase'
+                              color={Contact.badgeInfo.color}
+                              pill
+                            >
+                              #{i + 1}
+                            </Badge>
+
+                            <h3>{detailContact.main}</h3>
+                            <p>{detailContact.sub}</p>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </Col>
                 </Row>
               </Container>
