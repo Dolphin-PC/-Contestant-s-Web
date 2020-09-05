@@ -1,3 +1,7 @@
+import 'react-app-polyfill/ie9'; // For IE 9-11 support
+import 'react-app-polyfill/ie11'; // For IE 11 support
+import 'react-app-polyfill/stable';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
@@ -7,10 +11,10 @@ import 'assets/vendor/font-awesome/css/font-awesome.min.css';
 import 'assets/scss/argon-design-system-react.scss?v1.1.0';
 
 // Views
-import Index from 'views/Index.js';
+
 import Landing from 'views/pages/Landing.js';
 import Login from 'views/pages/Login.js';
-import Profile from 'views/pages/Profile.js';
+// import Profile from 'views/pages/Profile.js';
 import Register from 'views/pages/Register.js';
 import Activity from 'views/pages/Activity.js';
 import Curriculum from 'views/pages/Curriculum.js';
@@ -18,8 +22,6 @@ import Budget from 'views/pages/Budget.js';
 import Rule from 'views/pages/Rule.js';
 import Day from 'views/pages/Day.js';
 import Idea from 'views/pages/Idea.js';
-
-import Test from './Test';
 
 // Reducer
 import { Provider } from 'react-redux';
@@ -49,17 +51,17 @@ ReactDOM.render(
           exact
           render={(props) => <Login {...props} />}
         />
-        <Route
+        {/* <Route
           path='/profile-page'
           exact
           render={(props) => <Profile {...props} />}
-        />
+        /> */}
         <Route
           path='/register-page'
           exact
           render={(props) => <Register {...props} />}
         />
-        <Route path='/test' exact render={(props) => <Index {...props} />} />
+
         <Route
           path='/activity'
           exact
@@ -74,7 +76,6 @@ ReactDOM.render(
         <Route path='/rule' exact render={(props) => <Rule {...props} />} />
         <Route path='/idea' exact render={(props) => <Idea {...props} />} />
         <Route path='/day' exact render={(props) => <Day {...props} />} />
-        <Route path='/te' exact render={(props) => <Test {...props} />} />
         <Redirect to='/landing-page' />
       </Switch>
     </BrowserRouter>

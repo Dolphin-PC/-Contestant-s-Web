@@ -25,10 +25,7 @@ class CardsFooter extends React.Component {
               <Col md='6'>
                 <div className='copyright'>
                   © {new Date().getFullYear()}{' '}
-                  <a
-                    href='https://github.com/DorPhin-pc?tab=repositories'
-                    target='_blank'
-                  >
+                  <a href='https://github.com/Dolphin-PC' target='_blank'>
                     Dolphin-PC
                   </a>
                   &emsp;with&emsp;
